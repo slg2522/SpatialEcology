@@ -14,15 +14,24 @@
 #stuck. Some of these tasks are challenging! Refer to the advanced spatial data tutorial we started in class,
 #which provides examples of most of the steps required to complete this assignment.
 
+#Load necessary packages
+library(rgdal) # 'Geospatial' Data Abstraction Library ('GDAL')
+library(raster) # for all things raster and more
+library(dismo) # species distribution modeling and much more
+library(maps) # quick plotting of countries, etc.
+library(gtools) # various functions
+library(rasterVis) # raster visualization methods
+library(fields) # Curve / function fitting for spatial analyses
+library(tcltk) #build GUIs for R interface
 
 
 #1. Use the raster::getData function to download the Worldclim climate data set at 2.5 arc-minute
 #resolution. You want the bioclimatic variables (use var="bio", see ?getData in the raster package).
 
-
-
-
-
+#download the world climate data at 2.5 arc-minute resolution (res) with the bio variables (var)
+bioclimVars <- getData(name="worldclim", 
+                       res = 2.5, # resolution
+                       var = "bio") #variable
 
 
 
@@ -31,8 +40,23 @@
 #(Note that the shapefile also contains New Zealand, so you will have to do something about that before
 #you perform the clipping operation, among other things. . . ).
 
+#Make a raster stack of the bio10, bio11, bio18, and bio19 bioclimatic variables
+#collect raster files from disk and read them as a stack:
+file.remove(paste(getwd(), "/wc2-5/", "bio_2-5m_bil.zip", sep=""))
+# sort the file names using ?mixedsort
+files <- list.files(path=paste(getwd(), "/wc2-5/", sep=""), 
+                    full.names=T, 
+                    pattern=".bil")
+#sort the file paths
+list.ras <- mixedsort(files)
+list.ras
+#pull out 10, 11, 18, and 19 for the stack
+bioclimStack <- stack(list.ras[10], list.ras[11], list.ras[18], list.ras[19])
+bioclimStack
 
-
+#clip the raster stack to the outline of Australia (not the extent) using the shapefile provided with this assignment.
+#(Note that the shapefile also contains New Zealand, so you will have to do something about that before
+#you perform the clipping operation, among other things. . . ).
 
 
 
