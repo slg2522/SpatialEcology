@@ -54,11 +54,34 @@ list.ras
 bioclimStack <- stack(list.ras[10], list.ras[11], list.ras[18], list.ras[19])
 bioclimStack
 
-#clip the raster stack to the outline of Australia (not the extent) using the shapefile provided with this assignment.
-#(Note that the shapefile also contains New Zealand, so you will have to do something about that before
-#you perform the clipping operation, among other things. . . ).
+# Read shapefile
+outline <- shapefile("Homework2/oz_nz_aea.shp")
+class(outline)
+plot(outline)
+outline@proj4string
+
+# Crop outline of Australia manually by drawing region of interest
+plot(outline)
+# click twice on the map to select the region of interest
+drawExt <- drawExtent()    
+drawExt
+#class      : Extent 
+#xmin       : -2249728 
+#xmax       : 2050870 
+#ymin       : -4972158 
+#ymax       : -1089487 
+#crop the outline
+bioclimVars.sw <- crop(outline, drawExt)
+#plot the new outline
+plot(bioclimVars.sw)
 
 
+# now crop the raster stack using the new outline
+swOutline <- spTransform(bioclimVars.sw, projection(bioclimStack))
+polyExt <- extent(swOutline)
+bioclimVars.sw <- crop(bioclimStack, polyExt)
+#plot the new region of interest and accompanying data
+plot(bioclimVars.sw)
 
 
 
