@@ -79,9 +79,9 @@ plot(bioclimVars.sw)
 # now crop the raster stack using the new outline
 swOutline <- spTransform(bioclimVars.sw, projection(bioclimStack))
 polyExt <- extent(swOutline)
-bioclimVars.sw <- crop(bioclimStack, polyExt)
+bioclimVars.sw2 <- crop(bioclimStack, polyExt)
 #plot the new region of interest and accompanying data
-plot(bioclimVars.sw)
+plot(bioclimVars.sw2)
 
 
 
@@ -90,6 +90,88 @@ plot(bioclimVars.sw)
 #fall outside the Australian mainland. Convert the data to a SpatialPointsDataFrame with the correct
 #CRS and containing only these attributes: acceptedScientificName, institutionCode, lon, lat,
 #and year. Save your SpatialPointsDataFrame as a shapefile.
+
+#load library
+library('jsonlite')
+
+#download records for the Austral grass tree (Xanthorrhoea australis)
+#download up to 300 records in a single request (nrecs=300 max) and only retrieve records that have
+#a georeference (geo=T) and fall within the specified extent (ext=drawExt)
+xaustralis <- gbif("Xanthorrhoea", species="australis", ext=polyExt, nrecs=300, geo=T)
+
+#save the projection information stored in the 'geodeticDatum column
+unique(xaustralis$geodeticDatum)
+#correct CRS
+crsxaustralis <- "WGS84"
+
+#Convert the data to a SpatialPointsDataFrame and subset the columns to include: acceptedScientificName, institutionCode, lon, lat, year
+xaustralis <- subset(xaustralis, select=c("acceptedScientificName", "institutionCode", "lon", "lat", "year"))
+
+# review the attributes
+dim(xaustralis)
+#check for duplicates
+duplicated(xaustralis) #lots of duplicated records - common problem with GBIF data
+#keep only unique
+xaustralis <- unique(xaustralis)
+#view new dimensions
+dim(xaustralis)
+
+#check for NAs
+which(is.na(xaustralis$lat)) #no NAs
+which(is.na(xaustralis$lon)) #no NAs
+#convert to spatial object
+coordinates(xaustralis) <- c("lon", "lat")
+
+#plot coordinates on world map in blue
+map('world')
+plot(xaustralis, pch=21, bg="blue", cex=1, add=T)
+
+#assign CRS information  geographical, datum WGS84
+crsxaustralis
+crs.geo <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")    
+# define projection system of our data
+crs(xaustralis) <- crs.geo     
+
+# polygon for Australia
+plot(bioclimVars.sw)
+#remove Tasmania
+# click twice on the map to select the region of interest
+drawExt2 <- drawExtent()    
+drawExt2
+#class      : Extent 
+#xmin       : -2288918 
+#xmax       : 2121845 
+#ymin       : -4342060 
+#ymax       : -1138015 
+#crop the outline
+australiaMainland <- crop(bioclimVars.sw, drawExt2)
+#plot the new outline
+plot(australiaMainland)
+australiaMainland@proj4string
+
+#use the 'over' function to select points that fall within the mainland of Australia
+#project / transform the data first
+swPolyProj2 <- spTransform(australiaMainland, CRSobj=projection(xaustralis))
+xaustralis2 <- over(xaustralis, swPolyProj2)
+# records outside of the polygon
+which(is.na(xaustralis2))
+#create new set with non mainland points removed
+xaustralis3 <- xaustralis[-which(is.na(xaustralis2)),]
+#plot only the mainland X. australis
+plot(swPolyProj2)
+plot(xaustralis3, pch=21, bg=rgb(0,0,1,0.5), add=T)
+
+#Save a shapefile to disk
+# Provide Spatial* object and filename to the 'shapefile' function
+outfile <- 'australiaMainland.shp'
+shapefile(swPolyProj2, outfile, overwrite=FALSE)
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#Save your SpatialPointsDataFrame as a shapefile.
 
 
 
@@ -130,3 +212,9 @@ plot(bioclimVars.sw)
 #rasterize function or perhaps by extracting the cell number for each observation and counting the
 #number of times each cell number is duplicated (indicating the number of observations in that cell).
 #This can be a tough one, so don’t hesitate to check in if you get stuck.
+
+
+
+
+
+
