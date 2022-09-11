@@ -192,7 +192,37 @@ shapefile(xaustralis3, outfile, overwrite=FALSE)
 #the Australia & New Zealand shapefile (i.e., not WGS84). Save the transformed
 #bio10 raster as a GeoTiff.
 
+#find number of years to color
+xaustralis3
+numyears <- 2022-1770
 
+#rainbow palette for the scatter year points
+my.palette <- rainbow(numyears)
+
+#extract just bio10
+bio10Background <- stack(list.ras[10])
+# crop the bio10Background outline
+background <- spTransform(australiaMainland, projection(bio10Background))
+polyExt2 <- extent(background)
+background.sw <- crop(bio10Background, polyExt2)
+
+#plot the new region of interest and accompanying data
+backPlot <- plot(background.sw)
+
+#check the plot
+backPlot
+
+#align plots side-by-side
+par(mfrow=c(1,2))
+#arrange on top of one another
+allPlot <- plot(background.sw) + plot(xaustralis3, pch=16, col=rainbow(numyears), add=T)
+
+#years that the scalebar must show
+years <- c(1770:2022)
+#scalebar for scatter points
+colorbar <- image(0, years, t(seq_along(1770:2022)), col=my.palette, axes=FALSE) + axis(4)
+
+#save as a GeoTiff
 
 
 
