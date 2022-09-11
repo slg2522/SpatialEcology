@@ -161,22 +161,14 @@ xaustralis3 <- xaustralis[-which(is.na(xaustralis2)),]
 plot(swPolyProj2)
 plot(xaustralis3, pch=21, bg=rgb(0,0,1,0.5), add=T)
 
-#Save a shapefile to disk
-# Provide Spatial* object and filename to the 'shapefile' function
+#Save an Australia Mainland shapefile to disk
 outfile <- 'australiaMainland.shp'
 shapefile(swPolyProj2, outfile, overwrite=FALSE)
 
-
-
-
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#Save your SpatialPointsDataFrame as a shapefile.
-
-
-
-
-
+#Save the xaustralis3 SpatialPointsDataFrame as a shapefile
+class(xaustralis3)
+outfile <- 'xaustralis3.shp'
+shapefile(xaustralis3, outfile, overwrite=FALSE)
 
 
 
