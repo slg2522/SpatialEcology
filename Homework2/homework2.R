@@ -223,26 +223,18 @@ years <- c(1770:2022)
 colorbar <- image(0, years, t(seq_along(1770:2022)), col=my.palette, axes=FALSE) + axis(4)
 
 #save as a GeoTiff (.tif)
-
-
-
-
 # Provide Raster* object and filename. The file format is assumed from 
 # the filename extension. Or you can use 'format' argument.
 # The 'datatype' argument can be used to set whether data are
 # integer, float, etc.
-x <- writeRaster(s, 'output.tif', overwrite=F)
-x # a single file with multiple bands
-list.files(patt="^output")
-file.remove('output.tif')
-
-
+saveRaster <- writeRaster(background.sw, 'bio10Raster.tif', overwrite=F)
+saveRaster # file available
 
 
 
 #5. Use the cleaned species occurrence data to extract the bioclimatic variables
 #from the raster stack and compare the climate conditions where this species has
-#been observed to the broader climate of Australia. A few hints: Have a look at
+#been observed to the broader climate of Australia.A few hints: Have a look at
 #the raster::sampleRandom function. To perform the comparison between climates
 #where the species is present and Australia more broadly, you have a number of
 #options. You might try scatter plots, box plots or histograms, but you do not
@@ -250,7 +242,76 @@ file.remove('output.tif')
 #from simple plots alone - that’s enough for this assignment). Answer the
 #question: How does the climate where X. australis has been observed differ from
 #that of Australian climates more generally?
-  
+
+
+# crop the rasterstack outline to just mainland australia
+mainlandStack <- spTransform(australiaMainland, projection(bioclimVars.sw2))
+polyExt3 <- extent(mainlandStack)
+mainlandStack.sw <- crop(bioclimVars.sw2, polyExt3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Extract values from raster 
+# generate some random locations
+set.seed(9032020)
+coords <- cbind(x=runif(100,115,130), y=runif(100,-35,-20)) 
+head(coords)
+plot(bio19.sw)
+points(coords)
+# Use `extract` function
+bio19Dat <- extract(bio19.sw, coords)
+coords <- cbind(coords, bio19Dat)    # raster values
+head(coords)
+coords <- na.omit(coords)
+# are incorporated to the dataframe
+plot(bio19.sw)
+points(coords[,1:2])
+
+# extract bio19 values using buffer around points
+climBuff <- extract(bio19.sw, #raster 
+                    karri, #ppoints to buffer
+                    cellnumbers=TRUE, #return cell numbers too?
+                    buffer=100000) # buffer size in meters
+class(climBuff)
+length(climBuff)
+head(climBuff[[1]])
+
+
+# Using `rasterToPoints`:
+bio19Pts <- data.frame(rasterToPoints(swBioClim$bio19))
+head(bio19Pts)
+dim(bio19Pts)
+#use 'rasterize' to recreate raster from points & data
+newRast <- rasterize(bio19Pts[,1:2], swBioClim$bio19, field=bio19Pts$bio19)
+plot(newRast)
+
+# And also, the `click` function will get values from particular locations in the map
+plot(swBioClim$bio19)
+# click n times in the map to get values
+click(swBioClim$bio19, n=5)   
+
+
+
+
+
+
+
+
 
 
 
