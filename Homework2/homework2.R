@@ -222,8 +222,19 @@ years <- c(1770:2022)
 #scalebar for scatter points
 colorbar <- image(0, years, t(seq_along(1770:2022)), col=my.palette, axes=FALSE) + axis(4)
 
-#save as a GeoTiff
+#save as a GeoTiff (.tif)
 
+
+
+
+# Provide Raster* object and filename. The file format is assumed from 
+# the filename extension. Or you can use 'format' argument.
+# The 'datatype' argument can be used to set whether data are
+# integer, float, etc.
+x <- writeRaster(s, 'output.tif', overwrite=F)
+x # a single file with multiple bands
+list.files(patt="^output")
+file.remove('output.tif')
 
 
 
