@@ -272,8 +272,13 @@ library('ggplot2')
 barplot(bio10Temp,xlab="Temperature in the warmest Quarter",ylab="Region",main="Bio10", names.arg=c('XAustralis', "Australia"),col="blue")
 ?barchart
 
-#example 
-
+#example scatterplot warm quarter temperature and rainfall
+TreeBio10$temp <- treeRandomDF$bio10
+TreeBio10$name <- "Tree"
+AustraliaBio10 <- australiaRandomDF$bio10
+TreeBio18 <- treeRandomDF$bio18
+AustraliaBio18 <- australiaRandomDF$bio18
+combined <- data.frame(Temp=c(TreeBio10, AustraliaBio10), Precip=c(TreeBio18, AustraliaBio18), Region=c(TreeBio18$name, AUstraliaBio18$name))
 
 
 
