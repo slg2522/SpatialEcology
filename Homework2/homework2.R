@@ -234,7 +234,7 @@ saveRaster # file available
 
 #5. Use the cleaned species occurrence data to extract the bioclimatic variables
 #from the raster stack and compare the climate conditions where this species has
-#been observed to the broader climate of Australia.A few hints: Have a look at
+#been observed to the broader climate of Australia. A few hints: Have a look at
 #the raster::sampleRandom function. To perform the comparison between climates
 #where the species is present and Australia more broadly, you have a number of
 #options. You might try scatter plots, box plots or histograms, but you do not
@@ -249,11 +249,30 @@ mainlandStack <- spTransform(australiaMainland, projection(bioclimVars.sw2))
 polyExt3 <- extent(mainlandStack)
 mainlandStack.sw <- crop(bioclimVars.sw2, polyExt3)
 
+#tree random sample
+treeRandom <- sampleRandom(bioclimVars.sw2, 1000, na.rm=TRUE, ext=xaustralis3, 
+             cells=FALSE, rowcol=FALSE, xy=FALSE, sp=FALSE, asRaster=FALSE)
 
+#australia random sample
+australiaRandom <- sampleRandom(bioclimVars.sw2, 1000, na.rm=TRUE, ext=polyExt3, 
+             cells=FALSE, rowcol=FALSE, xy=FALSE, sp=FALSE, asRaster=FALSE)
 
+treeRandomDF <- as.data.frame(treeRandom)
 
+australiaRandomDF <- as.data.frame(australiaRandom)
 
+averageTreeBio10 <- mean(treeRandomDF$bio10)
+averageAustraliaBio10 <- mean(australiaRandomDF$bio10)
+bio10Temp <- c(averageTreeBio10, averageAustraliaBio10)
 
+par(mfrow=c(1,1))
+
+#example of barchart showing averages for Bio10
+library('ggplot2')
+barplot(bio10Temp,xlab="Temperature in the warmest Quarter",ylab="Region",main="Bio10", names.arg=c('XAustralis', "Australia"),col="blue")
+?barchart
+
+#example 
 
 
 
@@ -319,12 +338,17 @@ click(swBioClim$bio19, n=5)
 
 
 
+
 #6. Create a raster of the number of species observations in each grid cell. You
 #might try using the rasterize function or perhaps by extracting the cell number
 #for each observation and counting the number of times each cell number is
 #duplicated (indicating the number of observations in that cell). This can be a
 #tough one, so don’t hesitate to check in if you get stuck.
 
+
+#use 'rasterize' to recreate raster from points & data
+newRast <- rasterize(bio19Pts[,1:2], swBioClim$bio19, field=bio19Pts$bio19)
+plot(newRast)
 
 
 
