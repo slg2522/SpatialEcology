@@ -380,20 +380,13 @@ class(sumTree)
 #check the number of observations per gridcell
 freq(sumTree)
 
-
 library('sprawl')
 #histogram of frequency by grid cell
 plot_rasthist(sumTree, variable = "freq", type = "hist",
               verbose = TRUE)
 
 #plot the number of observations
-plot()
 plot(sumTree)
-
-
-#use 'rasterize' to recreate raster from points & data
-newRast <- rasterize(bio19Pts[,1:2], swBioClim$bio19, field=bio19Pts$bio19)
-plot(newRast)
 
 
 
