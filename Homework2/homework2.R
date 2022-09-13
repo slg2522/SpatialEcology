@@ -387,8 +387,10 @@ plot_rasthist(sumTree, variable = "freq", type = "hist",
 
 #plot the number of observations
 plot(sumTree)
-
-
-
+# zoom in t see the counts by clicking two locations on the plot
+#I zoomed in three times to see the locations with better detail
+zoom(sumTree)
+zoom(sumTree)
+zoom(sumTree)
 
 
