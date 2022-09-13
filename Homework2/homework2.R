@@ -370,8 +370,25 @@ boxplot(Precip~Region,data=coolQuarter, main="Precipitation*10 (c) Bio19",
 #duplicated (indicating the number of observations in that cell). This can be a
 #tough one, so don’t hesitate to check in if you get stuck.
 
+#each observation will be worth 1 count
+xaustralis3$count <- 1
+
+#rasterize using the spatial points data frame, the prior raster, the "count" column, and the function sum
+sumTree <- rasterize(xaustralis3, background.sw, "count", fun='count')
+#now raster class of the frequency of points per gridcell
+class(sumTree)
+#check the number of observations per gridcell
+freq(sumTree)
 
 
+library('sprawl')
+#histogram of frequency by grid cell
+plot_rasthist(sumTree, variable = "freq", type = "hist",
+              verbose = TRUE)
+
+#plot the number of observations
+plot()
+plot(sumTree)
 
 
 #use 'rasterize' to recreate raster from points & data
