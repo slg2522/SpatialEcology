@@ -277,10 +277,10 @@ bio18Prec <- c(averageTreeBio18, averageAustraliaBio18)
 par(mfrow=c(1,1))
 
 #temperature bar chart showing averages for Bio10
-barplot(bio10Temp,xlab="Temperature in the warmest Quarter",ylab="Region",main="Bio10", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
+barplot(bio10Temp,xlab="Regin",ylab="Temperature*10 in the warmest Quarter (C)",main="Bio10", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
 
-#precipitatin bar chart showing averages for Bio18
-barplot(bio18Prec,xlab="Precipitation in the warmest Quarter",ylab="Region",main="Bio18", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
+#precipitation bar chart showing averages for Bio18
+barplot(bio18Prec,xlab="Region",ylab="Precipitation*10 in the warmest Quarter (in)",main="Bio18", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
 
 #set up warm quarter temperature and rainfall dataframes
 TreeBio10 <- data.frame(temp=treeRandomDF$bio10, region='X. australis', color='green')
@@ -290,16 +290,16 @@ AustraliaBio18 <- data.frame(precip=australiaRandomDF$bio18, region='Australia',
 warmQuarter <- data.frame(Temp=c(TreeBio10$temp, AustraliaBio10$temp), Precip=c(TreeBio18$precip, AustraliaBio18$precip), Region=c(TreeBio10$region, AustraliaBio10$region), Col=c(TreeBio10$color, AustraliaBio10$color))
 
 #plot the temperature vs precipitation for Warmer Quarter
-plot(warmQuarter$Temp, warmQuarter$Precip, main="Warm Quarter", xlab="Temperature", ylab="Precipitation", pch=16, col=warmQuarter$Col)
+plot(warmQuarter$Temp, warmQuarter$Precip, main="Warm Quarter", xlab="Temperature*10 (C)", ylab="Precipitation*10 (in)", pch=16, col=warmQuarter$Col)
 legend(x=150,y=1200,c("X. australis region","Australia mainland"),cex=.8,col=c("green","yellow"),pch=16)
 
 #Bio10 temperature boxplot
-boxplot(Temp~Region,data=warmQuarter, main="Temperature Bio10",
-        xlab="Region", ylab="Temperature (C)", col=c("green", "yellow"))
+boxplot(Temp~Region,data=warmQuarter, main="Temperature*10 (C) Bio10",
+        xlab="Region", ylab="Temperature*10 (C)", col=c("green", "yellow"))
 
 #Bio18 precipitation boxplot
-boxplot(Precip~Region,data=warmQuarter, main="Precipitation Bio10",
-        xlab="Region", ylab="Precipitation (in)", col=c("green", "yellow"))
+boxplot(Precip~Region,data=warmQuarter, main="Precipitation*10 (in) Bio10",
+        xlab="Region", ylab="Precipitation*10 (in)", col=c("green", "yellow"))
 
 
 
@@ -307,45 +307,59 @@ boxplot(Precip~Region,data=warmQuarter, main="Precipitation Bio10",
 #find average temperature of each
 averageTreeBio11 <- mean(treeRandomDF$bio11)
 averageAustraliaBio11 <- mean(australiaRandomDF$bio11)
-bio11Temp <- c(averageTreeBio10, averageAustraliaBio10)
+bio11Temp <- c(averageTreeBio11, averageAustraliaBio11)
 
 #find average rainfall of each
-averageTreeBio18 <- mean(treeRandomDF$bio18)
-averageAustraliaBio18 <- mean(australiaRandomDF$bio18)
-bio18Prec <- c(averageTreeBio18, averageAustraliaBio18)
-
-par(mfrow=c(1,1))
+averageTreeBio19 <- mean(treeRandomDF$bio19)
+averageAustraliaBio19 <- mean(australiaRandomDF$bio19)
+bio19Prec <- c(averageTreeBio19, averageAustraliaBio19)
 
 #temperature bar chart showing averages for Bio10
-barplot(bio10Temp,xlab="Temperature in the warmest Quarter",ylab="Region",main="Bio10", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
+barplot(bio11Temp,xlab="Region",ylab="Temperature*10 in the Coolest Quarter (C)",main="Bio11", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
 
-#precipitatin bar chart showing averages for Bio18
-barplot(bio18Prec,xlab="Precipitation in the warmest Quarter",ylab="Region",main="Bio18", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
+#precipitatin bar chart showing averages for Bio19
+barplot(bio19Prec,xlab="Region",ylab="Precipitation*10 in the Coolest Quarter (in)",main="Bio19", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
 
-#set up warm quarter temperature and rainfall dataframes
-TreeBio10 <- data.frame(temp=treeRandomDF$bio10, region='X. australis', color='green')
-AustraliaBio10 <- data.frame(temp=australiaRandomDF$bio10, region='Australia', color='yellow')
-TreeBio18 <- data.frame(precip=treeRandomDF$bio18, region='X. australis', color='green')
-AustraliaBio18 <- data.frame(precip=australiaRandomDF$bio18, region='Australia', color='yellow')
-warmQuarter <- data.frame(Temp=c(TreeBio10$temp, AustraliaBio10$temp), Precip=c(TreeBio18$precip, AustraliaBio18$precip), Region=c(TreeBio10$region, AustraliaBio10$region), Col=c(TreeBio10$color, AustraliaBio10$color))
+#set up cool quarter temperature and rainfall dataframes
+TreeBio11 <- data.frame(temp=treeRandomDF$bio11, region='X. australis', color='green')
+AustraliaBio11 <- data.frame(temp=australiaRandomDF$bio11, region='Australia', color='yellow')
+TreeBio19 <- data.frame(precip=treeRandomDF$bio19, region='X. australis', color='green')
+AustraliaBio19 <- data.frame(precip=australiaRandomDF$bio19, region='Australia', color='yellow')
+coolQuarter <- data.frame(Temp=c(TreeBio11$temp, AustraliaBio11$temp), Precip=c(TreeBio19$precip, AustraliaBio19$precip), Region=c(TreeBio11$region, AustraliaBio11$region), Col=c(TreeBio11$color, AustraliaBio11$color))
 
-#plot the temperature vs precipitation for Warmer Quarter
-plot(warmQuarter$Temp, warmQuarter$Precip, main="Warm Quarter", xlab="Temperature", ylab="Precipitation", pch=16, col=warmQuarter$Col)
-legend(x=150,y=1200,c("X. australis region","Australia mainland"),cex=.8,col=c("green","yellow"),pch=16)
+#plot the temperature vs precipitation for cool Quarter
+plot(coolQuarter$Temp, coolQuarter$Precip, main="Cool Quarter", xlab="Temperature*10 (c)", ylab="Precipitation*10 (in)", pch=16, col=coolQuarter$Col)
+legend(x=10,y=600,c("X. australis region","Australia mainland"),cex=.8,col=c("green","yellow"),pch=16)
 
-#Bio10 temperature boxplot
-boxplot(Temp~Region,data=warmQuarter, main="Temperature Bio10",
-        xlab="Region", ylab="Temperature (C)", col=c("green", "yellow"))
+#Bio11 temperature boxplot
+boxplot(Temp~Region,data=coolQuarter, main="Temperature*10 (c) Bio11",
+        xlab="Region", ylab="Temperature*10 (C)", col=c("green", "yellow"))
 
-#Bio18 precipitation boxplot
-boxplot(Precip~Region,data=warmQuarter, main="Precipitation Bio10",
-        xlab="Region", ylab="Precipitation (in)", col=c("green", "yellow"))
-
-
+#Bio19 precipitation boxplot
+boxplot(Precip~Region,data=coolQuarter, main="Precipitation*10 (c) Bio19",
+        xlab="Region", ylab="Precipitation*10 (in)", col=c("green", "yellow"))
 
 
-
-
+#How does the climate where X. australis has been observed differ from
+#that of Australian climates more generally?
+#The mean temperature of the warmest quarter is slightly higher in Australia's
+#mainland compared to X. australis' range (barchart bio10), however, they do not
+#appear significantly different, disregarding outliers (boxplot bio10).
+#The mean rainfall of the warmest quarter is substantially higher in Australia's
+#mainland compared to X. australis' range (barchart bio18)however, they do not
+#appear significantly different, disregarding outliers (boxplot bio18).
+#X. australis appears to inhabit a slightly cooler and drier habitat in the warm
+#quarter than the overall Australia mainland (scatterplot bio10 bio18).
+#The mean temperature of the coolest quarter is slightly higher in Australia's
+#mainland compared to X. australis' range (barchart bio11), however, the
+#overlapping errorbars and large presence of outliers suggests no statistical
+#difference.
+#The mean rainfall of the coolest quarter is substantially higher in X.
+#australis'region compared to the mainland (barchart bio19), however, the
+#overlapping errorbars and large presence of outliers suggests no statistical
+#difference.
+#The X. australis region appears cooler and wetter than the mainland in the
+#coolest quarter.
 
 
 
