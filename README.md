@@ -1,1 +1,2 @@
 # SpatialEcology
+This repo catalogues the coursework for Spatial Ecology in R, a graduate class taken through the University of Maryland Center for Environmental Science. Course materials and assignments were created by Matt Fitzpatrick and Emily Cohen. The class uses material and code examples from the book: "Spatial Ecology and Conservation Modeling: Applications with R (1st ed. 2018 Edition)" by Robert Fletcher and Marie-Josée Fortin. Coursework was completed by Sabrina Groves in 2022.
