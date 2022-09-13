@@ -251,91 +251,95 @@ mainlandStack.sw <- crop(bioclimVars.sw2, polyExt3)
 
 #tree random sample
 treeRandom <- sampleRandom(bioclimVars.sw2, 1000, na.rm=TRUE, ext=xaustralis3, 
-             cells=FALSE, rowcol=FALSE, xy=FALSE, sp=FALSE, asRaster=FALSE)
+                           cells=FALSE, rowcol=FALSE, xy=FALSE, sp=FALSE, asRaster=FALSE)
 
 #australia random sample
 australiaRandom <- sampleRandom(bioclimVars.sw2, 1000, na.rm=TRUE, ext=polyExt3, 
-             cells=FALSE, rowcol=FALSE, xy=FALSE, sp=FALSE, asRaster=FALSE)
+                                cells=FALSE, rowcol=FALSE, xy=FALSE, sp=FALSE, asRaster=FALSE)
 
+#convert to dataframe
 treeRandomDF <- as.data.frame(treeRandom)
 
+#convert to dataframe
 australiaRandomDF <- as.data.frame(australiaRandom)
 
+#Analyses for the warmest Quarter
+#find average temperature of each
 averageTreeBio10 <- mean(treeRandomDF$bio10)
 averageAustraliaBio10 <- mean(australiaRandomDF$bio10)
 bio10Temp <- c(averageTreeBio10, averageAustraliaBio10)
 
+#find average rainfall of each
+averageTreeBio18 <- mean(treeRandomDF$bio18)
+averageAustraliaBio18 <- mean(australiaRandomDF$bio18)
+bio18Prec <- c(averageTreeBio18, averageAustraliaBio18)
+
 par(mfrow=c(1,1))
 
-#example of barchart showing averages for Bio10
-library('ggplot2')
-barplot(bio10Temp,xlab="Temperature in the warmest Quarter",ylab="Region",main="Bio10", names.arg=c('XAustralis', "Australia"),col="blue")
-?barchart
+#temperature bar chart showing averages for Bio10
+barplot(bio10Temp,xlab="Temperature in the warmest Quarter",ylab="Region",main="Bio10", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
 
-#example scatterplot warm quarter temperature and rainfall
-TreeBio10 <- data.frame(temp=treeRandomDF$bio10, region='tree', color='green')
-AustraliaBio10 <- data.frame(temp=australiaRandomDF$bio10, region='australia', color='yellow')
-TreeBio18 <- data.frame(precip=treeRandomDF$bio18, region='tree', color='green')
-AustraliaBio18 <- data.frame(precip=australiaRandomDF$bio18, region='australia', color='yellow')
+#precipitatin bar chart showing averages for Bio18
+barplot(bio18Prec,xlab="Precipitation in the warmest Quarter",ylab="Region",main="Bio18", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
+
+#set up warm quarter temperature and rainfall dataframes
+TreeBio10 <- data.frame(temp=treeRandomDF$bio10, region='X. australis', color='green')
+AustraliaBio10 <- data.frame(temp=australiaRandomDF$bio10, region='Australia', color='yellow')
+TreeBio18 <- data.frame(precip=treeRandomDF$bio18, region='X. australis', color='green')
+AustraliaBio18 <- data.frame(precip=australiaRandomDF$bio18, region='Australia', color='yellow')
 warmQuarter <- data.frame(Temp=c(TreeBio10$temp, AustraliaBio10$temp), Precip=c(TreeBio18$precip, AustraliaBio18$precip), Region=c(TreeBio10$region, AustraliaBio10$region), Col=c(TreeBio10$color, AustraliaBio10$color))
-ggplot(warmQuarter,aes(x=Temp,y=Precip))+geom_point()
 
-#plot the temperature vs precipitation for 
+#plot the temperature vs precipitation for Warmer Quarter
 plot(warmQuarter$Temp, warmQuarter$Precip, main="Warm Quarter", xlab="Temperature", ylab="Precipitation", pch=16, col=warmQuarter$Col)
 legend(x=150,y=1200,c("X. australis region","Australia mainland"),cex=.8,col=c("green","yellow"),pch=16)
 
+#Bio10 temperature boxplot
+boxplot(Temp~Region,data=warmQuarter, main="Temperature Bio10",
+        xlab="Region", ylab="Temperature (C)", col=c("green", "yellow"))
+
+#Bio18 precipitation boxplot
+boxplot(Precip~Region,data=warmQuarter, main="Precipitation Bio10",
+        xlab="Region", ylab="Precipitation (in)", col=c("green", "yellow"))
 
 
 
+#Analyses for the Coolest Quarter
+#find average temperature of each
+averageTreeBio11 <- mean(treeRandomDF$bio11)
+averageAustraliaBio11 <- mean(australiaRandomDF$bio11)
+bio11Temp <- c(averageTreeBio10, averageAustraliaBio10)
 
+#find average rainfall of each
+averageTreeBio18 <- mean(treeRandomDF$bio18)
+averageAustraliaBio18 <- mean(australiaRandomDF$bio18)
+bio18Prec <- c(averageTreeBio18, averageAustraliaBio18)
 
+par(mfrow=c(1,1))
 
+#temperature bar chart showing averages for Bio10
+barplot(bio10Temp,xlab="Temperature in the warmest Quarter",ylab="Region",main="Bio10", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
 
+#precipitatin bar chart showing averages for Bio18
+barplot(bio18Prec,xlab="Precipitation in the warmest Quarter",ylab="Region",main="Bio18", names.arg=c('X. australis', "Australia"),col=c("green", "yellow"))
 
-# Extract values from raster 
-# generate some random locations
-set.seed(9032020)
-coords <- cbind(x=runif(100,115,130), y=runif(100,-35,-20)) 
-head(coords)
-plot(bio19.sw)
-points(coords)
-# Use `extract` function
-bio19Dat <- extract(bio19.sw, coords)
-coords <- cbind(coords, bio19Dat)    # raster values
-head(coords)
-coords <- na.omit(coords)
-# are incorporated to the dataframe
-plot(bio19.sw)
-points(coords[,1:2])
+#set up warm quarter temperature and rainfall dataframes
+TreeBio10 <- data.frame(temp=treeRandomDF$bio10, region='X. australis', color='green')
+AustraliaBio10 <- data.frame(temp=australiaRandomDF$bio10, region='Australia', color='yellow')
+TreeBio18 <- data.frame(precip=treeRandomDF$bio18, region='X. australis', color='green')
+AustraliaBio18 <- data.frame(precip=australiaRandomDF$bio18, region='Australia', color='yellow')
+warmQuarter <- data.frame(Temp=c(TreeBio10$temp, AustraliaBio10$temp), Precip=c(TreeBio18$precip, AustraliaBio18$precip), Region=c(TreeBio10$region, AustraliaBio10$region), Col=c(TreeBio10$color, AustraliaBio10$color))
 
-# extract bio19 values using buffer around points
-climBuff <- extract(bio19.sw, #raster 
-                    karri, #ppoints to buffer
-                    cellnumbers=TRUE, #return cell numbers too?
-                    buffer=100000) # buffer size in meters
-class(climBuff)
-length(climBuff)
-head(climBuff[[1]])
+#plot the temperature vs precipitation for Warmer Quarter
+plot(warmQuarter$Temp, warmQuarter$Precip, main="Warm Quarter", xlab="Temperature", ylab="Precipitation", pch=16, col=warmQuarter$Col)
+legend(x=150,y=1200,c("X. australis region","Australia mainland"),cex=.8,col=c("green","yellow"),pch=16)
 
+#Bio10 temperature boxplot
+boxplot(Temp~Region,data=warmQuarter, main="Temperature Bio10",
+        xlab="Region", ylab="Temperature (C)", col=c("green", "yellow"))
 
-# Using `rasterToPoints`:
-bio19Pts <- data.frame(rasterToPoints(swBioClim$bio19))
-head(bio19Pts)
-dim(bio19Pts)
-#use 'rasterize' to recreate raster from points & data
-newRast <- rasterize(bio19Pts[,1:2], swBioClim$bio19, field=bio19Pts$bio19)
-plot(newRast)
-
-# And also, the `click` function will get values from particular locations in the map
-plot(swBioClim$bio19)
-# click n times in the map to get values
-click(swBioClim$bio19, n=5)   
-
-
-
-
-
-
+#Bio18 precipitation boxplot
+boxplot(Precip~Region,data=warmQuarter, main="Precipitation Bio10",
+        xlab="Region", ylab="Precipitation (in)", col=c("green", "yellow"))
 
 
 
@@ -351,6 +355,9 @@ click(swBioClim$bio19, n=5)
 #for each observation and counting the number of times each cell number is
 #duplicated (indicating the number of observations in that cell). This can be a
 #tough one, so don’t hesitate to check in if you get stuck.
+
+
+
 
 
 #use 'rasterize' to recreate raster from points & data
