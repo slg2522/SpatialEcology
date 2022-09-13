@@ -273,14 +273,16 @@ barplot(bio10Temp,xlab="Temperature in the warmest Quarter",ylab="Region",main="
 ?barchart
 
 #example scatterplot warm quarter temperature and rainfall
-TreeBio10$temp <- treeRandomDF$bio10
-TreeBio10$name <- "Tree"
-AustraliaBio10 <- australiaRandomDF$bio10
-TreeBio18 <- treeRandomDF$bio18
-AustraliaBio18 <- australiaRandomDF$bio18
-combined <- data.frame(Temp=c(TreeBio10, AustraliaBio10), Precip=c(TreeBio18, AustraliaBio18), Region=c(TreeBio18$name, AUstraliaBio18$name))
+TreeBio10 <- data.frame(temp=treeRandomDF$bio10, region='tree', color='green')
+AustraliaBio10 <- data.frame(temp=australiaRandomDF$bio10, region='australia', color='yellow')
+TreeBio18 <- data.frame(precip=treeRandomDF$bio18, region='tree', color='green')
+AustraliaBio18 <- data.frame(precip=australiaRandomDF$bio18, region='australia', color='yellow')
+warmQuarter <- data.frame(Temp=c(TreeBio10$temp, AustraliaBio10$temp), Precip=c(TreeBio18$precip, AustraliaBio18$precip), Region=c(TreeBio10$region, AustraliaBio10$region), Col=c(TreeBio10$color, AustraliaBio10$color))
+ggplot(warmQuarter,aes(x=Temp,y=Precip))+geom_point()
 
-
+#plot the temperature vs precipitation for 
+plot(warmQuarter$Temp, warmQuarter$Precip, main="Warm Quarter", xlab="Temperature", ylab="Precipitation", pch=16, col=warmQuarter$Col)
+legend(x=150,y=1200,c("X. australis region","Australia mainland"),cex=.8,col=c("green","yellow"),pch=16)
 
 
 
