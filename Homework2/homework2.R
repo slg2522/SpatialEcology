@@ -48,9 +48,13 @@ bioclimVars <- getData(name="worldclim",
 
 #Make a raster stack of the bio10, bio11, bio18, and bio19 bioclimatic variables
 #collect raster files from disk and read them as a stack:
+#used to extract from folder
 file.remove(paste(getwd(), "/wc2-5/", "bio_2-5m_bil.zip", sep=""))
-# sort the file names using ?mixedsort
+#sort the file names using ?mixedsort
 files <- list.files(path=paste(getwd(), "/wc2-5/", sep=""), 
+                    full.names=T, 
+                    pattern=".bil")
+files <- list.files(path=paste("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Homework2", "/wc2-5/", sep=""), 
                     full.names=T, 
                     pattern=".bil")
 #sort the file paths
