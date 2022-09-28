@@ -126,25 +126,29 @@ plot(Kest(thom, correction = "none"), main="K-test, 2nd-order") #significant clu
 # for statistical significance
 #Envelopes
 par(mfrow=c(1,2))
-env.csr <- envelope(csr, Kest, nsim=99, nrank=1) 
+env.csr <- envelope(csr, Kest, nsim=99, nrank=1) #test you want to run, number of simulations, and rank (1 means minimum and maximum values generated will be the envelope bounds) 
 plot(env.csr, main="K-test, csr with envelope")
 
+#the non-random pattern with second order structure:
 env.thom <- envelope(thom, Kest, nsim=99, nrank=1)
-plot(env.thom, main="K-test, 2nd-order with envelope")
+plot(env.thom, main="K-test, 2nd-order with envelope") #clustering at small values of r and some at larger ones (less important)
 
 # The cells dataset shows significant dispersion to distances of r~0.15
 ?cells
 par(mfrow=c(1,2))
 plot(cells, pch=20)
 env.cells <- envelope(cells, Kest, nsim=99, nrank=1)
+#evidence for significant over dispersion
 plot(env.cells, main="K-test on cells with envelope")
-# the range of simulated values is quite large - why might that be the case?
+# the range of simulated values is quite large - why might that be the case? 1) you may need to run more simulations under the 95% confidence interval instead of the min and max; 2) there are not that many datapoints (only 42)
 
 ### The redwood dataset shows significant clustering to distances of r~0.2
 ?redwood
 par(mfrow=c(1,2))
 plot(redwood, pch=20)
 plot(envelope(redwood, Kest, nsim=99, nrank=1), main="K-test on redwood with envelope")
+#significant clustering at a range of distances
+#stair-step like patterns reflect a low amount of data
 dev.off()
 
 # generate a point pattern with both first- and second-order structure
@@ -152,10 +156,13 @@ set.seed(983)
 kappa <- function(x,y) {50*exp(-5*x*y)} #intensity of cluster centers
 thom.ipp <- rThomas(kappa, scale=0.02, mu=10, c(0,1,0,1))
 plot(thom.ipp)
+#both first (variation of intensity of the clusters across space) and second order (clear clustering) structure
 ?Kinhom
-plot(Kinhom(thom.ipp, correction="best"))
+#inhomogeneous K-function
+plot(Kinhom(thom.ipp, correction="best")) #use best edge correction
+#if you don't accomodate the edge effects (ie. specify non) the theoretical envelope is outside the line
+#very strong spatial structure with the clear clustering and some dispersion at large radii
 plot(envelope(thom.ipp, Kinhom, nsim=999, correction="best"))
-
 
 # Analysis of marked point patterns
 set.seed(4321)
@@ -163,41 +170,50 @@ set.seed(4321)
 # Exploratory analyses / plotting
 data(lansing)
 ?lansing
+#frequency of each mark type, the proportion of the data, and the intensity under unit area of 1
 summary(lansing)
 plot(lansing)
+#plot each species individually
 plot(split(lansing))
+#split by species with density graph
 plot(density(split(lansing)))
 
 # simulating Poisson marked point processes, multivariate
 # same number of points for each 
 par(mfrow=c(1,2))
-dat1 <- rmpoispp(100, types=c("A", "B", "C"))
+#random marked poison distribution point process
+dat1 <- rmpoispp(100, types=c("A", "B", "C")) #average of 100
 plot(dat1)
 
 # different number of points
-dat2 <- rmpoispp(c(100, 50, 20), types=c("A", "B", "C"))
+dat2 <- rmpoispp(c(100, 50, 20), types=c("A", "B", "C")) #different numbers for each marked point type
 plot(dat2)
 
 
 ### Compare point patterns with different marks
-dat <- rmpoispp(500, types=c("Plant", "Ant"))
+dat <- rmpoispp(500, types=c("Plant", "Ant")) #one type if plant one type is plant
+#expect neither plants nor ants to be aggregated or segregated with not interaction between them (due to specified random marks by poisson point process)
 plot(dat)
 
 # summary functions
 ?Gcross
-plot(Gcross(dat, "Ant", "Plant"))
+plot(Gcross(dat, "Ant", "Plant")) #the legend shows the different ways of estimating the gfunction
 ?alltypes
-plot(alltypes(dat, "G"))
+#alltypes to see the different interactions
+plot(alltypes(dat, "G")) #pairwise matrix of the different marked types
 
 
 # generalization of the function Gest to multitype point patterns
 data(ants)
-plot(ants)
-plot(Gcross(ants, "Cataglyphis", "Messor")) 
+plot(ants) #looks like they may aggregate nonrandomly
+plot(Gcross(ants, "Cataglyphis", "Messor")) #not a lot of data so stairstep pattern, some evidence of clustering at larger distances and some evidence of segregation at shorter distances
 # deviation from theoretical may suggest dependence between the points
 plot(alltypes(ants, "G"))
-plot(Gdot(ants, "Messor")) # i-to-any test
+plot(Gdot(ants, "Messor")) # i-to-any test (dispersion at all scales?)
 
+#all of the possible pairwise comparisons across the species
+#evidence of segregation between hickory and maple
+#black oak segregates from miscellaneous
 plot(alltypes(lansing, "G"))
 plot(alltypes(lansing, "G", envelope = T))
 
