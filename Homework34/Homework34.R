@@ -13,7 +13,15 @@
 #a field sampling study in the hopes of minimizing autocorrelation. Perform the following tasks and answer
 #the associated questions.
 
-
+#Load necessary packages
+library(rgdal) # 'Geospatial' Data Abstraction Library ('GDAL')
+library(raster) # for all things raster and more
+library(dismo) # species distribution modeling and much more
+library(maps) # quick plotting of countries, etc.
+library(gtools) # various functions
+library(rasterVis) # raster visualization methods
+library(fields) # Curve / function fitting for spatial analyses
+library(tcltk) #build GUIs for R interface
 
 #1. Use the sampleRegular function in the raster package to generate a sample of Carolina wren abundance
 #at about 300-500 locations. To avoid sampling outside of the primary range of the Carolina wren (i.e.,
@@ -21,9 +29,149 @@
 #abundance is greater than zero. See Figure 1. The drawExtent function might be useful to help you
 #define the sampling extent.
 
+# Download world shapefile and store in HW34 folder
+download.file("http://thematicmapping.org/downloads/TM_WORLD_BORDERS_SIMPL-0.3.zip" , destfile="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Homework34/world_shape_file.zip")
+# You now have it in your current working directory, have a look!
+
+# Unzip this file
+system("unzip C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Homework34/world_shape_file.zip")
+
+
+# Read in the TM_WORLD_BORDERS_SIMPL-0.3.shp file with rgdal
+worldspdf <- readOGR( 
+  dsn= paste0(getwd(),"/Homework34/world_shape_file/") , 
+  layer="TM_WORLD_BORDERS_SIMPL-0.3",
+  verbose=FALSE
+)
+
+#check the shapefile
+#looks good
+plot(worldspdf, col="white", bg="black", lwd=0.25, border=0 )
+
+
+# Read shapefile
+outline <- shapefile("Homework34/world_shape_file/TM_WORLD_BORDERS_SIMPL-0.3.shp")
+class(outline)
+plot(outline)
+outline@proj4string
+
+# Crop outline of USA manually by drawing region of interest
+plot(outline)
+# click twice on the map to select the region of interest
+drawExt <- drawExtent()    
+drawExt
+#class      : Extent 
+#xmin       : -2249728 
+#xmax       : 2050870 
+#ymin       : -4972158 
+#ymax       : -1089487 
+#crop the outline
+cropUSA.sw <- crop(outline, drawExt)
+#plot the new outline
+plot(cropUSA.sw)
+
+#load raster data in an R object called 'wrenArea'
+wrenArea <- raster(paste0(getwd(), "/Homework34/carolinaWren.tif"))
+wrenArea
+
+# now crop the raster stack using the new outline
+wrenOutline <- spTransform(cropUSA.sw, projection(wrenArea))
+polyExt <- extent(wrenOutline)
+wrenUSA.sw <- crop(wrenArea, polyExt)
+#plot the new region of interest and accompanying data
+plot(wrenUSA.sw)
+
+#check still raster layer, so operable with sampleRegular function
+class(wrenUSA.sw)
+?sampleRegular
+
+#Use the sampleRegular function in the raster package to generate a sample of
+#Carolina wren abundance at about 300-500 locations.
+wrenSample <- sampleRegular(wrenUSA.sw, size=2000, ext=wrenArea, sp=TRUE)
+class(wrenSample)
+#show approximately where the data are
+spplot(wrenSample)
+
+
+onlyWren <- clamp(wrenUSA.sw, lower=1, useValues=FALSE)
+values(onlyWren)
+plot(onlyWren)
+
+#Use the sampleRegular function in the raster package to generate a sample of
+#Carolina wren abundance at about 300-500 locations.
+wrenSample <- sampleRegular(onlyWren, size=500, ext=onlyWren, sp=TRUE)
+class(wrenSample)
+#show approximately where the data are
+spplot(wrenSample)
+
+#now plot on the original map
+wrenFrame <- sampleRegular(onlyWren, size=500, ext=onlyWren, xy=TRUE)
+class(wrenFrame)
+wrenFrame <- as.data.frame(wrenFrame)
+class(wrenFrame)
+#total sampled that are not NA is 398
+sum(!is.na(wrenFrame))
+wrenRaster <- plot(wrenUSA.sw)
+
+#remove the nas
+wrenClean<-na.omit(wrenFrame)
+
+plot(wrenUSA.sw)
+#get points from the dataframe and plot
+for(x in wrenClean){
+  for(y in wrenClean){
+    points(x,y, pch=19, col="blue")
+  }
+}
 
 
 
+#use the 'over' function to select points that fall within the mainland of
+#usa project / transform the data first
+wrenSampleMod <- spTransform(wrenSample, CRSobj=projection(wrenUSA.sw))
+usapoints <- as(wrenUSA.sw, "SpatialPoints")
+newMap <- over(usapoints, wrenSampleMod)
+# records outside of the polygon
+which(is.na(newMap))
+
+
+#create new set with non mainland points removed
+newMap2 <- xaustralis[-which(is.na(newMap)),]
+#plot only the mainland X. australis
+plot(wrenUSA.sw)
+plot(newMap2, pch=21, bg=rgb(0,0,1,0.5), add=T)
+
+
+
+  
+
+
+coord <- c(long, lat)
+
+
+
+
+
+#project the meters coordinates to lat lon
+wrenRaster <- projectRaster(wrenUSA.sw, crs = crs("+init=epsg:4326"))
+plot(wrenRaster)
+
+
+
+points(-80,30)
+
+
+
+
+plot(onlyRen, pch=21, bg="blue", cex=1, add=T)
+
+
+
+
+#To avoid sampling outside of the primary range of the Carolina wren (i.e.,
+#outside of where abundance is relatively high), limit the extent of your sampling to the region where
+#abundance is greater than zero. See Figure 1. The drawExtent function might be useful to help you
+#define the sampling extent.
 
 
 
