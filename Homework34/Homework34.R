@@ -60,11 +60,6 @@ plot(outline)
 # click twice on the map to select the region of interest
 drawExt <- drawExtent()    
 drawExt
-#class      : Extent 
-#xmin       : -2249728 
-#xmax       : 2050870 
-#ymin       : -4972158 
-#ymax       : -1089487 
 #crop the outline
 cropUSA.sw <- crop(outline, drawExt)
 #plot the new outline
@@ -89,6 +84,7 @@ class(wrenUSA.sw)
 #Carolina wren abundance at about 300-500 locations.
 wrenSample <- sampleRegular(wrenUSA.sw, size=2000, ext=wrenArea, sp=TRUE)
 class(wrenSample)
+
 #show approximately where the data are
 spplot(wrenSample)
 
@@ -96,6 +92,24 @@ spplot(wrenSample)
 onlyWren <- clamp(wrenUSA.sw, lower=1, useValues=FALSE)
 values(onlyWren)
 plot(onlyWren)
+
+# now crop the usa using the new wren outline
+eastCoast <- spTransform(eastCoast.sw, projection(wrenArea))
+polyExt <- extent(eastCoast.sw)
+eastCoast <- crop(eastCoast.sw, polyExt)
+#plot the new region of interest and accompanying data
+plot(eastCoast)
+
+
+
+# now crop the raster using the new outline
+newSample <- spTransform(wrenSample, projection(wrenArea))
+polyExt <- extent(wrenArea)
+newSample.sw <- crop(wrenSample, polyExt)
+#plot the new region of interest and accompanying data
+plot(newSample.sw)
+
+
 
 #Use the sampleRegular function in the raster package to generate a sample of
 #Carolina wren abundance at about 300-500 locations.
@@ -111,16 +125,29 @@ wrenFrame <- as.data.frame(wrenFrame)
 class(wrenFrame)
 #total sampled that are not NA is 398
 sum(!is.na(wrenFrame))
-wrenRaster <- plot(wrenUSA.sw)
+plot(onlyWren)
 
 #remove the nas
 wrenClean<-na.omit(wrenFrame)
 
-plot(wrenUSA.sw)
+plot(onlyWren)
 #get points from the dataframe and plot
 for(x in wrenClean){
   for(y in wrenClean){
-    points(x,y, pch=19, col="blue")
+    points(x,y, pch=20, col="blue")
+  }
+}
+
+#remove artifact column created by raster imperfection
+wrenClean
+wrenCleaner <- subset(wrenClean, y > 4226683 | y < 4226681)
+
+
+plot(onlyWren)
+#get points from the dataframe and plot
+for(x in wrenCleaner){
+  for(y in wrenCleaner){
+    points(x,y, pch=20, col="blue")
   }
 }
 
