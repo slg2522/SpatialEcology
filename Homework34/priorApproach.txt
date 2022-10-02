@@ -1,0 +1,105 @@
+#eliminate the na values
+wrenSample <- wrenSample[-which(is.na(wrenSample$lat)),]
+which(is.na(wrenSample$lon))
+wrenSample
+spplot(wrenSample)
+
+#make sure the plot is showing the relevant abundances
+onlyWren <- clamp(wrenUSA.sw, lower=1, useValues=FALSE)
+values(onlyWren)
+plot(onlyWren)
+
+# now crop the usa using the new wren outline
+eastCoast <- spTransform(eastCoast.sw, projection(wrenArea))
+polyExt <- extent(eastCoast.sw)
+eastCoast <- crop(eastCoast.sw, polyExt)
+#plot the new region of interest and accompanying data
+plot(eastCoast)
+
+# now crop the raster using the new outline
+newSample <- spTransform(wrenSample, projection(wrenArea))
+polyExt <- extent(wrenArea)
+newSample.sw <- crop(wrenSample, polyExt)
+#plot the new region of interest and accompanying data
+plot(newSample.sw)
+
+#Use the sampleRegular function in the raster package to generate a sample of
+#Carolina wren abundance at about 300-500 locations.
+wrenSample <- sampleRegular(onlyWren, size=500, ext=onlyWren, sp=TRUE)
+class(wrenSample)
+#show approximately where the data are
+spplot(wrenSample)
+
+#now plot on the original map
+wrenFrame <- sampleRegular(onlyWren, size=500, ext=onlyWren, xy=TRUE)
+class(wrenFrame)
+wrenFrame <- as.data.frame(wrenFrame)
+class(wrenFrame)
+#total sampled that are not NA is 398
+sum(!is.na(wrenFrame))
+plot(onlyWren)
+
+#remove the nas
+wrenClean<-na.omit(wrenFrame)
+
+plot(onlyWren)
+#get points from the dataframe and plot
+for(x in wrenClean){
+  for(y in wrenClean){
+    points(x,y, pch=20, col="blue")
+  }
+}
+
+#remove artifact column created by raster imperfection
+wrenClean
+wrenCleaner <- subset(wrenClean, y > 4226683 | y < 4226681)
+
+
+plot(onlyWren)
+#get points from the dataframe and plot
+for(x in wrenCleaner){
+  for(y in wrenCleaner){
+    points(x,y, pch=20, col="blue")
+  }
+}
+
+
+
+#use the 'over' function to select points that fall within the mainland of
+#usa project / transform the data first
+wrenSampleMod <- spTransform(wrenSample, CRSobj=projection(wrenUSA.sw))
+usapoints <- as(wrenUSA.sw, "SpatialPoints")
+newMap <- over(usapoints, wrenSampleMod)
+# records outside of the polygon
+which(is.na(newMap))
+
+
+#create new set with non mainland points removed
+newMap2 <- xaustralis[-which(is.na(newMap)),]
+#plot only the mainland X. australis
+plot(wrenUSA.sw)
+plot(newMap2, pch=21, bg=rgb(0,0,1,0.5), add=T)
+
+
+
+
+
+
+coord <- c(long, lat)
+
+
+
+
+
+#project the meters coordinates to lat lon
+wrenRaster <- projectRaster(wrenUSA.sw, crs = crs("+init=epsg:4326"))
+plot(wrenRaster)
+
+
+
+points(-80,30)
+
+
+
+
+plot(onlyRen, pch=21, bg="blue", cex=1, add=T)
