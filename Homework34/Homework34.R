@@ -69,7 +69,15 @@ plot(cropUSA.sw)
 wrenArea <- raster(paste0(getwd(), "/Homework34/carolinaWren.tif"))
 wrenArea
 
-# now crop the raster stack using the new outline
+
+
+
+#To avoid sampling outside of the primary range of the Carolina wren (i.e.,
+#outside of where abundance is relatively high), limit the extent of your sampling to the region where
+#abundance is greater than zero. See Figure 1. The drawExtent function might be useful to help you
+#define the sampling extent.
+
+# now crop the raster using the new outline
 wrenOutline <- spTransform(cropUSA.sw, projection(wrenArea))
 polyExt <- extent(wrenOutline)
 wrenUSA.sw <- crop(wrenArea, polyExt)
@@ -82,131 +90,52 @@ class(wrenUSA.sw)
 
 #Use the sampleRegular function in the raster package to generate a sample of
 #Carolina wren abundance at about 300-500 locations.
-wrenSample <- sampleRegular(wrenUSA.sw, size=2000, ext=wrenArea, sp=TRUE)
+wrenSample <- sampleRegular(wrenUSA.sw, size=500, ext=wrenArea, asRaster=TRUE)
 class(wrenSample)
 
 #show approximately where the data are
 spplot(wrenSample)
+plot(wrenSample)
 
+# Crop outline of wrenSample manually by drawing region of interest
+plot(wrenSample)
+# click twice on the map to select the region of interest
+drawExt <- drawExtent()    
+drawExt
+#crop the outline
+wrenSample.sw <- crop(wrenSample, drawExt)
+#plot the new outline
+plot(wrenSample.sw)
 
-onlyWren <- clamp(wrenUSA.sw, lower=1, useValues=FALSE)
-values(onlyWren)
-plot(onlyWren)
+#fix the small extra areas
+plot(wrenSample.sw)
+# click twice on the map to select the region of interest
+drawExt <- drawExtent()    
+drawExt
+#crop the outline
+wrenSample.sw2 <- crop(wrenSample.sw, drawExt)
+#plot the new outline
+plot(wrenSample.sw2)
 
-# now crop the usa using the new wren outline
-eastCoast <- spTransform(eastCoast.sw, projection(wrenArea))
-polyExt <- extent(eastCoast.sw)
-eastCoast <- crop(eastCoast.sw, polyExt)
-#plot the new region of interest and accompanying data
-plot(eastCoast)
+wrenSample.sw3 <- na.omit(wrenSample.sw2)
+plot(wrenSample.sw3)
+#delete any cell that is less than 1 (ie. those that round to 0 or less)
+wrenSample.sw3[wrenSample.sw3<1] <- NA
+plot(wrenSample.sw3)
 
+#convert the raster to spatial points
+wrenPoints <- rasterToPoints(wrenSample.sw3, spatial=TRUE)
 
-
-# now crop the raster using the new outline
-newSample <- spTransform(wrenSample, projection(wrenArea))
-polyExt <- extent(wrenArea)
-newSample.sw <- crop(wrenSample, polyExt)
-#plot the new region of interest and accompanying data
-plot(newSample.sw)
-
-
-
-#Use the sampleRegular function in the raster package to generate a sample of
-#Carolina wren abundance at about 300-500 locations.
-wrenSample <- sampleRegular(onlyWren, size=500, ext=onlyWren, sp=TRUE)
-class(wrenSample)
-#show approximately where the data are
-spplot(wrenSample)
-
-#now plot on the original map
-wrenFrame <- sampleRegular(onlyWren, size=500, ext=onlyWren, xy=TRUE)
-class(wrenFrame)
-wrenFrame <- as.data.frame(wrenFrame)
-class(wrenFrame)
-#total sampled that are not NA is 398
-sum(!is.na(wrenFrame))
-plot(onlyWren)
-
-#remove the nas
-wrenClean<-na.omit(wrenFrame)
-
-plot(onlyWren)
-#get points from the dataframe and plot
-for(x in wrenClean){
-  for(y in wrenClean){
-    points(x,y, pch=20, col="blue")
-  }
-}
-
-#remove artifact column created by raster imperfection
-wrenClean
-wrenCleaner <- subset(wrenClean, y > 4226683 | y < 4226681)
-
-
-plot(onlyWren)
-#get points from the dataframe and plot
-for(x in wrenCleaner){
-  for(y in wrenCleaner){
-    points(x,y, pch=20, col="blue")
-  }
-}
-
-
-
-#use the 'over' function to select points that fall within the mainland of
-#usa project / transform the data first
-wrenSampleMod <- spTransform(wrenSample, CRSobj=projection(wrenUSA.sw))
-usapoints <- as(wrenUSA.sw, "SpatialPoints")
-newMap <- over(usapoints, wrenSampleMod)
-# records outside of the polygon
-which(is.na(newMap))
-
-
-#create new set with non mainland points removed
-newMap2 <- xaustralis[-which(is.na(newMap)),]
-#plot only the mainland X. australis
+par(mfrow=c(1,1))
 plot(wrenUSA.sw)
-plot(newMap2, pch=21, bg=rgb(0,0,1,0.5), add=T)
+plot(wrenPoints, pch=20, col="blue", add=TRUE)
 
-
-
-  
-
-
-coord <- c(long, lat)
-
-
-
-
-
-#project the meters coordinates to lat lon
-wrenRaster <- projectRaster(wrenUSA.sw, crs = crs("+init=epsg:4326"))
-plot(wrenRaster)
-
-
-
-points(-80,30)
-
-
-
-
-plot(onlyRen, pch=21, bg="blue", cex=1, add=T)
-
-
-
-
-#To avoid sampling outside of the primary range of the Carolina wren (i.e.,
-#outside of where abundance is relatively high), limit the extent of your sampling to the region where
-#abundance is greater than zero. See Figure 1. The drawExtent function might be useful to help you
-#define the sampling extent.
 
 
 
 #Once you have generated the regular grid of samples, make a map that shows Carolina wren abundance
 #and your sampling locations, but plot only those sampling locations that overlap the land surface, as
 #shown below.
-
-
 
 
 #Next, we will produce and plot a correlogram using the regular grid of abundance samples. I have found
