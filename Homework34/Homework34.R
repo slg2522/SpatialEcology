@@ -22,6 +22,8 @@ library(gtools) # various functions
 library(rasterVis) # raster visualization methods
 library(fields) # Curve / function fitting for spatial analyses
 library(tcltk) #build GUIs for R interface
+library(ncf)
+library(gstat)
 
 #1. Use the sampleRegular function in the raster package to generate a sample of Carolina wren abundance
 #at about 300-500 locations. To avoid sampling outside of the primary range of the Carolina wren (i.e.,
@@ -136,7 +138,7 @@ wrenPoints <- rasterToPoints(wrenSample.sw3, spatial=TRUE)
 par(mfrow=c(1,1))
 plot(wrenUSA.sw)
 plot(wrenPoints, pch=20, col="blue", add=TRUE)
-
+wrenSample.sw3
 
 
 
@@ -151,6 +153,14 @@ plot(wrenPoints, pch=20, col="blue", add=TRUE)
 #resamp = 1000)
 #plot(cor)
 
+#using the provided example from above and the spatial points object
+cor <- correlog(x=wrenPoints@coords[,1],
+y=wrenPoints@coords[,2],
+z=wrenPoints@data$carolinaWren,
+increment = 75000,
+resamp = 1000)
+plot(cor)
+
 
 
 
@@ -161,9 +171,41 @@ plot(wrenPoints, pch=20, col="blue", add=TRUE)
 #becoming more common!) - so when answering these questions, try to think about what you could learn from
 #just the correlogram if you had abundance data at a few dozen locations instead of these detailed data. This
 #paper might be helpful to guide your interpretation:
-
 #Brown, James H., David W. Mehlman, and George C. Stevens. “Spatial variation in abundance.” Ecology
 #76.7 (1995): 2028-2043.
+
+#Similar to Brown et al. 1995, this correlogram shows peaks at short distances
+# and long distances. High spatial autocorrelation at short distances indicates
+#that sites near one another in space, regardless of numeric distance, support
+#more similar numbers of wrens than comparisons to wider spread out sites.
+#Nearby areas with lots of individuals tend to sit ajacent to other sites with 
+#high densities, and vice versa (low density sites near low density sites).
+#High spatial autocorrelation at large lag distances suggests that sites at the
+#furthest-most edges of the sample range showed similar densities. This may be 
+#because sites along the peripheral of the wrens' geographic range are expected
+#to support fewer wrens whereas those in the middle of the range tend to allow
+#for higher carrying capacities (ie. the hotspots mentioned prior). From this 
+#type of pattern, Brown et al. 1995 concludes that environmental variables that
+# limit abundance are slow-changing and predictable over a given geographic and
+# temporal range.
+
+#Given that the spatial autocorrelation is an aspect of nearest neighbors,
+#rather than a metric governed strictly by numerical proximity, I would guess 
+#that the correlogram would look similar even if we sampled random locations
+#instead of using a regularly spaced grid. At the edges of the wrens' range, we
+#would still expect the environment to support lower densities than in the most
+#ideal conditions likely in the central-most sites. A correlogram with less
+#sites that still includes sampling at the center and edge-most areas should
+#still capture the autocorrelation, albeit, in a less pronounced pattern. If you
+#had abundance data at a few dozen locations, instead of these detailed data,
+#you would likely still see high spatial autocorrelation at short distances in
+#the center of the wrens' range, but the survey may miss the pronounced
+#edge-of-range similarity if the scope of the study only examined sites well
+#within the wrens' range (ie. not the extremes). If the small sample included
+#the extremes, then both autocorrelation in short distance to centrally located
+#neighbors and autocorrelation in widely spaced edge sites would be visible. If
+#the study included only several sites that were widely spaced and lacked edges,
+#the spatial autocorrelation may appear negligible.
 
 
 
@@ -174,6 +216,47 @@ plot(wrenPoints, pch=20, col="blue", add=TRUE)
 #you were to design a study to sample abundance of the Carolina wren, is there a distances at which
 #you could space the sample sites to eliminate spatial structure in the observations (again, refer to your
 #variogram(s) to support your answer)?
+
+# create variogram with the assumption of stationarity (~1 = constant trend)
+v1 <- variogram(object=carolinaWren~1, data=wrenPoints)
+#view the variogram: np is the number of points, dist is distance, gamma is the autocorrelation
+v1
+# plot the observations
+plot(v1, pch=20, col="blue", cex=2)
+
+#show all of the types of variograms
+show.vgms()
+
+#list all of the possible models
+vmod.best <- vgm(c("Nug", "Exp", "Sph", "Gau", "Exc", "Mat", "Ste", "Cir", "Lin", "Bes", "Pen", "Per", "Wav", "Hol", "Log", "Pow", "Spl"))
+# use fit.variogram function to select the best fitting
+model.best <- fit.variogram(v1, vmod.best)
+model.best #"Nug" and "Gau" are the best fits
+#plot with the model
+plot(v1, model=model.best)
+
+#Is the abundance pattern isotropic (use variograms to support your answer)?
+
+# Lets check if the pattern is the same in all directions
+v2 <- variogram(carolinaWren~1, data=wrenPoints, alpha=c(0,45,90,135))
+#we can see there is anisotropy
+plot(v2)
+#the model does not evenly fit each direction, suggesting we should analyse each
+#direction differently
+plot(v2, model=model.best)
+#for the Carolina Wrens, the data are not stationary in each direction
+#other directions should be tested likely with lower tolerance angles
+
+#If you were to design a study to sample abundance of the Carolina wren, is
+#there a distances at which you could space the sample sites to eliminate
+#spatial structure in the observations?
+
+#The sill of the best fit Nug model occurs at 1339.546 and for Gau at 6662.450.
+#Unfortunately, anisotropy suggests that these sills would not be effective for
+#the 135 and 0 degree angles. To determine direction-specific sills, the data
+#should be examined with lower tolerance angles and variograms fit to each. The
+#sill can then be used as a proxy for the minimum distance at which spatial
+#structure between observations can be eliminated.
 
 
 
