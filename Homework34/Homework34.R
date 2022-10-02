@@ -107,6 +107,13 @@ wrenSample.sw <- crop(wrenSample, drawExt)
 #plot the new outline
 plot(wrenSample.sw)
 
+
+
+
+#Once you have generated the regular grid of samples, make a map that shows Carolina wren abundance
+#and your sampling locations, but plot only those sampling locations that overlap the land surface, as
+#shown below.
+
 #fix the small extra areas
 plot(wrenSample.sw)
 # click twice on the map to select the region of interest
@@ -131,11 +138,6 @@ plot(wrenUSA.sw)
 plot(wrenPoints, pch=20, col="blue", add=TRUE)
 
 
-
-
-#Once you have generated the regular grid of samples, make a map that shows Carolina wren abundance
-#and your sampling locations, but plot only those sampling locations that overlap the land surface, as
-#shown below.
 
 
 #Next, we will produce and plot a correlogram using the regular grid of abundance samples. I have found
