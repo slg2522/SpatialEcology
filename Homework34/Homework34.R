@@ -312,14 +312,46 @@ plot(thom, pch=20,  main="Clustered") #fairly clustered dataset with only second
 
 #Segregated:
 
-set.seed(1)
-#uniform distribution
-unif <- runif(50, min =0, max = 0.5)
-par(pty="s")
-#plot the uniform distribution as a square like above plots
-plot(unif, pch=20,  main="Segregated", axes=FALSE,  ylab="", xlab="", asp=100)
-#place box around it
-box(col = "black", lty="solid", lwd=3) 
+#create empty matrices for the x and y coordinates
+points.x=matrix(data=NA, nrow=1, ncol=1)
+points.y=matrix(data=NA, nrow=1, ncol=1)
+
+#fill in the x coordinates with numbers 1-7 repeating
+for (x in 0:7){
+  points.x[x]=1
+  points.x[x+7]=2
+  points.x[x+14]=3
+  points.x[x+21]=4
+  points.x[x+28]=5
+  points.x[x+35]=6
+  points.x[x+42]=7
+}
+
+#fill in the y coordinates with numbers 1-7 serially
+for (y in 0:7){
+  points.y[y]=y
+}
+
+#make the y coordinates repeat serially
+points.y <- c(points.y, points.y, points.y, points.y, points.y, points.y, points.y)
+
+#combine the coordinates
+points <- data.frame(x=points.x, y=points.y)
+
+#jitter the coordinates
+jittered.x <- jitter(points.x)
+jittered.y <- jitter(points.y)
+
+#make the coordinates a dataframe
+points <- data.frame(x=jittered.x, y=jittered.y)
+
+#plot to make sure they look jittered
+plot(points, pch=20)
+
+#convert the dataframe to a spatial object with window 0:8 both
+segregated.sp <- as.ppp(points, c(0,8,0,8))
+#plot the new distribution
+plot(segregated.sp, pch=20, main="Segregated")
 
 
 
@@ -409,29 +441,34 @@ plot(Kest(thom, correction = "none"), main="K-test, Clustered")
 #Segregated
 #the points plot
 par(mfrow=c(2,2))
-plot(unif, pch=20, main="Segregated")
-
-seg <- as.ppp(unif)
+plot(segregated.sp, pch=20, main="Segregated")
 
 # F = Empty space function = point-to-nearest-event distribution
-Fest(unif, # point pattern
+Fest(segregated.sp, # point pattern
      correction = "none")
 
 # F-test on pattern with Segregated
-plot(Fest(unif, correction = "none"), main="F-test, Segregated")
+plot(Fest(segregated.sp, correction = "none"), main="F-test, Segregated")
 
 # G = Nearest Neighbour Distance function = event-to-event distribution
-Gest(unif, # point pattern
+Gest(segregated.sp, # point pattern
      correction = "none")
-plot(Gest(unif, correction = "none"), main="G-test, Segregated")
+plot(Gest(segregated.sp, correction = "none"), main="G-test, Segregated")
 
 # Ripley's K
-Kest(csr, # point pattern
+Kest(segregated.sp, # point pattern
      correction = "none")
-plot(Kest(unif, correction = "none"), main="K-test, Segregated")
+plot(Kest(segregated.sp, correction = "none"), main="K-test, Segregated")
 
 #Interpretation:
-
+#Upon visual inspection, the points appear relatively evenly spaced with some 
+#noise added from the jitter. According to the ftest, the simulated distribution
+#is the same as the poisson at small spatial scales but much more dispersed at 
+#middle and larger distances. The Gtest suggests some dispersion at small to 
+#medium large distances, but poisson-following at the largest distances. The 
+#ktest suggests dispersion at small distances, consistency with poisson at medium
+#and dispersion at large distances. These tests appear to disagree with one
+#another.
 
 
 
