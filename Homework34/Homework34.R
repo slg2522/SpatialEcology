@@ -24,6 +24,7 @@ library(fields) # Curve / function fitting for spatial analyses
 library(tcltk) #build GUIs for R interface
 library(ncf)
 library(gstat)
+library(spatstat)
 
 #1. Use the sampleRegular function in the raster package to generate a sample of Carolina wren abundance
 #at about 300-500 locations. To avoid sampling outside of the primary range of the Carolina wren (i.e.,
@@ -265,20 +266,171 @@ plot(v2, model=model.best)
 #For this assignment, write R scripts to complete the following tasks and answer each question.
 
 #1. Simulate three types of point-patterns: (1) Complete Spatial Randomness, (2) clustered, and (3)
-#segregated. For the point-pattern with CSR: what is lambda?
+#segregated. For the point-pattern with Complete Spatial Randomness (CSR): What is lambda?
 
+#Complete Spatial Randomness (homogeneous Poisson process):
+#if you want to replicate
+set.seed(1) 
+dims <- 100 # window size
+pts <- 500 # number of points
+#CSR represents lambda*area as the mean intensity of a poisson-distributed
+#number of points over an area in two-dimensional space
+lambda <- pts/dims/dims
+lambda
+#lambda represents the intensity of the process and for CSR is thus a constant
+#of 0.5. 
+
+# generate a point pattern with csr using the rpoispp function
+#I use one simulation, note, nsim can be changed to your liking
+csr <- rpoispp(lambda, 
+               win=owin(xrange=c(0,dims), yrange=c(0,dims)),
+               nsim=1)
+
+# Let's look at the details of the csr object
+summary(csr)
+#for lambda
+summary(csr)$intensity
+
+#example: 100 simulations:
+csrMoreSims <- rpoispp(lambda, 
+                       win=owin(xrange=c(0,dims), yrange=c(0,dims)),
+                       nsim=100)
+summary(csrMoreSims)
+
+# plot the csr point-pattern
+plot(csr, pch=20, main="CSR")
+
+
+#Clustered:
+
+#Second-order structure, but not first order
+set.seed(1)
+# Thomas process with constant intensity
+thom <- rThomas(kappa=30, scale=0.02, mu=10, win=c(0,1,0,1))
+plot(thom, pch=20,  main="Clustered") #fairly clustered dataset with only second order structure
+
+
+#Segregated:
+
+set.seed(1)
+#uniform distribution
+unif <- runif(50, min =0, max = 0.5)
+par(pty="s")
+#plot the uniform distribution as a square like above plots
+plot(unif, pch=20,  main="Segregated", axes=FALSE,  ylab="", xlab="", asp=100)
+#place box around it
+box(col = "black", lty="solid", lwd=3) 
 
 
 
 
 #2. Examine and interpret each of your simulated patterns using the G-, K- and F-tests.
 
+#combined response for questions 2-3 because the interpretation requires the
+#plots and results of the G-, K-, and F-tests called for by #3.
 
 
 
-#3. Plot: (i) your simulated point-patterns (be sure to add an appropriate title so I know whcih is which)
+
+#3. Plot: (i) your simulated point-patterns (be sure to add an appropriate title so I know which is which)
 #and (ii) the results of the G-, K- and F-tests for each pattern. Provide a brief interpretation of the G-,
 #K- and F-test results.
+
+#CSR
+#the points plot
+par(mfrow=c(2,2))
+plot(csr, pch=20, main="CSR")
+
+# F = Empty space function = point-to-nearest-event distribution
+Fest(csr, # point pattern
+     correction = "none")
+
+# F-test on pattern with csr (no distance-dependent interactions or spatial structure)
+plot(Fest(csr, correction = "none"), main="F-test, csr")
+
+# G = Nearest Neighbour Distance function = event-to-event distribution
+Gest(csr, # point pattern
+     correction = "none")
+plot(Gest(csr, correction = "none"), main="G-test, csr")
+
+# Ripley's K
+Kest(csr, # point pattern
+     correction = "none")
+plot(Kest(csr, correction = "none"), main="K-test, csr")
+
+#Interpretation:
+#The complete spatial randomness (CSR) plots closely follow the Fpoison and
+#Gpoisson lines, indicating that the simulated CSR graph displays F-values
+#statistically similar to those we'd obtain if the null hypothesis of randomness
+#were true. This similarity suggests that the distribution of distances r from
+# the arbitrary test locations to the earest event patterns are the same for the
+#simulation and for the poisson. The gtest plot shows that the nearest neighbors in the simulated set
+#are not clustered or dispersed by comparison to a traditional poisson
+#distribution. In the K-test, the simulated data was notably lower than the
+#poisson at further distances, indicating the possibility for some dispersion at
+#large distances. However, this is likely due to the low number of simulations 
+#and we would expect the csr to better match the theoretical with more data.
+
+
+#Clustered
+#the points plot
+par(mfrow=c(2,2))
+plot(thom, pch=20, main="Clustered")
+
+# F = Empty space function = point-to-nearest-event distribution
+Fest(thom, # point pattern
+     correction = "none")
+
+# F-test on pattern with Clustered
+plot(Fest(thom, correction = "none"), main="F-test, Clustered")
+
+# G = Nearest Neighbour Distance function = event-to-event distribution
+Gest(thom, # point pattern
+     correction = "none")
+plot(Gest(thom, correction = "none"), main="G-test, Clustered")
+
+# Ripley's K
+Kest(thom, # point pattern
+     correction = "none")
+plot(Kest(thom, correction = "none"), main="K-test, Clustered")
+
+#Interpretation:
+#The simulated data is much lower than the poisson distribution on the ftest
+#plot, indicating that regardless of distance, there is clustering. The Gtest
+# shows the simulation much higher than the poisson throughout the short and
+#middle distances, indicating significant clustering at small and medium
+# distances but not very large. The simulation above the poisson line for the 
+#Ktest plot suggests that there is significant clustering at almost all
+#distances except those very large (where the two lines intersect.) At the
+#greatest of distances, the simulation below the poisson indicates minor
+#dispersion (likely negligible).
+
+
+#Segregated
+#the points plot
+par(mfrow=c(2,2))
+plot(unif, pch=20, main="Segregated")
+
+seg <- as.ppp(unif)
+
+# F = Empty space function = point-to-nearest-event distribution
+Fest(unif, # point pattern
+     correction = "none")
+
+# F-test on pattern with Segregated
+plot(Fest(unif, correction = "none"), main="F-test, Segregated")
+
+# G = Nearest Neighbour Distance function = event-to-event distribution
+Gest(unif, # point pattern
+     correction = "none")
+plot(Gest(unif, correction = "none"), main="G-test, Segregated")
+
+# Ripley's K
+Kest(csr, # point pattern
+     correction = "none")
+plot(Kest(unif, correction = "none"), main="K-test, Segregated")
+
+#Interpretation:
 
 
 
