@@ -34,7 +34,6 @@ library(spatstat)
 
 # Download world shapefile and store in HW34 folder
 download.file("http://thematicmapping.org/downloads/TM_WORLD_BORDERS_SIMPL-0.3.zip" , destfile="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Homework34/world_shape_file.zip")
-# You now have it in your current working directory, have a look!
 
 # Unzip this file
 system("unzip C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Homework34/world_shape_file.zip")
