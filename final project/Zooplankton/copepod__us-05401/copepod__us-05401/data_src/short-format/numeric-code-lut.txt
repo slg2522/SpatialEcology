@@ -1,0 +1,39 @@
+ GEAR -------------------------------------
+ GEAR  118 = Bongo Net
+ INST -------------------------------------
+ INST 1185 = NOAA - NMFS -  National Marine Fisheries Service
+ INST 1313 = NMFS Alaska Fisheries Science Center (AFSC)
+ PROJ -------------------------------------
+ PROJ  174 = Eco-FOCI - Ecosystems and Fisheries-Oceanography Coordinated Investigations
+ SHIP -------------------------------------
+ SHIP 1477 = Discoverer [31ds]
+ SHIP 1544 = Miller Freeman [31fn]
+ SHIP 1626 = Alpha Helix [31hx]
+ SHIP 1812 = McArthur [31m4]
+ SHIP 2018 = Surveyor [31su]
+ SHIP 2053 = Thomas G. Thompson [31tt]
+ SHIP 2557 = Fairweather [317w]
+ SHIP 2923 = Healy - USCG Icebreaker Healy [32h1]
+ SHIP 3428 = Wecoma [32wc]
+ SHIP 3508 = Chapman [32yn]
+ SHIP 4913 = Oshoro Maru [49os]
+ SHIP 6352 = Professor Khromov [90ci]
+ SHIP 6450 = MYS Babushkina [90mb]
+ SHIP 6506 = Poseydon [90pn]
+ SHIP 6524 = Babayevsk [90rc]
+ SHIP 6567 = Tikhookeanskiy [90tk]
+ SHIP 6649 = Shantar [9092]
+ SHIP 7603 = Ron Brown [33ro]
+ SHIP 7679 = Gissar [90kg]
+ SHIP 8571 = Kilo Moana [33kb]
+ SHIP 9023 = Equator [t023]
+ SHIP 9024 = Great Pacific [t024]
+ SHIP 9025 = Mlechney Put [t025]
+ SHIP 9030 = FRV Oscar Dyson [t030]
+ SHIP 9032 = Arcturus [to32]
+ SHIP 9033 = Sea Storm [to33]
+ SHIP 9034 = Northwest Explorer [to34]
+ SHIP 9061 = Tiglax [3100]
+ SHIP 9062 = Bristol Explorer [3100]
+ SHIP 9064 = Alaska Knight F/V [3100]
+ SHIP 9065 = Epic Explorer F/V [3100]

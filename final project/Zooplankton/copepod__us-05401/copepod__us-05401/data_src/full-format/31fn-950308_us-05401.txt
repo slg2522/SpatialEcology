@@ -1,0 +1,96 @@
+#-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*
+# 
+#  "EcoFOCI:  Zooplankton biomass data sampled during ichthyoplankton surveys as part of the ECOsystems and Fisheries-Oceanography Cooperative Investigation (Eco-FOCI) program"
+# 
+#-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*
+# 
+#                COPEPOD:  15-Feb-2018  (Web v10.2 x)
+#
+#              Live-link:  https://www.st.nmfs.noaa.gov/copepod/data/us-05401/index.html 
+#
+#                          A comprehensive content summary and alternate data formats
+#                                 are available online at the web link above.
+#
+#-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*
+#
+#              Contact Email:  Janet.Duffy-Anderson@noaa.gov
+#     Associated Website (orig-data):  http://www.afsc.noaa.gov
+#     Associated Website (orig-data):  http://www.ecofoci.noaa.gov
+# 
+# 
+#-----------------------------------------------------------------------------------------
+COPEPOD internal STATION ID  ,31FN-950308__0001,
+#-----------------------------------------------------------------------------------------
+,
+,COPEPOD run date            ,15-Feb-2018    ,Web v10.2,
+,
+,Data TITLE                  ,EcoFOCI,
+,Data Description            ,Zooplankton biomass data sampled during ichthyoplankton surveys as part of the ECOsystems and Fisheries-Oceanography Cooperative Investigation (Eco-FOCI) program.,
+,
+,Originators_Cruise_ID       ,2MF95          ,
+,Originators_Station_ID      ,(not provided) ,,
+,
+,Latitude                    ,       53.57333, (north) ,       DDD_MM_SS.S --> ,   53,   34, 23.9,
+,Longitude                   ,        -168.37, (west)  ,       DDD_MM_SS.S --> , -168,   22, 11.9,
+,Year                        ,           1995,,,
+,Month                       ,              3,,,
+,Day                         ,              8,,,
+,
+,Station Time (UTC/GMT)      ,          1.967,   UTC,           HH_MM_SS.S --> ,    1,   58,  0.0,
+,
+METADATA,
+#----------------------------
+,Country                     ,,
+,Project/Program             ,Eco-FOCI - Ecosystems and Fisheries-Oceanography Coordinated Investigations,
+,Platform/Ship               ,Miller Freeman,
+,Institution                 ,NMFS Alaska Fisheries Science Center (AFSC),
+,Institution                 ,NOAA - NMFS -  National Marine Fisheries Service,
+,Bottom Depth                ,           932.,meters,,
+,
+,Investigator -              ,Janet Duffy-Anderson,
+,
+PLANKTON METADATA,,
+,Sampling Time (UTC/GMT)     ,          1.967,decimal hours (UTC/GMT),,
+,Local/Ship Time             ,         14.967,decimal hours (Local Time),,
+,Original Time Type          ,provided as GMT time,
+,Day/Night Sampling Code     ,               ,,,
+,
+#,SAMPLING GEAR INFORMATION,
+,Type of Gear                ,Bongo Net,
+,Net Mesh Size               ,           333.,um (micrometers),,
+,Net Mouth Area              ,          0.283,m2 (square meters),,
+,Net Mouth Diameter          ,               ,m (meters),,
+,Flowmeter Type              ,,
+,
+#,TOWING INFORMATION,
+,Type of Tow                 ,oblique,
+,Volume of Water Filtered    ,         679.66,m3 (cubic meters),,
+,Average Towing Speed        ,               ,knots,,
+,Towing Duration             ,               ,minutes,,
+,Towing Distance             ,               ,meters,,
+,Wire Angle (start)          ,               ,degrees,,
+,Wire Angle (end)            ,               ,degrees,,
+,Wire Out (start)            ,               ,meters,,
+,Wire Out (end)              ,               ,meters,,
+,Net Depth Determination Meth,,
+,Flowmeter Calibration       ,,
+,
+#,SAMPLE PROCESSING INFORMATION,
+,Preservation Medium/Method  ,,
+,Method:  Counting           ,,
+,Method:  Weight             ,,
+,Method:  Volume             ,,
+,Were Large Plankton Removed?,,
+,Removal Criteria (volume)   ,               ,ml (milliliters),,
+,Removal Criteria (length)   ,               ,cm (centimeters),,
+,Counting/Processing Center  ,               ,,,
+,Voucher Sample Location     ,               ,,,
+,
+PLANKTON DATA,
+#Tset,T,Upper_Z,Lower_Z,     PGC,PSC,ITIS-TSN, Meth, Water Strained,FVT,OVT, ORIGINAL-value, Large-removed?, Original Units,         CBV-m3,unit3,F1,F2,F3,F4,meth3,         CBV-m2,unit2,F1,F2,F3,F4,meth2,Taxonomic Description -[modifiers]- ,
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    1,b,    0.0,  300.0,    -401,  0,    -401,     ,      679.66 m3,  0,  S,            72.,           null,        ml/haul,         0.1059,ml/m3, 0, 0, 0,-1, 70.0,          254.8,ml/m2,-1,-1,-1,-1, 68.1,Zooplankton displacement volume -[ ]-,
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+END OF PLANKTON DATA,
+END OF STATION,
+,

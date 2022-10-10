@@ -1,0 +1,29 @@
+#-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*
+# 
+#  "EcoFOCI:  Zooplankton biomass data sampled during ichthyoplankton surveys as part of the ECOsystems and Fisheries-Oceanography Cooperative Investigation (Eco-FOCI) program"
+# 
+#-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*
+#
+#                COPEPOD:  15-Feb-2018  (Web v10.2 x)
+#
+#              Live-link:  https://www.st.nmfs.noaa.gov/copepod/data/us-05401/index.html 
+#
+#                          A comprehensive content summary and alternate data formats
+#                                 are available online at the web link above.
+#
+#
+#
+#SHP-CRUISE,YEAR,MON,DAY,TIMEgmt,TIMEloc,LATITUDE,LONGITDE,UPPER_Z,LOWER_Z,T,GEAR,MESH,NMFS_PGC,ITIS_TSN,MOD,LIF,PSC,SEX,V, Water Strained, Original-VALUE,Orig-UNITS, VALUE-per-volu,UNITS,F1,F2,F3,F4, VALUE-per-area,UNITS,F1,F2,F3,F4,SCIENTIFIC NAME -[ modifiers ]-, RECORD-ID,DATASET-ID, SHIP, PROJ, INST,Orig-CRUISE-ID,Orig-STATION-ID,Taxa-Name,Taxa-Modifiers,
+#----------,----,---,---,-------,-------,--------,--------,-------,-------,-,----,----,--------,--------,---,---,---,---,-,---------------,---------------,----------,---------------,-----,--,--,--,--,---------------,-----,--,--,--,--,-------------------------------,----------,----------,-----,-----,-----,
+T030-100427,2010,  4, 27, 13.233,  2.233,  56.873,-164.055,    0.0,   73.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   135.48428 m3,            20.,   ml/haul,         0.1476,ml/m3, 0, 0, 0,-1,           70.8,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0001_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  4, 28,  0.917, 13.920,  56.939,-163.835,    0.0,   72.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   122.00212 m3,            38.,   ml/haul,         0.3115,ml/m3, 0, 0, 0,-1,          134.5,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0002_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  4, 28,  5.917, 18.917,  56.771,-164.356,    0.0,   75.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   155.61004 m3,            35.,   ml/haul,         0.2249,ml/m3, 0, 0, 0,-1,          123.8,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0003_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  4, 28,  8.750, 21.750,  56.668,-163.864,    0.0,   77.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    203.9063 m3,            58.,   ml/haul,         0.2844,ml/m3, 0, 0, 0,-1,          205.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0004_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  4, 28,  8.750, 21.750,  56.668,-163.864,    0.0,   77.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    203.9063 m3,            58.,   ml/haul,         0.2844,ml/m3, 0, 0, 0,-1,          205.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0005_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  5,  1,  1.350, 14.350,  56.898,-164.039,    0.0,   72.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   115.23092 m3,            54.,   ml/haul,         0.4686,ml/m3, 0, 0, 0,-1,          191.1,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0006_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  5,  1, 12.750,  1.750,  55.435,-168.081,    0.0,  208.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   313.31930 m3,            43.,   ml/haul,         0.1372,ml/m3, 0, 0, 0,-1,          152.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0007_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  5,  1, 12.750,  1.750,  55.435,-168.081,    0.0,  208.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   313.31930 m3,            43.,   ml/haul,         0.1372,ml/m3, 0, 0, 0,-1,          152.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0008_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  5,  1, 12.750,  1.750,  55.435,-168.081,    0.0,  208.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   313.31930 m3,            43.,   ml/haul,         0.1372,ml/m3, 0, 0, 0,-1,          152.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0009_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  5,  1, 13.167,  2.167,  56.143,-166.119,    0.0,  110.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   239.33152 m3,            36.,   ml/haul,         0.1504,ml/m3, 0, 0, 0,-1,          127.4,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0010_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  5,  1, 13.167,  2.167,  56.143,-166.119,    0.0,  110.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   239.33152 m3,            36.,   ml/haul,         0.1504,ml/m3, 0, 0, 0,-1,          127.4,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0011_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,
+T030-100427,2010,  5,  1, 13.167,  2.167,  56.143,-166.119,    0.0,  110.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,   239.33152 m3,            36.,   ml/haul,         0.1504,ml/m3, 0, 0, 0,-1,          127.4,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0012_0001,EcoFOCI, 9030,  174, 1185,1DY10,,Zooplankton displacement volume,-[ ]-,

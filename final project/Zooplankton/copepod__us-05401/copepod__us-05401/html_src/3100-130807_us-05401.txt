@@ -1,0 +1,30 @@
+#-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*
+# 
+#  "EcoFOCI:  Zooplankton biomass data sampled during ichthyoplankton surveys as part of the ECOsystems and Fisheries-Oceanography Cooperative Investigation (Eco-FOCI) program"
+# 
+#-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*
+#
+#                COPEPOD:  15-Feb-2018  (Web v10.2)
+#
+#              Live-link:  https://www.st.nmfs.noaa.gov/copepod/data/us-05401/index.html 
+#
+#                          A comprehensive content summary and alternate data formats
+#                                 are available online at the web link above.
+#
+#
+#
+#SHP-CRUISE,YEAR,MON,DAY,TIMEgmt,TIMEloc,LATITUDE,LONGITDE,UPPER_Z,LOWER_Z,T,GEAR,MESH,NMFS_PGC,ITIS_TSN,MOD,LIF,PSC,SEX,V, Water Strained, Original-VALUE,Orig-UNITS, VALUE-per-volu,UNITS,F1,F2,F3,F4, VALUE-per-area,UNITS,F1,F2,F3,F4,SCIENTIFIC NAME -[ modifiers ]-, RECORD-ID,DATASET-ID, SHIP, PROJ, INST,Orig-CRUISE-ID,Orig-STATION-ID,Taxa-Name,Taxa-Modifiers,
+#----------,----,---,---,-------,-------,--------,--------,-------,-------,-,----,----,--------,--------,---,---,---,---,-,---------------,---------------,----------,---------------,-----,--,--,--,--,---------------,-----,--,--,--,--,-------------------------------,----------,----------,-----,-----,-----,
+3100-130807,2013,  8,  7, 21.050, 10.050,  66.000,-167.894,    0.0,   17.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    106.5339 m3,             6.,   ml/haul,         0.0563,ml/m3, 0, 1, 1,-1,           21.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0001_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8,  8,  7.933, 20.933,  65.989,-167.267,    0.0,   15.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    54.82095 m3,             4.,   ml/haul,          0.073,ml/m3, 0, 0, 0,-1,           14.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0002_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8,  8, 14.317,  3.317,  66.500,-165.998,    0.0,   17.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    68.69482 m3,             4.,   ml/haul,          0.058,ml/m3, 0, 1, 1,-1,           14.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0003_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8,  8, 14.317,  3.317,  66.500,-165.998,    0.0,   17.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    68.69482 m3,             4.,   ml/haul,          0.058,ml/m3, 0, 1, 1,-1,           14.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0004_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8,  8, 18.667,  7.667,  66.500,-166.629,    0.0,   22.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    112.6248 m3,            51.,   ml/haul,         0.4528,ml/m3, 0, 1, 1,-1,          180.5,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0005_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8,  9,  7.550, 20.550,  66.493,-168.502,    0.0,   52.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    245.5086 m3,           120.,   ml/haul,         0.4888,ml/m3, 0, 1, 1,-1,          424.6,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0006_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8, 10, 14.317,  3.317,  67.002,-165.944,    0.0,   24.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,     80.3274 m3,            88.,   ml/haul,          1.096,ml/m3, 0, 1, 1,-1,          311.4,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0007_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8, 10, 19.667,  8.667,  67.002,-164.661,    0.0,   27.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    108.3186 m3,             6.,   ml/haul,         0.0554,ml/m3, 0, 1, 1,-1,           21.2,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0008_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8, 12,  9.717, 22.717,  67.499,-168.496,    0.0,   48.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    200.4194 m3,           190.,   ml/haul,         0.9480,ml/m3, 0, 1, 1,-1,          672.3,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0009_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8, 13, 20.383,  9.383,  67.997,-165.825,    0.0,   28.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    62.47369 m3,            10.,   ml/haul,          0.160,ml/m3, 0, 1, 1,-1,           35.4,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0010_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8, 14,  8.517, 21.517,  68.501,-167.148,    0.0,   35.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    111.4299 m3,            60.,   ml/haul,         0.5385,ml/m3, 0, 1, 1,-1,          212.3,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0011_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8, 15, 14.250,  3.250,  69.001,-166.415,    0.0,   32.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    84.20810 m3,            23.,   ml/haul,          0.273,ml/m3, 0, 1, 1,-1,           81.4,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0012_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,
+3100-130807,2013,  8, 16,  9.000, 22.000,  69.499,-164.216,    0.0,   23.0,O, 118, 505,    -401,    -401,  0,  0,  0,  0,b,    34.59472 m3,            10.,   ml/haul,          0.289,ml/m3, 0, 1, 1,-1,           35.4,ml/m2,-1,-1,-1,-1,Zooplankton displacement volume -[ ]-,0013_0001,EcoFOCI, 9062,  174, 1185,BE13-01,,Zooplankton displacement volume,-[ ]-,

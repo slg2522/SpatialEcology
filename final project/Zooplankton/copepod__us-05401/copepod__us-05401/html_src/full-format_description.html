@@ -1,0 +1,172 @@
+<html>
+<head>
+    <title>COPEPOD: (full form format)</title>
+ <style type="text/css">
+  a { color: #990000;   text-decoration: none  }
+  a:hover { color: #0000ee;     text-decoration: underline overline; background: #eeeeee}
+ </style>
+</head>
+
+<body text="#000066" vlink="#0000EE" alink="#0000EE" link="#0000EE" background='back2010.jpg'>
+
+<center>
+
+
+
+ <table width=800><tr><td>
+ <table cellpadding=10><tr><td width=100><img src="noaa-copepod_200w.gif" title="COPEPOD Logo" ></td><td valign=middle align=center>
+ <nobr><font style="font-size: 32px">
+ <b>FULL FORM Format</b></br>
+ </font></nobr> 
+ <font style="font-size: 14px">[ <a href="javascript:history.go(-1)"  title="click here to go back to previous window"> back to <b>previous</b> window</a> ] &nbsp; &nbsp;  [ <a href="javascript:window.close()"  title="click here to close this window"> <b>close</b> this window</a> ] <br> </font>
+ </td></tr></table>
+
+
+
+<table BORDER=1 CELLSPACING=0 CELLPADDING=15 WIDTH="800" bgcolor=#ffffff>
+
+<tr>
+<td align=left valign=top>
+
+<font style="font-size: 15px">
+This is the "full-form" comprehensive COPEPOD-2007 data format. &nbsp;
+This format contains all metadata and (plankton) values present in the original data source, and is designed to be both human and computer readable. &nbsp; 
+Human readers should view each data file using a text editor or viewer (not via spreadsheet software). &nbsp;
+For the computer reader, the following rules describe the general format of this data: <br>
+
+<ul>
+    <li>Each individual data file represents an individual cruise (as designated in the original data).</li>
+    <li>The data fields and columns are comma-separated.</li>
+    <li>Any line beginning with "#" is a comment field (for human readers) and can be skipped.</li>
+    <li><i>Column 1</i> is used <u>only</u> for sectional headers and dividers. &nbsp; Sections are divided by:</li>
+</ul>
+<ul>
+    <ul>
+        <li>"<b>COPEPOD internal STATION ID</b>" &nbsp; indicates the start of <u>each</u> station;</li>
+    </ul>
+    <ul>
+        <ul>
+            <i>This section contains station position, date, and time information.</i>
+       </ul>
+    </ul> &nbsp;
+    <ul>
+        <li>"<b>METADATA</b>" &nbsp; section of "on-station" fields;</li>
+        <ul>
+            <i>This section contains ship, country, institution, and project information.</i>
+        </ul>
+    </ul> &nbsp;
+    <ul>
+        <li>"<b>PLANKTON METADATA</b>" &nbsp; section of "plankton sampling" fields;</li>
+        <ul>
+            <i>This section contains sampling gear, towing method, and sample processing information.</i>
+        </ul>
+    </ul> &nbsp;
+    <ul>
+        <li>"<b>PLANKTON DATA</b>" &nbsp; indicates the start of the measured plankton section;</li>
+        <ul>
+            <i>The data section can contain from one to thousands of plankton observation sets.</i>
+        </ul>
+    </ul> &nbsp;
+    <ul>
+        <li>"<b>END OF PLANKTON DATA</b>" &nbsp; indicates the end of the measured plankton section;</li>
+    </ul> &nbsp;
+    <ul>
+        <li>"<b>END OF STATION</b>" &nbsp; indicates the end of each station.</li>
+    </ul>
+</ul>
+<ul>
+    <li>For all sub-sections <u>except</u> PLANKTON DATA:</i>
+</ul>
+<ul>
+    <ul>
+        <li><i>Column 2</i> is used for the data field descriptors (<i>keywords</i>).</li>
+        <li><i>Column 3</i> contains the data values or data text (<i>a blank means no information available</i>).</li>
+        <li><i>Column 4</i> contains any units associated with the data values (<i>when applicable</i>).</li>
+    </ul>
+</ul>
+<ul>
+    <li>For the PLANKTON DATA sub-section, the columns contain:</li>
+</ul>
+<ul>
+    <ul><font style="font-size: 13px">
+        <li><b>Tset</b> - &nbsp; <i>COPEPOD internal "taxa set" counter, used to identify this specific observation;</i></li> 
+        <li><b>T</b> - &nbsp; measurement type ( <b>b</b> = <i>biomass</i>, <b>c</b> = <i>count</i>, <b>r</b> = <i>relative abundance</i> );</li> 
+        <li><b>Upper_Z</b> - &nbsp; upper depth of the tow or bottle sampling;</li>
+        <li><b>Lower_Z</b> - &nbsp; lower depth of the tow or bottle sampling;</li>
+        <li><b>PGC</b> - &nbsp; <i>COPEPOD</i> Plankton Grouping Code (PGC);</li>
+        <li><b>PSC</b> - &nbsp; <i>COPEPOD</i> Plankton Staging Code (PSC);</li>
+        <li><b>ITIS-TSN</b> - &nbsp; ITIS Taxonomic Serial Number (TSN) <u>or</u> <i>COPEPOD</i> identifier (iff < 0);</li>
+        <li><b>Meth</b> - &nbsp; special sub-counting method (<i>e.g.</i>, bacteria staining method in most cases);</li>
+        <li><b>Water Strained</b> - &nbsp; volume of water filtered (strained) during the net or bottle sampling;</li>
+        <li><b>FVT</b> - &nbsp; Filtered Volume Type (<i>2=flow meter, 3=unspecified, 4=PI-calc, 5=COPEPOD-calc</i>);</li>
+    </ul> &nbsp; <ul>
+    </ul> ORIGINAL DATA VALUE: <ul>
+        <li><b>OVT</b> - &nbsp; Original Value Type (<b>v</b> = <i>per volume</i>, <b>a</b> = <i>per area</i>, <b>s</b> = <i>per haul</i>);</li>
+        <li><b>ORIGINAL-value</b> - &nbsp; The original value, with units of type "Original Units";</li>
+        <li><b>Large-removed</b> - &nbsp; biomass (only) of large plankters removed (<i>same units as "ORIGINAL-value"</i>)</li>
+        <li><b>Original Units</b> - &nbsp; Units for the "ORIGINAL-value" field;</li>
+    </ul> &nbsp; <ul>
+    </ul> Calculated COMMON UNIT VALUE (per volume): <ul>
+        <li><b>CBV-m3</b> - &nbsp; Common Base-unit Value (per volume);</li>
+        <li><b>unit3</b> - &nbsp; units for the "CBV-m3" value;</li>
+        <li><b>F1</b> - &nbsp; <i>COPEPOD-2007</i> global-annual range flag for CBV-m3 value;</li>
+        <li><b>F2</b> - &nbsp; <i>COPEPOD-2007</i> basin-annual range flag for CBV-m3 value;</li>
+        <li><b>F3</b> - &nbsp; <i>COPEPOD-2007</i> basin-seasonal range flag for CBV-m3 value;</li>
+        <li><b>F4</b> - &nbsp; <i>COPEPOD-2007</i> basin-monthly range flag for CBV-m3 value;</li>
+        <li><b>meth3</b> - &nbsp; calculation method for the CBV-m3 value (<i>see documentation</i>);</li>
+</ul>
+
+</ul>
+<table width=100% border=0 bgcolor=#eeeeee><tr><td>
+<font style="font-size: 13px">
+<ul> Calculated COMMON UNIT VALUE (per area):
+<font style="font-size: 6px"><br></font>
+<center>
+  <font style="color: #990000; font-size: 13px">These calculated "per area" values are currently in a </i>testing<i> state. &nbsp;
+While the calculations appear sound,<br> range flagging has <u>not</u> been run on these values. &nbsp;
+</i><b>Use these values at your own risk, with caution!</b><i>.<br></font>
+</center>
+<font style="font-size: 6px"><br></font>
+     <ul>
+        <li><b>CBV-m2</b> - &nbsp; Common Base-unit Value (per area);</li>
+        <li><b>unit2</b> - &nbsp; units for the "CBV-m2" value;</li>
+        <li><b>F1</b> - &nbsp; place-holder for <u>future</u> global-annual range flag for CBV-m2 value;</li>
+        <li><b>F2</b> - &nbsp; place-holder for <u>future</u> basin-annual range flag for CBV-m2 value;</li>
+        <li><b>F3</b> - &nbsp; place-holder for <u>future</u> basin-seasonal range flag for CBV-m2 value;</li>
+        <li><b>F4</b> - &nbsp; place-holder for <u>future</u> basin-monthly range flag for CBV-m2 value;</li>
+        <li><b>meth2</b> - &nbsp; calculation method for the CBV-m2 value (<i>see documentation</i>);</li>
+    </ul>
+</ul>
+
+</td></tr></table>
+
+<ul>
+TAXONOMIC DESCRIPTION: <ul>
+        <li><b>Taxonomic Description</b> &nbsp; scientific name of the observed taxa;</li><br>
+        <font style="color: #990000"><b><i>-[modifiers]-</i></b> contains additional modifiers to the scientific name (<i>sex, life stage, size ranges, etc.</i>)</font>;
+
+    </font>
+    </ul>
+</ul>
+Obviously, large-scale use and/or processing of the full format data is best done via software. &nbsp;
+Sample access and processing software is available <a href='https://www.st.nmfs.noaa.gov/copepod/software/index.html' target='_top'>here</a>. &nbsp;
+If you are interested in a format that can be accessed via a spreadsheet, graphing, or statiscial software, see the <a href='https://www.st.nmfs.noaa.gov/copepod/documentation/fields_short.html' target='_top'>Short-Form</a> format. &nbsp;
+
+</td>
+</tr>
+</table>
+
+
+ <table width=650 border=0 cellpadding=20>
+ <tr><td width=100%> &nbsp; </td><td align=center>
+  <font style="font-size: 18px"><b><i>COPEPOD</i></b><br>
+  <font style="font-size: 13px">
+  <nobr><a href="https://www.st.nmfs.noaa.gov/copepod">https://www.st.nmfs.noaa.gov/copepod</a></nobr><br>
+  <font style="font-size: 14px">
+  Web v10.1 &nbsp; <i>[ 2010-Dec] </i><br>
+ </td></tr></table>
+
+</center>
+
+</body>
+</html>

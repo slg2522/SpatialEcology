@@ -1,0 +1,234 @@
+
+<html>
+<head>
+    <title>COPEPOD: (short form format)</title>
+ <style type="text/css">
+  a { color: #990000;   text-decoration: none  }
+  a:hover { color: #0000ee;     text-decoration: underline overline; background: #eeeeee}
+ </style>
+</head>
+
+<body text="#000066" vlink="#0000EE" alink="#0000EE" link="#0000EE" background='back2010.jpg'>
+
+<center>
+
+ <table width=800><tr><td>
+ <table cellpadding=10><tr><td width=100><img src="noaa-copepod_200w.gif" title="COPEPOD Logo" ></td><td valign=middle align=center>
+ <nobr><font style="font-size: 32px">
+ <b>SHORT FORM Format</b></br>
+ </font></nobr> 
+<font style="font-size: 17px">( <i>also used for </i>Plankton-Group<i> and </i>Regional<i> Compilations </i> )</font><br>
+<br>
+ <font style="font-size: 14px">[ <a href="javascript:history.go(-1)"  title="click here to go back to previous window"> back to <b>previous</b> window</a> ] &nbsp; <br> </font>
+ </td></tr></table>
+
+
+<table BORDER=1 CELLSPACING=0 CELLPADDING=15 WIDTH="800" bgcolor=#ffffff>
+
+<tr>
+<td align=left valign=top>
+
+<font style="font-size: 17px">
+The <b><i>COPEPOD-2010</i></b> "short-form" format is designed for use in spreadsheet, graphical, or statistical software. &nbsp;
+This format is designed to contain numerically useful information, and does <u>not</u> contain the full methods and institutional  metadata available in the "Full Format".<br>
+</font>
+<br>
+
+<hr>
+
+<font style="font-size: 15px">
+Each row of the "Short Form" format represents a complete "observation set" which has its own latitude/longitude, date, and sampling parameters (<i>i.e.</i>, depth, water volume filtered, time of day).&nbsp;
+Each observation set represents an individual measurement, such as the total wet mass of a biomass tow or a single count of a plankton species. &nbsp;   
+If a net towing event has multiple depths (<i>0-25m, 25-50m, 50-100m</i>) or taxonomic identifications (<i>species a, species b, species b males, species b females</i>), it will have many observation sets (and thus many rows). &nbsp;  
+This means that 300 rows of data in the "Short Form" format could represent 100 different "total wet mass" tows from 100 different locations, <u>OR</u> it could represent a single location in which 25 species were identified and counted at four discrete bottle depths (4 x 25 = 100). <br>
+<br>
+If you want to reconstruct the original tow or bottle contents within a single cruise, you can do this with the <b>RECORD-ID</b>. &nbsp;
+The first four digits in the RECORD-ID field are a unique identifier for each tow or bottle within a that cruise.  &nbsp;
+The second four digits count the observations measured from that net or bottle. &nbsp;
+For example, "0001_0001" and "0001_0002" are two observations from the same net, but "0001_0001" and "0002_0001" are observations from two different nets. &nbsp;
+[ If working with a "compilation file" (see below), you must also take into consideration the "SHP-CRUISE" identifier (otherwise "0001_0001" and "0002_0001" could be from completely different cruises!).
+
+<br>
+
+With individual COPEPOD data sets (<i>i.e.</i>, the CalCOFI data set, the MARMAP data set), each individual "Short Form" data file represents an individual cruise. &nbsp;
+A data set with five cruises will therefore have five data files. &nbsp;
+With COPEPOD Taxonomic Compilations (<i>i.e.</i>, "All Copepod Data", "All Diatom Data"), an individual "Short Form" data file will likely contain data from many cruises and projects.<br>
+<br>
+<b>NOTE:</b> &nbsp; All associated code tables are linked below, and are also found on this page of <a href="https://www.st.nmfs.noaa.gov/copepod/codes/" title="go to the code tables page">COPEPOD Code Tables</a>.
+
+<hr>
+
+<br>
+<font style="font-size: 17px">
+<b>Each row in the "Short Form" file contains multiple comma-separated data fields (<i>columns</i>).<br>
+ Below are the column headings and contents for each data field:</b><br>
+</font>
+<br>
+<ul>
+
+<b>(01) SHP-CRUISE</b> &nbsp; - &nbsp; NODC ship code + <i>COPEPOD</i> internal cruise identifier<br>
+<br>
+
+<b>(02) YEAR</b> &nbsp; - &nbsp; year of the tow or sample <br>
+<br>
+
+<b>(03) MONTH</b> &nbsp; - &nbsp; month of the tow or sample <br>
+<br>
+
+<b>(04) DAY</b> &nbsp; - &nbsp; <u>GMT</u>-based day of the tow or sample <br>
+<br>
+
+<b>(05) TIMEgmt</b> &nbsp; - &nbsp; <u>GMT</u> time of the tow or sample ( <i>in decimal hours</i> )<br>
+<br>
+
+<b>(06) TIMEloc</b> &nbsp; - &nbsp; <u>LOCAL</u> time of the tow or sample ( <i>in decimal hours</i> )<br>
+<br>
+
+<b>(07) LATITUDE</b> &nbsp; - &nbsp; latitude of the tow or sample ( <b>+</b> = <i>North</i>, <b>-</b> = <i>South</i> ) <br>
+<br>
+
+<b>(08) LONGITDE</b> &nbsp; - &nbsp; longitude of the tow or sample ( <b>+</b> = <i>East</i>, <b>-</b> = <i>West</i> )<br>
+<br>
+
+<b>(09) UPPER_Z</b> &nbsp; - &nbsp; upper depth of the tow or bottle<br>
+<br>
+
+<b>(10) LOWER_Z</b> &nbsp; - &nbsp; lower depth of the tow or bottle<br>
+<br>
+
+<b>(11) T</b> &nbsp; - &nbsp; tow type &nbsp; ( <i><b>V</b>ertical, <b>H</b>orizontal, <b>O</b>blique</i> ) <br>
+<br>
+
+<b>(12) GEAR</b> &nbsp; - &nbsp; towing gear used ( <a href="https://www.st.nmfs.noaa.gov/copepod/codes/copecode-biohmeta.gear.html" title="go to this code table"><i>COPEPOD Gear Table</i></a> )<br>
+<br>
+
+<b>(13) MESH</b> &nbsp; - &nbsp; net mesh size ( <i>in micrometers</i> )<br>
+<br>
+
+<b>(14) NMFS_PGC</b> &nbsp; - &nbsp; <i>COPEPOD</i> Plankton Grouping Code (PGC) for the observation<br>
+<br>
+
+<b>(15) ITIS_TSN</b> &nbsp; - &nbsp; ITIS Taxonomic Serial Number (TSN) or <i>COPEPOD</i> identifier (iff < 0) <br>
+<br>
+
+<b>(16) MOD</b> &nbsp; - &nbsp; taxonomic modifier, such as "sp.", "spp.", or "unknown".  ( <a href="https://www.st.nmfs.noaa.gov/copepod/codes/copecode-taxameta.modifier.html" title="go to this code table"><i>COPEPOD Taxonomic Modifier Table</i></a> )<br>
+<br>
+
+<b>(17) LIF</b> &nbsp; - &nbsp; plankton lifestage, such as "adult", "nauplius", or "veliger".  ( <a href="https://www.st.nmfs.noaa.gov/copepod/codes/copecode-taxameta.life_stage.html" title="go to this code table"><i>COPEPOD Lifestage Table</i></a> )<br>
+<br>
+
+<b>(18) PSC</b> &nbsp; - &nbsp; <i>COPEPOD</i> Plankton [Life] Staging Code for the observation<br>
+<ul><i>
+   0 = unspecified<br>
+   1 = adult or sub-adult<br>
+   2 = juvenile or larvae<br>
+   3 = nauplius-like
+   4 = eggs
+   5 = incomplete body fragments
+   </i>
+</ul>
+<br>
+
+<b>(19) SEX</b> &nbsp; - &nbsp; plankton sex, if provided ( <i> 1=male, 2=female, 3+ = </i><a href="https://www.st.nmfs.noaa.gov/copepod/codes/copecode-taxameta.sex.html" title="go to this code table"><i>COPEPOD Sex Table</i></a> )<br>
+<br>
+
+<b>(20) V</b> &nbsp; - &nbsp; Type of (V)alue measurement in the Value fields<br>
+<ul><i>
+   c = Number Count (e.g., number of species "X")<br>
+   r = Relative Abundance code (e.g., "absent", "present", "common")<br>
+   b = Total Net-haul Biomass Value<br>
+   t = Invidual Taxa biomass or biovolume (value for that specific group or species)<br>
+   </i>
+</ul>
+<br>
+
+<b>(21) Water Strained</b> &nbsp; - &nbsp; volume of water sampled by bottle or flow meter (<i> in cubic meters </i>).<br>
+<br>
+
+<b>(22) Original-VALUE</b> &nbsp; - &nbsp; this is the original measured value (<i> in units provided below </i>) <br>
+<br>
+
+<b>(23) Orig-UNITS</b> &nbsp; - &nbsp; this is the original units for the original value provided above <br>
+<br>
+
+<b>(24) VALUE-per-volu</b>[me] &nbsp; - &nbsp; standardized "per-water-volume" count or biomass measurement of the observation <br>
+<br>
+
+<b>(25) UNITS</b> &nbsp; - &nbsp; Units for the VALUE-per-volu[me] above (<i> "#/m3" for zooplankton, "#/mL" for phytoplankton </i>) <br>
+<br>
+
+<b>(26) F1</b> &nbsp; - &nbsp; <i>COPEPOD-2010</i> global-annual range flag for the per-volu[me] value<br>
+<b>(27) F2</b> &nbsp; - &nbsp; <i>COPEPOD-2010</i> basin-annual range flag for the per-volu[me] value<br>
+<b>(28) F3</b> &nbsp; - &nbsp; <i>COPEPOD-2010</i> basin-seasonal range flag for the per-volu[me] value<br>
+<b>(29) F4</b> &nbsp; - &nbsp; <i>COPEPOD-2010</i> basin-monthly  range flag for the per-volu[me] value<br>
+
+</ul>
+
+<table width = 100% border=0 bgcolor=#dddddd><tr><td>
+<ul>
+<b>(30) VALUE-per-area</b> &nbsp; - &nbsp; standardized "per-surface-area" count or biomass measurement of the observation <br>
+<i>
+
+<font style="font-size: 6px"><br></font>
+<center>
+  <font style="color: #990000; font-size: 13px">These calculated "per area" values are currently in a </i>testing<i> state. &nbsp;
+While the calculations appear sound,<br> range flagging has <u>not</u> been run on these values. &nbsp;
+</i><b>Use these values at your own risk, with caution!</b><i>.<br></font>
+</center>
+<font style="font-size: 6px"><br></font>
+
+
+<b>(31) UNITS</b> &nbsp; - &nbsp; Units of the count or biomass measurement<br>
+<br>
+
+<b>(32) F1</b> &nbsp; - &nbsp; place-holder for <u>future</u> global-annual range flag for the per-area value<br>
+<b>(33) F2</b> &nbsp; - &nbsp; place-holder for <u>future</u> basin-annual range flag for the per-area value<br>
+<b>(34) F3</b> &nbsp; - &nbsp; place-holder for <u>future</u> basin-seasonal range flag for the per-area value<br>
+<b>(35) F4</b> &nbsp; - &nbsp; place-holder for <u>future</u> basin-monthly  range flag for the per-area value<br>
+</i>
+</ul>
+</td></tr></table>
+
+<ul>
+
+<b>(36) SCIENTIFIC NAME -[ </b><i>descriptive modifiers</i><b> ]-</b> &nbsp; test description of the observation<br>
+<br>
+
+<b>(37) RECORD-ID</b> &nbsp; - &nbsp; <i>COPEPOD</i> unique record identifier<br>
+<br>
+
+<b>(38) DATASET-ID</b> &nbsp; - &nbsp; <i>COPEPOD</i> data set identifier<br>
+<br>
+
+<b>(39) SHIP</b> &nbsp; - &nbsp; sampling ship (vessel) identifier (<i> COPEPOD Ship Table </i>)<br>
+<br>
+
+<b>(40) PROJ</b> &nbsp; - &nbsp; associated project identifier (<i> COPEPOD Project Table </i>)<br>
+<br>
+
+<b>(41) INSTITUTE</b> &nbsp; - &nbsp; associated institute identifier (<i> COPEPOD Institute Table </i>)<br>
+<br>
+
+</ul>
+
+
+
+
+</td>
+</tr>
+</table>
+
+
+ <table width=650 border=0 cellpadding=20>
+ <tr><td width=100%> &nbsp; </td><td align=center>
+  <font style="font-size: 18px"><b><i>COPEPOD</i></b><br>
+  <font style="font-size: 13px">
+  <nobr><a href="https://www.st.nmfs.noaa.gov/copepod">https://www.st.nmfs.noaa.gov/copepod</a></nobr><br>
+  <font style="font-size: 14px">
+  Web v10.1 &nbsp; <i>[ 2010-Dec] </i><br>
+ </td></tr></table>
+
+</center>
+
+</body>
+</html>
