@@ -1,0 +1,45 @@
+Wed Oct 12 12:22:13 EDT 2022
+MaxEnt version 3.4.3
+Reading file absence
+readGrid: max memory 536870912, total allocated 266338304, free 255346784, used 10991520, increment 10991520
+Reading samples from presence
+Read samples: max memory 536870912, total allocated 266338304, free 224426408, used 41911896, increment 30920376
+Adding samples to background in feature space
+Command line used:  autorun -e C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week7/Rtutorials/absence -o C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week7/Rtutorials -s C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week7/Rtutorials/presence -z
+Command line to repeat: java density.MaxEnt nowarnings noprefixes "outputdirectory=C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week7/Rtutorials" "samplesfile=C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week7/Rtutorials/presence" "environmentallayers=C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week7/Rtutorials/absence" autorun novisible noprefixes -t biome
+Species: species
+Layers: bio1 bio12 bio16 bio17 bio5 bio6 bio7 bio8 biome
+Layertypes: Continuous Continuous Continuous Continuous Continuous Continuous Continuous Continuous Categorical
+outputdirectory: C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week7/Rtutorials
+samplesfile: C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week7/Rtutorials/presence
+environmentallayers: C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week7/Rtutorials/absence
+autorun: true
+visible: false
+prefixes: false
+
+getSamples: max memory 536870912, total allocated 266338304, free 222851496, used 43486808, increment 1574912
+Making features
+makeFeatures: max memory 536870912, total allocated 266338304, free 218926376, used 47411928, increment 3925120
+species: 
+Regularization values: linear/quadratic/product: 0.171, categorical: 0.250, threshold: 1.170, hinge: 0.500
+83 samples
+Density: max memory 536870912, total allocated 266338304, free 209746344, used 56591960, increment 9180032
+linearPredictor: max memory 536870912, total allocated 266338304, free 209746344, used 56591960, increment 0
+Deactivating (biome=3.0)
+Deactivating (biome=4.0)
+Deactivating (biome=5.0)
+Deactivating (biome=7.0)
+Deactivating (biome=8.0)
+Deactivating (biome=10.0)
+Deactivating (biome=11.0)
+Deactivating (biome=12.0)
+FeaturedSpace: max memory 536870912, total allocated 266338304, free 209746344, used 56591960, increment 0
+Sequential: max memory 536870912, total allocated 266338304, free 209746344, used 56591960, increment 0
+Initial loss: 9.186662244621605
+Time since start: 3.933
+500: time = 3.364000 loss = 7.812516
+Resulting gain: 1.3741462654037466
+Time since start: 5.402
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\Week7\Rtutorials\species.csv
+Ending
