@@ -6,3 +6,5 @@
 *.adf
 *.tiff
 *.tgz
+*.nc.gz
+*.nc
