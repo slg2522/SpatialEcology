@@ -158,10 +158,15 @@ plt44 <- levelplot(subset(tmp_raster.crop3, 44), margin = F,  at=cutpts, cuts=20
                    main="Temperature Depth 44")
 plt44
 
-#grid of all the plots incrementally
+#grid of all the temperature at depth map plots incrementally
 library(gridExtra)
 grid.arrange(plt1, plt5, plt7, plt11, plt15, plt19, plt23, plt27, plt31, plt35, plt39, plt44, ncol=4, nrow=3)
 
+#cell-level operations
+# S4 method for Raster,function
+minTemp <- calc(tmp_raster.crop3, min, na.rm=TRUE, forcefun=FALSE, forceapply=FALSE)
+pltMin <- levelplot(minTemp, margin = F,  at=cutpts, cuts=20, pretty=TRUE, par.settings = mapTheme,
+                   main="Minimum Temperature")
 
 #HU: ocean depth at U points
 #HT: ocean depth at T points
