@@ -13,7 +13,7 @@ library(R.utils)
 ncpath <- "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Test/"
 ncname <- "R2200aRBRZBGCcaaa03a.pop.h.2016-08.nc"  
 ncfname <- paste(ncpath, ncname, sep="")
-dname <- "Depth"  # note: tmp means temperature (not temporary)
+dname <- "TEMP"  # note: tmp means temperature (not temporary)
 
 #open netcdf file
 #file.choose() allows user to choose file from system
@@ -44,44 +44,54 @@ tmp_raster <- brick(ncfname, varname="TEMP")
 tmp_raster; class(tmp_raster)
 
 
-plot(subset(tmp_raster, 1), theme = mapTheme)
+plot(subset(tmp_raster, 1))
+tmp_raster
+crs(tmp_raster) <- "EPSG:3573"
+plot(tmp_raster)
+plot(subset(tmp_raster, 1))
+
 # click twice on the map to select the region of interest
-drawExt <- drawExtent()    
-drawExt
+#drawExt <- drawExtent()    
+#drawExt
 #> drawExt
 #class      : Extent 
 #xmin       : 222.6804 
 #xmax       : 584.4472 
 #ymin       : 109.7872 
 #ymax       : 349.5629 
+drawExt <- extent(c(222.6804, 584.4472, 109.7872, 349.5629))
 
 #crop the outline
 tmp_raster.crop <- crop(tmp_raster, drawExt)
 #plot the new outline
 plot(subset(tmp_raster.crop, 1))
 # click twice on the map to select the region of interest
-drawExt1 <- drawExtent()    
-drawExt1
+#drawExt1 <- drawExtent()    
+#drawExt1
 #> drawExt1
 #class      : Extent 
 #xmin       : 259.3191 
 #xmax       : 455.6267 
 #ymin       : 137.5159 
-#ymax       : 354.8564 
+#ymax       : 354.8564
+drawExt1 <- extent(c(259.3191, 455.6267, 137.5159, 354.8564))
+
 tmp_raster.crop2 <- crop(tmp_raster, drawExt1)
 
 #plot the new outline
 plot(subset(tmp_raster.crop2, 1))
 
 # click twice on the map to select the region of interest
-drawExt2 <- drawExtent()    
-drawExt2
+#drawExt2 <- drawExtent()    
+#drawExt2
 #> drawExt1
 #class      : Extent 
 #xmin       : 259.3191 
 #xmax       : 455.6267 
 #ymin       : 137.5159 
 #ymax       : 354.8564 
+drawExt2 <- extent(c(259.3191, 455.6267, 137.5159, 354.8564))
+
 #crop the outline
 tmp_raster.crop3 <- crop(tmp_raster, drawExt2)
 
@@ -168,6 +178,5 @@ minTemp <- calc(tmp_raster.crop3, min, na.rm=TRUE, forcefun=FALSE, forceapply=FA
 pltMin <- levelplot(minTemp, margin = F,  at=cutpts, cuts=20, pretty=TRUE, par.settings = mapTheme,
                    main="Minimum Temperature")
 
-#HU: ocean depth at U points
-#HT: ocean depth at T points
-#z_w_bot: depth from surface to bottom of layer
+#plot minimum temperature
+pltMin

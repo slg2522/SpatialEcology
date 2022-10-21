@@ -1,0 +1,27 @@
+<VRTDataset rasterXSize="212" rasterYSize="217">
+<VRTRasterBand dataType="Byte" band="1">
+<ColorInterp>Palette</ColorInterp>
+<ColorTable>
+<Entry c1="255" c2="0" c3="0" c4="255"/>
+<Entry c1="255" c2="77" c3="0" c4="255"/>
+<Entry c1="255" c2="153" c3="0" c4="255"/>
+<Entry c1="255" c2="229" c3="0" c4="255"/>
+<Entry c1="204" c2="255" c3="0" c4="255"/>
+<Entry c1="128" c2="255" c3="0" c4="255"/>
+<Entry c1="51" c2="255" c3="0" c4="255"/>
+<Entry c1="0" c2="255" c3="25" c4="255"/>
+<Entry c1="0" c2="255" c3="102" c4="255"/>
+<Entry c1="0" c2="255" c3="178" c4="255"/>
+<Entry c1="0" c2="255" c3="255" c4="255"/>
+<Entry c1="0" c2="179" c3="255" c4="255"/>
+<Entry c1="0" c2="102" c3="255" c4="255"/>
+<Entry c1="0" c2="26" c3="255" c4="255"/>
+<Entry c1="51" c2="0" c3="255" c4="255"/>
+<Entry c1="127" c2="0" c3="255" c4="255"/>
+<Entry c1="204" c2="0" c3="255" c4="255"/>
+<Entry c1="255" c2="0" c3="230" c4="255"/>
+<Entry c1="255" c2="0" c3="153" c4="255"/>
+<Entry c1="255" c2="0" c3="77" c4="255"/>
+</ColorTable>
+</VRTRasterBand>
+</VRTDataset>

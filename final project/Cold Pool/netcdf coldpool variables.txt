@@ -1,0 +1,907 @@
+File C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Test/R2200aRBRZBGCcaaa03a.pop.h.2016-08.nc (NC_FORMAT_64BIT):
+
+     134 variables (excluding dimension variables):
+        double time_bound[d2,time]   
+            long_name: boundaries for time-averaging interval
+            units: days since 0000-01-01 00:00:00
+        float dz[z_t]   
+            long_name: thickness of layer k
+            units: centimeters
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float dzw[z_w]   
+            long_name: midpoint of k to midpoint of k+1
+            units: centimeters
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double ULONG[nlon,nlat]   
+            long_name: array of u-grid longitudes
+            units: degrees_east
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double ULAT[nlon,nlat]   
+            long_name: array of u-grid latitudes
+            units: degrees_north
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double TLONG[nlon,nlat]   
+            long_name: array of t-grid longitudes
+            units: degrees_east
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double TLAT[nlon,nlat]   
+            long_name: array of t-grid latitudes
+            units: degrees_north
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        int KMT[nlon,nlat]   
+            long_name: k Index of Deepest Grid Cell on T Grid
+            coordinates: TLONG TLAT
+            _FillValue: -2147483647
+            missing_value: -2147483647
+        int KMU[nlon,nlat]   
+            long_name: k Index of Deepest Grid Cell on U Grid
+            coordinates: ULONG ULAT
+            _FillValue: -2147483647
+            missing_value: -2147483647
+        double UAREA[nlon,nlat]   
+            long_name: area of U cells
+            units: centimeter^2
+            coordinates: ULONG ULAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double TAREA[nlon,nlat]   
+            long_name: area of T cells
+            units: centimeter^2
+            coordinates: TLONG TLAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double HU[nlon,nlat]   
+            long_name: ocean depth at U points
+            units: centimeter
+            coordinates: ULONG ULAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double HT[nlon,nlat]   
+            long_name: ocean depth at T points
+            units: centimeter
+            coordinates: TLONG TLAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double DXU[nlon,nlat]   
+            long_name: x-spacing centered at U points
+            units: centimeters
+            coordinates: ULONG ULAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double DYU[nlon,nlat]   
+            long_name: y-spacing centered at U points
+            units: centimeters
+            coordinates: ULONG ULAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double DXT[nlon,nlat]   
+            long_name: x-spacing centered at T points
+            units: centimeters
+            coordinates: TLONG TLAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double DYT[nlon,nlat]   
+            long_name: y-spacing centered at T points
+            units: centimeters
+            coordinates: TLONG TLAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double HTN[nlon,nlat]   
+            long_name: cell widths on North sides of T cell
+            units: centimeters
+            coordinates: TLONG TLAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double HTE[nlon,nlat]   
+            long_name: cell widths on East sides of T cell
+            units: centimeters
+            coordinates: TLONG TLAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double HUS[nlon,nlat]   
+            long_name: cell widths on South sides of U cell
+            units: centimeters
+            coordinates: ULONG ULAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double HUW[nlon,nlat]   
+            long_name: cell widths on West sides of U cell
+            units: centimeters
+            coordinates: ULONG ULAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double ANGLE[nlon,nlat]   
+            long_name: angle grid makes with latitude line
+            units: radians
+            coordinates: ULONG ULAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double ANGLET[nlon,nlat]   
+            long_name: angle grid makes with latitude line on T grid
+            units: radians
+            coordinates: TLONG TLAT
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        double days_in_norm_year[]   
+            long_name: Calendar Length
+            units: days
+        double grav[]   
+            long_name: Acceleration Due to Gravity
+            units: centimeter/s^2
+        double omega[]   
+            long_name: Earths Angular Velocity
+            units: 1/second
+        double radius[]   
+            long_name: Earths Radius
+            units: centimeters
+        double cp_sw[]   
+            long_name: Specific Heat of Sea Water
+            units: erg/g/K
+        double sound[]   
+            long_name: Speed of Sound
+            units: centimeter/s
+        double vonkar[]   
+            long_name: von Karman Constant
+        double cp_air[]   
+            long_name: Heat Capacity of Air
+            units: joule/kg/degK
+        double rho_air[]   
+            long_name: Ambient Air Density
+            units: kg/m^3
+        double rho_sw[]   
+            long_name: Density of Sea Water
+            units: gram/centimeter^3
+        double rho_fw[]   
+            long_name: Density of Fresh Water
+            units: gram/centimeter^3
+        double stefan_boltzmann[]   
+            long_name: Stefan-Boltzmann Constant
+            units: watt/m^2/degK^4
+        double latent_heat_vapor[]   
+            long_name: Latent Heat of Vaporization
+            units: J/kg
+        double latent_heat_fusion[]   
+            long_name: Latent Heat of Fusion
+            units: erg/g
+        double ocn_ref_salinity[]   
+            long_name: Ocean Reference Salinity
+            units: g/kg
+        double sea_ice_salinity[]   
+            long_name: Salinity of Sea Ice
+            units: g/kg
+        double T0_Kelvin[]   
+            long_name: Zero Point for Celsius
+            units: degK
+        double salt_to_ppt[]   
+            long_name: Convert Salt in gram/gram to g/kg
+        double ppt_to_salt[]   
+            long_name: Convert Salt in g/kg to gram/gram
+        double mass_to_Sv[]   
+            long_name: Convert Mass Flux to Sverdrups
+        double heat_to_PW[]   
+            long_name: Convert Heat Flux to Petawatts
+        double salt_to_Svppt[]   
+            long_name: Convert Salt Flux to Sverdrups*g/kg
+        double salt_to_mmday[]   
+            long_name: Convert Salt to Water (millimeters/day)
+        double momentum_factor[]   
+            long_name: Convert Windstress to Velocity Flux
+        double hflux_factor[]   
+            long_name: Convert Heat and Solar Flux to Temperature Flux
+        double fwflux_factor[]   
+            long_name: Convert Net Fresh Water Flux to Salt Flux (in model units)
+        double salinity_factor[]   
+        double sflux_factor[]   
+            long_name: Convert Salt Flux to Salt Flux (in model units)
+        double nsurface_t[]   
+            long_name: Number of Ocean T Points at Surface
+        double nsurface_u[]   
+            long_name: Number of Ocean U Points at Surface
+        float UVEL[nlon,nlat,z_t,time]   
+            long_name: Velocity in grid-x direction
+            units: centimeter/s
+            coordinates: ULONG ULAT z_t time
+            grid_loc: 3221
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float VVEL[nlon,nlat,z_t,time]   
+            long_name: Velocity in grid-y direction
+            units: centimeter/s
+            coordinates: ULONG ULAT z_t time
+            grid_loc: 3221
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float TEMP[nlon,nlat,z_t,time]   
+            long_name: Potential Temperature
+            units: degC
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float SALT[nlon,nlat,z_t,time]   
+            long_name: Salinity
+            units: gram/kilogram
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            scale_factor: 1000
+            _FillValue: 9.96920974555766e+33
+            missing_value: 9.96920974555766e+33
+        float SU[nlon,nlat,time]   
+            long_name: Vertically Integrated Velocity in grid-x direction
+            units: centimeter^2/s
+            coordinates: ULONG ULAT time
+            grid_loc: 2221
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float SV[nlon,nlat,time]   
+            long_name: Vertically Integrated Velocity in grid-y direction
+            units: centimeter^2/s
+            coordinates: ULONG ULAT time
+            grid_loc: 2221
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float SSH[nlon,nlat,time]   
+            long_name: Sea Surface Height
+            units: centimeter
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float SHF[nlon,nlat,time]   
+            long_name: Total Surface Heat Flux, Including SW
+            units: watt/m^2
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float SHF_QSW[nlon,nlat,time]   
+            long_name: Solar Short-Wave Heat Flux
+            units: watt/m^2
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float SFWF[nlon,nlat,time]   
+            long_name: Virtual Salt Flux in FW Flux formulation
+            units: kg/m^2/s
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float TAUX[nlon,nlat,time]   
+            long_name: Windstress in grid-x direction
+            units: dyne/centimeter^2
+            coordinates: ULONG ULAT time
+            grid_loc: 2220
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float TAUY[nlon,nlat,time]   
+            long_name: Windstress in grid-y direction
+            units: dyne/centimeter^2
+            coordinates: ULONG ULAT time
+            grid_loc: 2220
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float pCO2SURF[nlon,nlat,time]   
+            long_name: surface pCO2
+            units: ppmv
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float DpCO2[nlon,nlat,time]   
+            long_name: D pCO2
+            units: ppmv
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float FG_CO2[nlon,nlat,time]   
+            long_name: DIC Surface Gas Flux
+            units: mmol/m^3 cm/s
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float PH[nlon,nlat,time]   
+            long_name: Surface pH
+            units: none
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float ATM_CO2[nlon,nlat,time]   
+            long_name: Atmospheric CO2
+            units: ppmv
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float O2_ZMIN[nlon,nlat,time]   
+            long_name: Vertical Minimum of O2
+            units: mmol/m^3
+            coordinates: TLONG TLAT time
+            grid_loc: 2111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float O2_ZMIN_DEPTH[nlon,nlat,time]   
+            long_name: Depth of Vertical Minimum of O2
+            units: cm
+            coordinates: TLONG TLAT time
+            grid_loc: 2111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float PAR_avg[nlon,nlat,z_t_150m,time]   
+            long_name: PAR Average over Model Cell
+            units: w/m^2
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float POC_FLUX_IN[nlon,nlat,z_t,time]   
+            long_name: POC Flux into Cell
+            units: mmol/m^3 cm/s
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float POC_PROD[nlon,nlat,z_t,time]   
+            long_name: POC Production
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float graze_sp[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phyto Grazing
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float graze_diat[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom Grazing
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float graze_diaz[nlon,nlat,z_t_150m,time]   
+            long_name: Diazotroph Grazing
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float sp_loss[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phyto Loss
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diat_loss[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom Loss
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diaz_loss[nlon,nlat,z_t_150m,time]   
+            long_name: Diaz Loss
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float zoo_loss[nlon,nlat,z_t_150m,time]   
+            long_name: Zooplankton Loss
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float sp_agg[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phyto Aggregate
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diat_agg[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom Aggregate
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float photoC_sp[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phyto C Fixation
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float photoC_diat[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom C Fixation
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float photoC_diaz[nlon,nlat,z_t_150m,time]   
+            long_name: Diaz C Fixation
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float photoC_NO3_sp_zint[nlon,nlat,time]   
+            long_name: Small Phyto C Fixation from NO3 Vertical Integral
+            units: mmol/m^3 cm/s
+            coordinates: TLONG TLAT time
+            grid_loc: 2111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float photoC_NO3_diat_zint[nlon,nlat,time]   
+            long_name: Diatom C Fixation from NO3 Vertical Integral
+            units: mmol/m^3 cm/s
+            coordinates: TLONG TLAT time
+            grid_loc: 2111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float photoC_NO3_diaz_zint[nlon,nlat,time]   
+            long_name: Diaz C Fixation from NO3 Vertical Integral
+            units: mmol/m^3 cm/s
+            coordinates: TLONG TLAT time
+            grid_loc: 2111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float Fe_scavenge[nlon,nlat,z_t,time]   
+            long_name: Iron Scavenging
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float Fe_scavenge_rate[nlon,nlat,z_t,time]   
+            long_name: Iron Scavenging Rate
+            units: 1/y
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float sp_N_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phyto N Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float sp_Fe_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phyto Fe Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float sp_PO4_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phyto PO4 Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float sp_light_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phyto Light Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diat_N_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom N Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diat_Fe_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom Fe Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diat_PO4_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom PO4 Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diat_SiO3_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom SiO3 Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diat_light_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom Light Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diaz_Fe_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Diaz Fe Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diaz_P_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Diaz PO4 Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diaz_light_lim[nlon,nlat,z_t_150m,time]   
+            long_name: Diaz LIGHT Limitation
+            units: none
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diaz_Nfix[nlon,nlat,z_t_150m,time]   
+            long_name: Diaz N Fixation
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float NITRIF[nlon,nlat,z_t,time]   
+            long_name: Nitrification
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float DENITRIF[nlon,nlat,z_t,time]   
+            long_name: Denitrification
+            units: mmol/m^3/s
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float PO4[nlon,nlat,z_t,time]   
+            long_name: Dissolved Inorganic Phosphate
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float NO3[nlon,nlat,z_t,time]   
+            long_name: Dissolved Inorganic Nitrate
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float SiO3[nlon,nlat,z_t,time]   
+            long_name: Dissolved Inorganic Silicate
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float NH4[nlon,nlat,z_t,time]   
+            long_name: Dissolved Ammonia
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float Fe[nlon,nlat,z_t,time]   
+            long_name: Dissolved Inorganic Iron
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float O2[nlon,nlat,z_t,time]   
+            long_name: Dissolved Oxygen
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float DIC[nlon,nlat,z_t,time]   
+            long_name: Dissolved Inorganic Carbon
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float ALK[nlon,nlat,z_t,time]   
+            long_name: Alkalinity
+            units: meq/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float DOC[nlon,nlat,z_t,time]   
+            long_name: Dissolved Organic Carbon
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float spC[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phytoplankton Carbon
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float spChl[nlon,nlat,z_t_150m,time]   
+            long_name: Small phytoplankton Chlorophyll
+            units: mg/m^3
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float spCaCO3[nlon,nlat,z_t_150m,time]   
+            long_name: Small Phytoplankton CaCO3
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diatC[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom Carbon
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diatChl[nlon,nlat,z_t_150m,time]   
+            long_name: Diatom Chlorophyll
+            units: mg/m^3
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float zooC[nlon,nlat,z_t_150m,time]   
+            long_name: Zooplankton Carbon
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diazC[nlon,nlat,z_t_150m,time]   
+            long_name: Diazotroph Carbon
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float diazChl[nlon,nlat,z_t_150m,time]   
+            long_name: Diazotroph Chlorophyll
+            units: mg/m^3
+            coordinates: TLONG TLAT z_t_150m time
+            grid_loc: 3114
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float DON[nlon,nlat,z_t,time]   
+            long_name: Dissolved Organic Nitrogen
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float DOP[nlon,nlat,z_t,time]   
+            long_name: Dissolved Organic Phosphorus
+            units: mmol/m^3
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float IAGE[nlon,nlat,z_t,time]   
+            long_name: Ideal Age
+            units: years
+            coordinates: TLONG TLAT z_t time
+            grid_loc: 3111
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float HMXL[nlon,nlat,time]   
+            long_name: Mixed-Layer Depth
+            units: centimeter
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float XMXL[nlon,nlat,time]   
+            long_name: Maximum Mixed-Layer Depth
+            units: centimeter
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: maximum
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float TMXL[nlon,nlat,time]   
+            long_name: Minimum Mixed-Layer Depth
+            units: centimeter
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: minimum
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float HBLT[nlon,nlat,time]   
+            long_name: Boundary-Layer Depth
+            units: centimeter
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float XBLT[nlon,nlat,time]   
+            long_name: Maximum Boundary-Layer Depth
+            units: centimeter
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: maximum
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float TBLT[nlon,nlat,time]   
+            long_name: Minimum Boundary-Layer Depth
+            units: centimeter
+            coordinates: TLONG TLAT time
+            grid_loc: 2110
+            cell_methods: time: minimum
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+        float BSF[nlon,nlat,time]   
+            long_name: Diagnostic barotropic streamfunction
+            units: Sv
+            coordinates: ULONG ULAT time
+            grid_loc: 2220
+            cell_methods: time: mean
+            _FillValue: 9.96920996838687e+36
+            missing_value: 9.96920996838687e+36
+
+     9 dimensions:
+        d2  Size:2 (no dimvar)
+        time  Size:1   *** is unlimited *** 
+            long_name: time
+            units: days since 0000-01-01 00:00:00
+            bounds: time_bound
+            calendar: noleap
+        z_t  Size:45 
+            long_name: depth from surface to midpoint of layer
+            units: centimeters
+            positive: down
+            valid_min: 250
+            valid_max: 610000
+        z_t_150m  Size:13 
+            long_name: depth from surface to midpoint of layer
+            units: centimeters
+            positive: down
+            valid_min: 250
+            valid_max: 13536
+        z_w  Size:45 
+            long_name: depth from surface to top of layer
+            units: centimeters
+            positive: down
+            valid_min: 0
+            valid_max: 595000
+        z_w_top  Size:45 
+            long_name: depth from surface to top of layer
+            units: centimeters
+            positive: down
+            valid_min: 0
+            valid_max: 595000
+        z_w_bot  Size:45 
+            long_name: depth from surface to bottom of layer
+            units: centimeters
+            positive: down
+            valid_min: 500
+            valid_max: 625000
+        nlon  Size:1280 (no dimvar)
+        nlat  Size:720 (no dimvar)
+
+    11 global attributes:
+        title: R2200aRBRZBGCcaaa03a
+        history: none
+        Conventions: CF-1.0; http://www.cgd.ucar.edu/cms/eaton/netcdf/CF-current.htm
+        contents: Diagnostic and Prognostic Variables
+        source: CCSM POP2, the CCSM Ocean Component
+        revision: $Id: tavg.F90 46641 2013-05-01 23:35:54Z tcraig $
+        calendar: All years have exactly  365 days.
+        start_time: This dataset was created on 2019-08-04 at 15:49:35.8
+        cell_methods: cell_methods = time: mean ==> the variable values are averaged over the time interval between the previous time coordinate and the current one.          cell_methods  absent  ==> the variable values are at the time given by the current time coordinate.
+        nsteps_total: 10695949
+        tavg_sum: 2678400.00000059

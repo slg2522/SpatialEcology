@@ -196,7 +196,7 @@ future$bio12 <- future$bio12*0.67 # decrease precipitation by 33%
 projNames <- paste0("/Users/mfitzpatrick/maxentOut/",
                     names(future), ".asc")
 for(i in 1:length(projNames)){
-  writeRaster(future[[i]], projNames[i], overwrite=T)
+  writeRaster(future[[i]], projNames[i], overwrite=T) #save the files to disk
 }
 
 # run the model and project to the new layers by providing the directory
@@ -208,10 +208,11 @@ mx <- maxent(stack(predictors),
              path=filePath,
              args=c("replicates=5", 
                     "projectionlayers=/Users/mfitzpatrick/maxentOut"))
-
+#map the model to the fake future conditions
 
 # Where the model extrapolating beyond the data?
 clamping <- raster("/Users/mfitzpatrick/maxentOut/species_0_maxentOut_clamping.asc")
+#clamping to force the model to not predict beyond the dataset
 # areas in red are problematic
 plot(clamping, col=rgb.tables(1000))
 
@@ -457,6 +458,10 @@ for(j in 2:sets){
 # to reflect bias in the presence data
 # BG points are more likely to be selected where
 # presence-only sampling is most dense
+
+#this code creastes a raster surface with the underlying
+#sampling bias estimated to account for sampling bias
+
 bg <- KDEpts[sample(seq(1:nrow(KDEpts)), 
                     size=1000, 
                     replace=T, 
