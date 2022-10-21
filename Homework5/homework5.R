@@ -127,6 +127,8 @@ dups <- duplicated(cells) # returns 'TRUE' if the cell number is duplicated
 grassTreeND <- grassTree[!dups,] # the ! = not, so here we keep dups == FALSE
 shapefile(grassTreeND, "grassTree.shp", overwrite=T) # save as shapefile
 
+#check for species-- only one species
+unique(grassTree$acceptedScientificName)
 
 ###HW QUESTION: In general terms, how would you expect the resolution of a raster to influence
 ###the number of spatial duplicates?
@@ -154,9 +156,6 @@ writeRaster(bio10Proj, "bio10Proj.tif", overwrite=T) # save raster as GeoTiff
 library(colorRamps)
 plot(bio10Proj, col=rgb.tables(1000), alpha=0.5) # alpha  sets transparency
 plot(aus, add=T) # add the polygon
-# here's where I setup the color scheme
-# this part: [nrow(grassTreeProj):1] reverses the order of the color ramp
-yearCol <- topo.colors(n=nrow(grassTreeProj))[nrow(grassTreeProj):1]
 # add the points with the color order set to the year column
 #pch=21 is a circle symbol
 points(grassTreeProj, pch=21, lwd=1, cex=0.8, 
@@ -175,6 +174,7 @@ points(grassTreeProj, pch=21, lwd=1, cex=0.8,
 #extract the values of rasters where tree is
 sppDat <- data.frame(extract(bioRasts, grassTreeND))
 sppDat <- na.omit(sppDat)
+head(sppDat)
                               
 ###4. Use your cleaned point occurrence data to extract the bioclimatic variables from the raster stack. You
 ###should end up with a table similar to this (only first few rows printed):
@@ -202,12 +202,12 @@ vifstep(bioRasts)
 #
 #---------- VIFs of the remained variables -------- 
 #  Variables      VIF
-#1      bio2 2.806983
-#2      bio3 3.194919
-#3     bio10 7.812300
-#4     bio15 6.504433
-#5     bio18 2.802514
-#6     bio19 3.393492
+#1      bio2 2.827502
+#2      bio3 3.333292
+#3     bio10 8.085931
+#4     bio15 6.571798
+#5     bio18 2.703522
+#6     bio19 3.318741
 
 #new raster stack containing only the variables retained by vifstep
 bioRastsUC <- bioRasts[[c("bio2", "bio3", "bio10", "bio15", "bio18", "bio19")]]
@@ -222,15 +222,35 @@ bioRastsUC <- bioRasts[[c("bio2", "bio3", "bio10", "bio15", "bio18", "bio19")]]
 #Create training/test datasets
 #allow to be replicated
 set.seed(0)
-
-#create dataframe to hold presence info
-sdmData <- as.data.frame(grassTreeND)
+#set presence
+library(dplyr)
+presvals <- select(sppDat,"bio2","bio3", "bio10", "bio15", "bio18", "bio19")
+head(presvals)
+# create 10,000 random background points
+backgr <- randomPoints(bioRastsUC, 10000)
+# and then extract env data at the background points
+absvals <- extract(bioRastsUC, backgr)
+# make a vector of 1's and 0's to match the
+# presence records and the background data
 
 #cheat and create background data
-sppPA <- c(rep(1, nrow(sdmData)))
+# See ?rep
+sppPA <- c(rep(1, nrow(presvals)), rep(0, nrow(absvals)))
 # now we bind everything together into a data.frame
-sdmData$sppPA <- sppPA
+sdmData <- data.frame(cbind(sppPA, rbind(presvals, absvals)))
 # and have a look at the data
+head(sdmData)
+summary(sdmData) #10603 rows
+
+# for plotting, extracting, etc
+grassTreeDF <- as.data.frame(grassTreeND)
+grassTreeDF <- grassTreeDF[,2:3]
+names(grassTreeDF) <- c("x", "y")
+grassTreeND <- grassTreeDF[1:10745,]
+ptsXY <- rbind(grassTreeND, backgr) #20245 rows
+n <- max(nrow(ptsXY))-max(nrow(sdmData)) 
+sdmData[nrow(sdmData) + n,] = c(NA, NA, NA, NA, NA, NA, NA)
+sdmData <- cbind(ptsXY, sdmData)
 head(sdmData)
 
 # 5 groups = 80/20 split (each group has 20% of the data)
@@ -238,14 +258,14 @@ group <- kfold(sdmData, k=5)
 
 #4 groups for training (80%)
 sdmTrain <- sdmData[group != 1, ]
-#1 group for testing (40%)
+#1 group for testing (20%)
 sdmTest <- sdmData[group == 1, ]
 
 #split the data up with 80/20
-presTrain <- sdmTrain[sdmTrain$sppPA==1,c("lon", "lat")]
-bgTrain <- sdmTrain[sdmTrain$sppPA==0,c("lon", "lat")]
-presTest <- sdmTest[sdmTest$sppPA==1,c("lon", "lat")]
-bgTest <- sdmTest[sdmTest$sppPA==0,c("lon", "lat")] 
+presTrain <- sdmTrain[sdmTrain$sppPA==1,c("x", "y")]
+bgTrain <- sdmTrain[sdmTrain$sppPA==0,c("x", "y")]
+presTest <- sdmTest[sdmTest$sppPA==1,c("x", "y")]
+bgTest <- sdmTest[sdmTest$sppPA==0,c("x", "y")] 
 
 # lets plot the data of the training testing datasets
 #use different symbols for each
@@ -256,27 +276,71 @@ points(presTrain, pch= '+', col='red')
 # presence pts (testing)
 points(presTest, pch='o', col='blue')
 # background pts (training)
-points(bgTrain, pch=20, cex=0.5, col='yellow')
+points(bgTrain, pch="*", col='yellow')
 # background pts (testing)
-points(bgTest, pch=20, cex=0.5, col='black')
+points(bgTest, pch="x", col='black')
 
 
 ###7. Create a spatialPoints object containing 10,000 random background (pseudo-absence) points. See
 ###randomPoints in the dismo package.
 
-#Create background (pseudo-absence) data
-# setting a random seed to always create the same random set of points
-set.seed(0)
+#created above with the code:
+#Create training/test datasets
+#allow to be replicated
+#set.seed(0)
 # create 10,000 random background points
-backgr <- randomPoints(bioRastsUC, 10000)
+#backgr <- randomPoints(bioRastsUC, 10000)
 # and then extract env data at the background points
-absvals <- extract(bioRastsUC, backgr)
+#absvals <- extract(bioRastsUC, backgr)
 # make a vector of 1's and 0's to match the
 # presence records and the background data
 
 
 ###8. Use your training data and the uncorrelated set of bioclimatic rasters to fit and predict a Mahalanobis
 ###model (using the mahal function in dismo).
+
+
+#Mahalanobis Distance
+mm <- mahal(stack(bioRastsUC), # raster stack
+            presTrain) #presence-only data
+
+# predict the distribution
+pm <- predict(stack(bioRastsUC), # raster stack
+              mm, # model
+              progress='text')
+plot(pm) # predictions are 1-distance
+#get some really large negative distances, so convert to probabilities
+
+# let's convert to a p-value
+# Mahal distances (D^2) are Chi-square distributed
+probMap <- (1-pm)
+#plot probability map
+plot(probMap)
+#p-value calculations
+dists <- as.numeric(na.omit(values(probMap)))
+p.value <- 1-as.numeric(pchisq(dists, df=nlayers(pred_nf)))
+probMap[!is.na(probMap[])] <- p.value
+
+
+
+# evaluate the model using test data (presences + background)
+e <- evaluate(p=extract(probMap, presTest), # presences
+              a=extract(probMap, bgTest)) # background / absences
+e
+
+#what am I calling habitat vs waht am I not calling habitat
+#plot it
+par(mfrow=c(1,2))
+plot(probMap, main='Mahalanobis distance (p-value)')
+plot(wrld_simpl, add=TRUE, border='dark grey')
+tr <- threshold(e, # model eval object
+                'no_omission')
+plot(probMap > tr, main='presence/absence')
+plot(wrld_simpl, add=TRUE, border='dark grey')
+points(sdmTrain[sdmTrain$sppPA==1,c("x", "y")], pch='+')
+points(sdmTest[sdmTest$sppPA==1,c("x", "y")], pch='x', col="red")
+
+
 
 
 

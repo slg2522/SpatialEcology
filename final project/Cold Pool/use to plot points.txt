@@ -1,0 +1,6 @@
+# can also plot by name, try: plot(predictors, "biome")
+plot(wrld_simpl, add=TRUE)
+# with the points function, "add" is implicit
+points(bradypus, cex=0.5, pch=20, col='blue')
+
+#use to plot points on a map

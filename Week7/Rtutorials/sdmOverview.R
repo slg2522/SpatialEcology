@@ -77,11 +77,11 @@ sdmData <- data.frame(cbind(sppPA, rbind(presvals, absvals)))
 sdmData[,'biome'] = as.factor(sdmData[,'biome'])
 # and have a look at the data
 head(sdmData)
-summary(sdmData)
+summary(sdmData) #10603 rows
 
 # for plotting, extracting, etc
-ptsXY <- rbind(bradypus, backgr)
-sdmData <- cbind(ptsXY, sdmData)
+ptsXY <- rbind(bradypus, backgr) #20245 rows, 2 columns x and y
+sdmData <- cbind(ptsXY, sdmData) #10603 rows, 6 columns sppPA, bio2, bio3, bio10, bio15, bio18, bio19
 head(sdmData)
 
 # make new stack without the categorical variable 'biome'
