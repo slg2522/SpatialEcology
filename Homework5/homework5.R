@@ -311,6 +311,19 @@ pm <- predict(stack(bioRastsUC), # raster stack
 plot(pm) # predictions are 1-distance
 #get some really large negative distances, so convert to probabilities
 
+
+###9. Make a map of the prediction (note that mahal predictions are slow, so it may take a few minutes
+###to complete this step). The predictions from mahal are 1-distance, so we will need to convert the
+###distance predictions from the mahal function to a probability.
+###Here is some R code to do that - it takes as input (1) a raster of the raw prediction (called mahalPred in the
+###code below) from the predict function and the stack of rasters used to fit the model (called bioRastsKeep
+### Convert distances to a p-value
+### Mahal distances (Dˆ2) are Chi-square distributed
+###probMap <- (1-mahalPred)
+###dists <- as.numeric(na.omit(getValues(probMap)))
+###p.value <- 1-as.numeric(pchisq(dists, df=nlayers(bioRastsKeep)))
+###probMap[!is.na(probMap[])] <- p.value
+
 # let's convert to a p-value
 # Mahal distances (D^2) are Chi-square distributed
 probMap <- (1-pm)
@@ -318,10 +331,8 @@ probMap <- (1-pm)
 plot(probMap)
 #p-value calculations
 dists <- as.numeric(na.omit(values(probMap)))
-p.value <- 1-as.numeric(pchisq(dists, df=nlayers(pred_nf)))
+p.value <- 1-as.numeric(pchisq(dists, df=nlayers(bioRastsUC)))
 probMap[!is.na(probMap[])] <- p.value
-
-
 
 # evaluate the model using test data (presences + background)
 e <- evaluate(p=extract(probMap, presTest), # presences
@@ -341,32 +352,41 @@ points(sdmTrain[sdmTrain$sppPA==1,c("x", "y")], pch='+')
 points(sdmTest[sdmTest$sppPA==1,c("x", "y")], pch='x', col="red")
 
 
-
-
-
-
-
-###9. Make a map of the prediction (note that mahal predictions are slow, so it may take a few minutes
-###to complete this step). The predictions from mahal are 1-distance, so we will need to convert the
-###distance predictions from the mahal function to a probability.
-###Here is some R code to do that - it takes as input (1) a raster of the raw prediction (called mahalPred in the
-###code below) from the predict function and the stack of rasters used to fit the model (called bioRastsKeep
-### Convert distances to a p-value
-### Mahal distances (Dˆ2) are Chi-square distributed
-###probMap <- (1-mahalPred)
-###dists <- as.numeric(na.omit(getValues(probMap)))
-###p.value <- 1-as.numeric(pchisq(dists, df=nlayers(bioRastsKeep)))
-###probMap[!is.na(probMap[])] <- p.value
-                              
-                              
-                              
 ###10. Use your training occurrence data and the uncorrelated set of bioclimatic rasters to fit and predict a
 ###MaxEnt model (using the maxent function in dismo). Use jackknife to assess variable importance.
 ###Make a map of the prediction.
-                              
-                              
-                              
-###HW QUESTION: What are the top two most important variables associated with the distribution of the Austral grass tree? Which variable is least important?
+
+maxent()
+#make sure that you set your filepath bc this has a lot of data
+filePath <- "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Homework5"
+
+#measure variable importance using jackknife and produce response curves
+mx <- maxent(stack(bioRastsUC), 
+             presTrain,
+             path=filePath,
+             args=c("jackknife", "responsecurves"))
+
+plot(mx)
+mx
+
+# evaluate the model using the test data
+e <- evaluate(presTest, bgTest, mx, bioRastsUC)
+e
+
+# predict back to geography
+mxPred <- predict(mx, bioRastsUC)
+plot(mxPred, col=rgb.tables(1000))
+# Predict in 'raw' format and save raster of prediction
+mxPred <- predict(mx, bioRastsUC, args=c("outputformat=raw"),
+                  filename=paste0(filePath, '/maxent_predictionJacknife.tif'))
+
+
+#check model quality using the Boyce Index
+predRast <- raster(paste0(filePath, '/maxent_predictionRAW.tif'))
+ecospat.boyce(predRast, presTest)
+
+###HW QUESTION: What are the top two most important variables associated with the
+###distribution of the Austral grass tree? Which variable is least important?
                                 
                                 
                                 
@@ -377,9 +397,20 @@ points(sdmTest[sdmTest$sppPA==1,c("x", "y")], pch='x', col="red")
                                 
                                 
 ###11. Evaluate the mahal and maxent models using the testing data and background data.
-                              
-                              
-                              
+
+#steps completed as part of the processes above. See code:
+## evaluate the model using test data (presences + background)
+#e <- evaluate(p=extract(probMap, presTest), # presences
+              #a=extract(probMap, bgTest)) # background / absences
+#e
+
+#and:
+
+# evaluate the model using the test data
+#e <- evaluate(presTest, bgTest, mx, bioRastsUC)
+#e
+
+
 ###HW QUESTION: Briefly discuss the model evaluation metrics. Which model performed best?
 ###My AUC values for these models were quite similar even though their predictions were not. If
 ###you were a conservation manager and were provided output from these two models, how might

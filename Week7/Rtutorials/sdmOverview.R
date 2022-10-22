@@ -204,6 +204,7 @@ mxPred <- predict(mx, predictors, args=c("outputformat=raw"),
 
 # let's check model quality using the Boyce Index
 predRast <- raster(paste0(filePath, '/maxent_predictionRAW.tif'))
+
 ecospat.bo
 
 fyce(predRast, presTest)
