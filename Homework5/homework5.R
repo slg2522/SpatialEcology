@@ -375,7 +375,7 @@ e
 
 # predict back to geography
 mxPred <- predict(mx, bioRastsUC)
-plot(mxPred, col=rgb.tables(1000))
+plot(mxPred, col=rgb.tables(1000), main="Maxent Prediction")
 # Predict in 'raw' format and save raster of prediction
 mxPred <- predict(mx, bioRastsUC, args=c("outputformat=raw"),
                   filename=paste0(filePath, '/maxent_predictionJacknife.tif'))
@@ -387,15 +387,65 @@ ecospat.boyce(predRast, presTest)
 
 ###HW QUESTION: What are the top two most important variables associated with the
 ###distribution of the Austral grass tree? Which variable is least important?
-                                
-                                
-                                
+
+#According to the Analysis of Variable Contributions Table, bio19 contributes
+#71.4% with 66.5% permutation importance abd bio10 contributes 19.2% with 6.3%
+#permutation importance. The least important variable is bio15, which contributes
+#1.1% and 7.6 permutation importance.
+
+#The Jacknife of Regularized Training Gain for Species shows bio10 as the most 
+#important (accounting for about 1.9 regularized training gain with only variable
+#and 2.1 without the variable). Bio19 is the seond-most important, reporting ~1.8
+#regularized training gain with only this variable and ~2.05 without the variable.
+#The jacknife disagrees with the Analysis of Variable Contributions Table for the
+#least important variable, and reports bio18 as 0.18 with only the variable and
+#about 2.1 without the variable.
+
+#Overall, bio10 is the environmental variable with highest gain when used
+#alone, which therefore likely holds the most useful information alone. 
+#Bio19 decreases the gain the most when it is omitted, likely making it 
+#contain the most information that cannot be captured from the other variables.
+
+
 ###HW QUESTION: Compare the predicted distributions from the two SDMs. How are they
 ###similar / different? Where do the models over- or under-predict the distribution? What might
 ###account for these model errors?
-                                
-                                
-                                
+
+#Mahalanobis Plot
+plot(probMap, main='Mahalanobis distance (p-value)')
+#Maxent Plot
+plot(mxPred, col=rgb.tables(1000), main="Maxent Prediction")
+
+#The Mahalanobis Distance plot dramatically over predicts the distribution of trees
+#suggesting their range expands from the east coast of Australia to central,
+#southern, and western portions of Australia. This prediction is likely driven
+#by the large amount of presence-only data points concentrated along the east
+#coast combined with several rarer and more central points. Since Mahalanobis
+#distance measures the relative distance to a central point representing the
+#overall mean, the presence of multivariate outliers may have skewed the centroid
+#further westward than would be anticipated had they been removed ahead of analysis.
+#This problem may have been exacerbated by high correlation in the environmental
+#variables, which despite undergoing cleaning, were likely related (as we only
+#examined temperature and precipitation). When the variables are highly correlated,
+#this interferes with the precision of the inverse of the correlation matrix, an 
+#element essential for model calculations. As a result, Egan & Morgan, 1998;
+#Hadi & Simonoff, 1993; and Varmuza & Filzmoser, 2016 caution against using the 
+#approach.
+
+#The Maxent predictions are similar to the Mahalanobis Distance in that they both
+#predict tree presence on the east coast of Australia, however, the maxent
+#predictions are much more spatially conservative than the former. The Maxent
+#model predicts tree populations along the east coast of Australia similar to the
+#current range and on the southeast most coastal portion of Australia. This 
+#prediction assumes relatively low geographic expansion (in some plaaces more 
+#constrained spatial ranges than are currently occupied) and likely underestimates 
+#the potential for range shifts. The maxent prediction may be overfitted as a 
+#result of either large sample size in small area, user selected choices, the
+#provided background points were too narrow, sampling bias to the west coast, 
+#region mismatch between background samples and extrapolation to the new environment,
+#or improper regularization leading to a highly complex model.
+
+
 ###11. Evaluate the mahal and maxent models using the testing data and background data.
 
 #steps completed as part of the processes above. See code:
@@ -416,10 +466,14 @@ ecospat.boyce(predRast, presTest)
 ###you were a conservation manager and were provided output from these two models, how might
 ###you handle this seeming contradiction between the differences in the spatial predictions, but
 ###similarity in AUC?
-                                
-                                
-                                
+
+
+
+
+
 ###HW QUESTION: How might you improve these models?
-                                
-                                
-                                
+
+
+
+
+
