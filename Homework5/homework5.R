@@ -467,13 +467,63 @@ plot(mxPred, col=rgb.tables(1000), main="Maxent Prediction")
 ###you handle this seeming contradiction between the differences in the spatial predictions, but
 ###similarity in AUC?
 
+#Mahal:
+#class          : ModelEvaluation 
+#n presences    : 141 
+#n absences     : 4 
+#AUC            : 0.714539 
+#cor            : -0.01406406 
+#max TPR+TNR at : 0.9948285
 
+#Maxent:
+#class          : ModelEvaluation 
+#n presences    : 141 
+#n absences     : 4 
+#AUC            : 0.3031915 
+#cor            : -0.0901167 
+#max TPR+TNR at : 0.4357871
 
+###Which model performed best?
+#According to the AUC values, the Mahalanobis Distance performed better than the Maxent.
+#However, the AUC is a problematic assessment method, as the technique
+#requires presence and absence data, but only presence data are supplied. AIC is 
+#the preferred and more accurate method for assessing Maxent models' abilities to
+#distinguish between presences from background location potential presences. In
+#addition, comparisons between models require the same landscape, background locations,
+#species, and test data. In the case of this exercise, the randomized test data and 
+#training sets should be statistically similar, but are not necessary equivalent.
+#Further, the assessment requires species to be near range equilibrium and it is
+# unclear whether this is the case.
+
+###If you were a conservation manager and were provided output from these two models, how might
+###you handle this seeming contradiction between the differences in the spatial predictions, but
+###similarity in AUC?
+#The results should be interpreted with full acknowledgement of the above criteria.
+#That being said, as a conservation manager I would want to run a variety of models
+#and assessment criteria, knowing that each method has downfalls. By comparing
+#where the ouputs share prediction areas and prioritize variables, a pattern
+#of likely range exapnsion/contraction, probable locations, and governing
+#variables may emerge. While these two models differ substantially in their 
+#predictions, other models may fall more in the middle of the spectrum. Further,
+#as a conservation manager, I would want to supply more environmental information
+#in case there are more or equally important variables governing the range.
 
 
 ###HW QUESTION: How might you improve these models?
+#Mahalanobis distance rapidly deteriorates as sample size decreases. In the case
+#of more available samples, a simple fix would be to provide the model with more 
+#input, but this is not always feasible. To simulate a near infinite sample size 
+#without providing numerous samples, the algorithm could in theory be improved
+#by using an expectation-maximization component, such that each principal component's
+#score's bias is mitigated by dividing by some numerical expectation. This method 
+#would act similarly to adding more datapoints in a high presence density area and 
+#effectively dwarfing low presence density outliers.
 
-
-
-
-
+#Maxent suffers from a propensity for model fitting, high sensitivity to evaluation
+#data, and model overcomplexity. To avoid these tendencies, I would recommend
+#substituting the current random partitionment of data, which appears to inflate
+#model performance and underestimate range, for a masked geographically structured
+#set. This approach would ensure the model covers the current presence range and
+#avoids overfitting, with enhanced discriminatory ability over only the potential
+#colonization areas. This could be paired with adjustment of the regularization 
+#multiplier if it is suspected to be under performing in the discrimination task.
