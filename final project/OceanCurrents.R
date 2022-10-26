@@ -15,6 +15,8 @@ ncname <- "R2200aRBRZBGCcaaa03a.pop.h.2016-08.nc"
 ncfname <- paste(ncpath, ncname, sep="")
 dname <- "TEMP"  # note: tmp means temperature (not temporary)
 
+#check that the extents overlap
+
 #open netcdf file
 #file.choose() allows user to choose file from system
 nc <- nc_open(ncfname)

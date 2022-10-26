@@ -12,12 +12,13 @@ library(gridExtra)
 library(stringr)
 
 # set path and filename
-files<- list.files("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Test/test",pattern='*.nc',full.names=TRUE)
-path <- "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Test/test/"
+files<- list.files("D:/Cold Pool/1993",pattern='*.nc',full.names=TRUE)
+path <- "D:/Cold Pool/1993/"
 dname <- "TEMP"
 
 #extent
-Ext <- extent(c(259.3191, 455.6267, 137.5159, 354.8564))
+#Ext <- extent(c(259.3191, 455.6267, 137.5159, 354.8564))
+Ext <- extent(c(222.6804, 584.4472, 109.7872, 349.5629))
 
 # rasterVis plot
 mapTheme <- rasterTheme(region = rev(brewer.pal(11, "RdBu")))
@@ -25,8 +26,9 @@ cutpts <- c(-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17)
 
 raster_list = list()
 plot_list = list()
+months_list = list("-05", "-06", "-07", "-08", "-09")
 
-setwd("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Test/test")
+setwd("D:/Cold Pool/1993")
 
 #loop through files
 for (i in seq_along(files)) {
@@ -46,7 +48,7 @@ for (i in seq_along(files)) {
   label <- toString(ncatt_get(nc,0,"title"))
   label <- as.list(strsplit(label, "TRUE, ")[[1]])
   title <- label[2]
-  filetitle <- paste(title, ".tif", sep="")
+  filetitle <- paste(title,months_list[i], ".tif", sep="")
   
   #find the minimum temperature and plot
   minTemp <- calc(tmp_raster.crop, min, na.rm=TRUE, forcefun=FALSE, forceapply=FALSE, colNA='black')
@@ -61,7 +63,6 @@ for (i in seq_along(files)) {
               NAflag=0,
               options=options,
               overwrite=TRUE)
-  #writeRaster(minTemp, filename=file.path(getwd(), filetitle), format="GTiff", overwrite=TRUE)
   raster_list[[i]] = minTemp
   pltMin <- levelplot(minTemp, margin = F,  at=cutpts, cuts=20, pretty=TRUE, par.settings = mapTheme,
                       main=title)
@@ -71,16 +72,82 @@ for (i in seq_along(files)) {
 
 dev.off()
 
+#check there are 5 rasters per folder
 raster_list
 testRaster <- raster(paste0(getwd(), "/", filetitle))
 plot(testRaster, col=rainbow(100))
 plot(minTemp)
 
+
+#view raster files
+
+#raster5
+raster5 <- raster(paste0(getwd(), "/", "R2200aRBRZBGCcaaa03a-05.tif"))
+plot(raster5)
+plt5 <- levelplot(raster5, margin = F,  at=cutpts, cuts=20, pretty=TRUE, par.settings = mapTheme,
+                  main="1993-05")
+#plot minimum temperature
+plt5
+
+#raster6
+raster6 <- raster(paste0(getwd(), "/", "R2200aRBRZBGCcaaa03a-06.tif"))
+plot(raster6)
+plt6 <- levelplot(raster6, margin = F,  at=cutpts, cuts=20, pretty=TRUE, par.settings = mapTheme,
+                  main="1993-06")
+#plot minimum temperature
+plt6
+
+#raster7
+raster7 <- raster(paste0(getwd(), "/", "R2200aRBRZBGCcaaa03a-07.tif"))
+plot(raster7)
+plt7 <- levelplot(raster7, margin = F,  at=cutpts, cuts=20, pretty=TRUE, par.settings = mapTheme,
+                  main="1993-07")
+#plot minimum temperature
+plt7
+
+#raster8
+raster8 <- raster(paste0(getwd(), "/", "R2200aRBRZBGCcaaa03a-08.tif"))
+plot(raster8)
+plt8 <- levelplot(raster8, margin = F,  at=cutpts, cuts=20, pretty=TRUE, par.settings = mapTheme,
+                  main="1993-08")
+#plot minimum temperature
+plt8
+
+#raster9
+raster9 <- raster(paste0(getwd(), "/", "R2200aRBRZBGCcaaa03a-09.tif"))
+plot(raster9)
+plt9 <- levelplot(raster9, margin = F,  at=cutpts, cuts=20, pretty=TRUE, par.settings = mapTheme,
+                  main="1993-09")
+#plot minimum temperature
+plt9
+
+
+
+
+## apply the colours used by raster plot() itself
+raster5 <- image_raster(raster5, col = rev(brewer.pal(11, "RdBu")))
+plotRGB(raster5)
+raster6 <- image_raster(raster6, col = rev(brewer.pal(11, "RdBu")))
+plotRGB(raster6)
+raster7 <- image_raster(raster7, col = rev(brewer.pal(11, "RdBu")))
+plotRGB(raster7)
+raster8 <- image_raster(raster8, col = rev(brewer.pal(11, "RdBu")))
+plotRGB(raster8)
+raster9 <- image_raster(raster9, col = rev(brewer.pal(11, "RdBu")))
+plotRGB(raster9)
+
+
+
+
+plot(raster5)
+plot(raster5)
+
+
 library(palr)
 
 ## apply the colours used by raster plot() itself
 rgb0 <- image_raster(minTemp, col = rev(brewer.pal(11, "RdBu")))
-plotRGB(rgb0)
+plotRGB(rgb5)
 
 #write correct color raster
 filetitle2 <- (paste0(title, "TrueColors.tif", sep=""))

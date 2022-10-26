@@ -137,6 +137,41 @@ gplot(region3Mask) +
 
 
 
+#bathymetry
+bathy <- raster("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/GEBCO_BATHY_2002-01-01_rgb_3600x1800.TIFF")
+bathy
+plot(bathy)
+
+# now crop the raster using the new outline
+region1OutlineBathy <- spTransform(region1, projection(bathy))
+polyExt <- extent(region1OutlineBathy)
+region1Bathy.sw <- crop(bathy, polyExt)
+#plot the new region of interest and accompanying data
+plot(region1Bathy.sw)
+
+#check still raster layer, so operable with sampleRegular function
+class(region1Bathy.sw)
+
+## crop and mask
+region1BathyCrop <- crop(region1Bathy.sw, extent(region1))
+region1BathyMask <- mask(region1BathyCrop, region1)
+
+theme_set(theme_bw())
+
+gplot(region1BathyMask) +
+  geom_tile(aes(fill = value)) +
+  facet_wrap(~ variable) +
+  scale_fill_gradient(low = '#091E5A',
+                      high = '#1ea84c',
+                      na.value="white") +
+  labs(x="longitude", y="latitude", title="Bathymetry") +
+  theme(plot.background = element_blank()
+        ,panel.grid.major = element_blank()
+        ,panel.grid.minor = element_blank()
+        ,panel.background = element_blank())
+
+
+
 
 
 

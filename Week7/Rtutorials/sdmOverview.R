@@ -6,6 +6,8 @@ library(corrplot)
 library(usdm)
 library(colorRamps)
 
+#install.packages("ecospat" , dependencies=T) if not working
+
 ## ---- Load species data-------------------------------------------------------
 # csv table with species occurrence data
 # csv (Comma separated values) is an easy format to work with
@@ -218,6 +220,7 @@ library(randomForest)
 library(biomod2)
 library(ggplot2)
 # the model formula
+#~ means as a function of
 model <- sppPA ~ bio1 + bio5 + bio6 + bio7 + bio8 + bio12 + bio16 + bio17 + biome
 
 # fit the RF model
@@ -230,6 +233,7 @@ importance(rf.reg) # variable importance summary
 
 
 # with pa as a factor to perform classification
+#default of 500 trees
 model <- factor(sppPA) ~ bio1 + bio5 + bio6 + bio7 + bio8 + bio12 + bio16 + bio17 + biome
 rf.class <- randomForest(model, data=sdmTrain, importance=T)
 rf.class
