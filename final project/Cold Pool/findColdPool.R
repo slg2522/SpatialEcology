@@ -48,7 +48,7 @@ for (i in seq_along(files)) {
   label <- toString(ncatt_get(nc,0,"title"))
   label <- as.list(strsplit(label, "TRUE, ")[[1]])
   title <- label[2]
-  filetitle <- paste(title,months_list[i], ".tif", sep="")
+  filetitle <- paste(title, months_list[i], ".tif", sep="")
   
   #find the minimum temperature and plot
   minTemp <- calc(tmp_raster.crop, min, na.rm=TRUE, forcefun=FALSE, forceapply=FALSE, colNA='black')
@@ -72,11 +72,39 @@ for (i in seq_along(files)) {
 
 dev.off()
 
+# Save plots to tiff. Makes a separate file for each plot.
+for (i in 1:length(plot_list)) {
+  file_name = paste(path, "1993", months_list[i], ".tiff", sep="")
+  tiff(file_name)
+  print(plot_list[[i]])
+  dev.off()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #check there are 5 rasters per folder
 raster_list
 testRaster <- raster(paste0(getwd(), "/", filetitle))
 plot(testRaster, col=rainbow(100))
 plot(minTemp)
+
+#set plot color theme
+# rasterVis plot
+mapTheme <- rasterTheme(region = rev(brewer.pal(11, "RdBu")))
+cutpts <- c(-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17)
 
 
 #view raster files
@@ -194,15 +222,4 @@ writePaletteVRT("test.vrt", testRaster, rainbow(20))
 
 
 
-# Save plots to tiff. Makes a separate file for each plot.
-for (i in 1:length(plot_list)) {
-  file_name = paste(path, i, ".tiff", sep="")
-  tiff(file_name)
-  print(plot_list[[i]])
-  dev.off()
-}
 
-plot(tmp_raster.crop)
-plot(minTemp)
-
-dev.off()
