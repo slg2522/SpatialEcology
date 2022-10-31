@@ -182,3 +182,7 @@ pltMin <- levelplot(minTemp, margin = F,  at=cutpts, cuts=20, pretty=TRUE, par.s
 
 #plot minimum temperature
 pltMin
+
+#SST vs Cold Pool
+grid.arrange(plt1, pltMin)
+
