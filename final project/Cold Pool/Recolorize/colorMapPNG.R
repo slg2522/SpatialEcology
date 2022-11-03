@@ -1,3 +1,5 @@
+library(png)
+library(recolorize)
 img <- readPNG("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/R2200aRBRZBGCcaaa03aTrueColors.png")
 
 # get original fit
