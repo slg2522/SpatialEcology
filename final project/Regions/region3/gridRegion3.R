@@ -1,0 +1,298 @@
+# Load packages.
+library(rgdal)
+library(raster)
+library(rgeos)
+library(dismo)
+library(sf)
+library(geojsonsf)
+library(geojsonR)
+
+region3 <- '{
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon", 
+      "coordinates": [
+      [
+        [
+          -174.238099,
+          58.294106
+        ],
+        [
+          -167.415693,
+          60.290498
+        ],
+        [
+          -165.233316,
+          60.590787
+        ],
+        [
+          -164.789573,
+          60.801526
+        ],
+        [
+          -164.265236,
+          60.611039
+        ],
+        [
+          -163.889763,
+          60.751409
+        ],
+        [
+          -163.343205,
+          60.6433
+        ],
+        [
+          -163.610148,
+          60.97382
+        ],
+        [
+          -164.247219,
+          60.870265
+        ],
+        [
+          -164.937825,
+          61.071612
+        ],
+        [
+          -165.36608,
+          61.177896
+        ],
+        [
+          -165.746751,
+          61.272071
+        ],
+        [
+          -165.872755,
+          61.561683
+        ],
+        [
+          -166.114081,
+          61.734805
+        ],
+        [
+          -165.620732,
+          61.871015
+        ],
+        [
+          -165.746881,
+          62.156094
+        ],
+        [
+          -164.784594,
+          62.571799
+        ],
+        [
+          -164.88581,
+          62.818174
+        ],
+        [
+          -164.560293,
+          63.128633
+        ],
+        [
+          -164.038357,
+          63.227324
+        ],
+        [
+          -163.366097,
+          63.01606
+        ],
+        [
+          -162.654208,
+          63.236501
+        ],
+        [
+          -162.299494,
+          63.456233
+        ],
+        [
+          -161.533357,
+          63.444355
+        ],
+        [
+          -160.769107,
+          63.651697
+        ],
+        [
+          -160.749419,
+          63.999607
+        ],
+        [
+          -161.188268,
+          64.472471
+        ],
+        [
+          -160.830281,
+          64.685005
+        ],
+        [
+          -161.146737,
+          64.938435
+        ],
+        [
+          -161.69686,
+          64.716963
+        ],
+        [
+          -162.176654,
+          64.664123
+        ],
+        [
+          -162.721583,
+          64.28077
+        ],
+        [
+          -163.013715,
+          64.505108
+        ],
+        [
+          -163.39455,
+          64.377359
+        ],
+        [
+          -163.638822,
+          64.590303
+        ],
+        [
+          -164.332669,
+          64.558687
+        ],
+        [
+          -165.118972,
+          64.442069
+        ],
+        [
+          -166.03109,
+          64.591013
+        ],
+        [
+          -166.538505,
+          64.781142
+        ],
+        [
+          -166.835843,
+          65.105757
+        ],
+        [
+          -166.337893,
+          65.230627
+        ],
+        [
+          -166.750005,
+          65.396189
+        ],
+        [
+          -167.422795,
+          65.488736
+        ],
+        [
+          -168.145506,
+          65.642375
+        ],
+        [
+          -169.060941,
+          65.835686
+        ],
+        [
+          -168.972645,
+          65.436725
+        ],
+        [
+          -178.748127,
+          60.743295
+        ],
+        [
+          -178.63898,
+          60.485668
+        ],
+        [
+          -178.529985,
+          60.226341
+        ],
+        [
+          -178.908352,
+          60.002923
+        ],
+        [
+          -178.348245,
+          59.534951
+        ],
+        [
+          -177.594246,
+          59.663546
+        ],
+        [
+          -177.601616,
+          59.399232
+        ],
+        [
+          -177.843271,
+          59.194976
+        ],
+        [
+          -178.380299,
+          59.306332
+        ],
+        [
+          -178.055668,
+          58.892234
+        ],
+        [
+          -177.328343,
+          58.668387
+        ],
+        [
+          -176.077781,
+          58.575809
+        ],
+        [
+          -175.281518,
+          58.361801
+        ],
+        [
+          -175.256828,
+          58.780219
+        ],
+        [
+          -174.462631,
+          58.628771
+        ],
+        [
+          -174.238099,
+          58.294106
+        ]
+      ]
+      ]
+      }
+    }'
+
+sf <- geojson_sf(region3)
+
+head(sf)
+plot(sf)
+
+st_write(sf, "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Regions/region3/region3Location.shp")
+
+shp <- shapefile("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Regions/region3/region3Location.shp")
+plot(shp)
+head(shp)
+
+
+library(terra)
+v <- vect(shp)
+r <- terra::rast(v, resolution = 1, vals=1)
+r <- terra::mask(r, v)
+g <- as.polygons(r, dissolve=FALSE)
+plot(g)
+plot(shp, add=TRUE)
+region3Crop <- crop(g, v)
+plot(region3Crop)
+
+s <- sf::st_as_sf(region3Crop)
+
+st_write(s, "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Regions/region3/region3Grid.shp")
+
+test <- shapefile("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Regions/region3/region3Grid.shp")
+
+plot(test)
+

@@ -1,0 +1,250 @@
+# Load packages.
+library(rgdal)
+library(raster)
+library(rgeos)
+library(dismo)
+library(sf)
+library(geojsonsf)
+library(geojsonR)
+
+region1 <- '{
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon", 
+      "coordinates": [
+      [
+        [
+          -164.129297,
+          59.90139
+        ],
+        [
+          -163.400521,
+          59.8165
+        ],
+        [
+          -162.195354,
+          60.158889
+        ],
+        [
+          -161.722177,
+          59.449736
+        ],
+        [
+          -162.146944,
+          59.14171
+        ],
+        [
+          -161.554152,
+          59.125809
+        ],
+        [
+          -161.870599,
+          58.786604
+        ],
+        [
+          -162.295951,
+          58.545444
+        ],
+        [
+          -161.114491,
+          58.655779
+        ],
+        [
+          -160.231264,
+          59.022766
+        ],
+        [
+          -159.877434,
+          58.822814
+        ],
+        [
+          -159.309074,
+          58.706864
+        ],
+        [
+          -158.765535,
+          58.418313
+        ],
+        [
+          -158.878298,
+          58.805323
+        ],
+        [
+          -158.476233,
+          59.0882
+        ],
+        [
+          -158.471323,
+          58.661179
+        ],
+        [
+          -157.930005,
+          58.587739
+        ],
+        [
+          -156.904818,
+          58.955627
+        ],
+        [
+          -157.388495,
+          58.514118
+        ],
+        [
+          -157.465668,
+          58.06671
+        ],
+        [
+          -157.730983,
+          57.556749
+        ],
+        [
+          -158.240527,
+          57.293877
+        ],
+        [
+          -158.640284,
+          56.925054
+        ],
+        [
+          -159.309637,
+          56.704491
+        ],
+        [
+          -160.402884,
+          56.229317
+        ],
+        [
+          -160.584757,
+          55.866675
+        ],
+        [
+          -161.334889,
+          55.931577
+        ],
+        [
+          -162.054042,
+          55.798778
+        ],
+        [
+          -162.606478,
+          55.389461
+        ],
+        [
+          -162.999963,
+          55.084112
+        ],
+        [
+          -163.691423,
+          55.057515
+        ],
+        [
+          -164.35082,
+          54.829665
+        ],
+        [
+          -165.032765,
+          54.49206
+        ],
+        [
+          -165.738708,
+          54.121254
+        ],
+        [
+          -166.396045,
+          53.968629
+        ],
+        [
+          -166.899282,
+          54.003662
+        ],
+        [
+          -167.179797,
+          53.658537
+        ],
+        [
+          -167.672637,
+          53.376539
+        ],
+        [
+          -168.154047,
+          53.602386
+        ],
+        [
+          -168.35689,
+          53.349915
+        ],
+        [
+          -168.873157,
+          53.03478
+        ],
+        [
+          -169.075154,
+          52.779774
+        ],
+        [
+          -170.072751,
+          52.771782
+        ],
+        [
+          -171.135085,
+          52.42607
+        ],
+        [
+          -171.91734,
+          52.351845
+        ],
+        [
+          -172.340896,
+          52.484605
+        ],
+        [
+          -173.034164,
+          52.183296
+        ],
+        [
+          -174.299893,
+          52.50098
+        ],
+        [
+          -171.958035,
+          55.353293
+        ],
+        [
+          -164.129297,
+          59.90139
+        ]
+      ]
+      ]
+      }
+    }'
+
+sf <- geojson_sf(region1)
+
+head(sf)
+plot(sf)
+
+st_write(sf, "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Regions/region1/region1Location.shp")
+
+shp <- shapefile("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Regions/region1/region1Location.shp")
+plot(shp)
+head(shp)
+
+
+library(terra)
+v <- vect(shp)
+r <- terra::rast(v, resolution = 1, vals=1)
+r <- terra::mask(r, v)
+g <- as.polygons(r, dissolve=FALSE)
+plot(g)
+plot(shp, add=TRUE)
+region1Crop <- crop(g, v)
+plot(region1Crop)
+
+s <- sf::st_as_sf(region1Crop)
+
+st_write(s, "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Regions/region1/region1Grid.shp")
+
+test <- shapefile("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Regions/region1/region1Grid.shp")
+
+plot(test)
+
