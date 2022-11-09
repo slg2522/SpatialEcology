@@ -86,3 +86,19 @@ for (i in 1:length(plot_list)) {
   print(plot_list[[i]])
   dev.off()
 }
+
+## apply the colours used by raster plot() itself
+rgb0 <- image_raster(minTemp, col = rev(greycols2))
+plotRGB(rgb0)
+
+#write correct color raster
+filetitle2 <- (paste0(title, "TrueColors.tif", sep=""))
+writeRaster(rgb0, 
+            filename=file.path(getwd(), filetitle2), 
+            datatype='INT1U',
+            NAflag=0,
+            options=options,
+            overwrite=TRUE)
+
+trueColorRaster <- raster(paste0(getwd(), "/", filetitle2))
+plot(trueColorRaster)
