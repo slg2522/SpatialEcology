@@ -324,6 +324,7 @@ bb.95$area
 
 
 #plot the predictions vs the tracks
+par(mfrow=c(1,3))
 #MCP
 plot(public)
 plot(intersectMCP95, add=TRUE)
@@ -420,36 +421,22 @@ percentBB$difference <- round(percentBB$public-percentBB$bb95,3)
 #what proportion of the home ranges of subadults is on public (protected) land?
 percentBB
 
-
-#how much the method used to measure the home range influences the estimate of
-#the proportion of use on public land
-Panther <- c(mcp95$id)
-MCP <- c(percentMCP$difference)
-KDE <- c(percentKDE$difference)
-BB <- c(percentBB$difference)
-methodMatters <- data.frame(Panther, MCP, KDE, BB)
-#difference in public area versus predicted home range for each panther
-methodMatters
-#  Panther         MCP        KDE         BB
-#1     100   123617001  272478015  272469940
-#2     130  2046949433 2911048684 2911163093
-#3     131   -87741751  129897442  129892889
-#4     137   -47075029  217618022  217619748
-#5     143  -503812229  104105249  104141880
-#6     147 -1435379516  272024272  272355037
-
-#convert the table to a percent used so that it is easier to read
-Public <- c(percentMCP$public)
-methodMatters <- data.frame(Panther, MCP, KDE, BB, Public)
-MCP_Per <- c(100-(methodMatters$MCP/methodMatters$Public)*100)
-KDE_Per <- c(100-(methodMatters$KDE/methodMatters$Public)*100)
-BB_Per <- c(100-(methodMatters$BB/methodMatters$Public)*100)
-percentUsed <- data.frame(Panther, MCP_Per, KDE_Per, BB_Per)
-
-
-
 #my interpretation of the results, answering the question for managers
-#Based on the table above, which reports the panther and 
+#Based on the combined visual evidence of the side-by-side maps of panther tracks
+#and predicted homeranges combined with the table above reporting percent of public
+#land occupied by each panther, and the intersections of the panther tracks with
+#the public land, the MCP model appears to best reflect panther 147's sole presence
+#in the public land and the other panther's absence. The MCP only overpredicts
+#presence on one polygon, whereas the KDE and BB overpredict on multiple polygons
+#yet report high percentages of nonresource use in the public land. Therefore,
+#if managers, want the most conservative estimate of panther ranges, they should
+#use the MCP model, if they want the most generous, use the BB model, and if they
+#want an inbetween estimate for public land use, KDE provides this. Based on the
+#track data alone, the MCP most closely matches the tracks. This could of course
+#change with specified KDE and BB parameters. For instance, a sigma2 of 450 was
+#chosen arbitrarily and likely deserves more attention based on the biology of 
+#the species.
+
 
 
 
