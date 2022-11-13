@@ -109,6 +109,9 @@ plot(trueColorRaster)
 plotRGB(rgb0)
 boundary <- rasterToPolygons(minTemp, fun=function(x){x<2 & x> -1})
 coldPool <- rasterToPolygons(minTemp, fun=function(x){x< -1})
+#get resolution of the raster
+resolution <- res(minTemp)
+
 plot(boundary, add=TRUE, col='red')
 plot(coldPool, add=TRUE, col='blue')
 
@@ -119,73 +122,26 @@ shapefile(boundary, filename="C:/Users/hongs/OneDrive - University of Maryland/D
 #merge shapes
 coldPoolShape <- readOGR("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/coldPoolShape/coldPoolShape.shp")
 boundaryShape <- readOGR("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/boundaryShape/boundaryShape.shp")
-plot(coldPoolShape)
-
-
-
-test1 <- st_read("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/coldPoolShape/coldPoolShape.shp")
-st_as_sf(test1)
-test <- st_combine(test1)
-plot(test1)
-
-
 plot(coldPoolShape, col="black")
-boundaryPlot <- plot(boundaryShape, col="black")
-graph_to_shp(graph = boundaryPlot, crds = pts_pop_simul, mode = "both",
-             crds_crs = crds_crs,
-             layer = "test_fonct",
-             dir_path = tempdir(),
-             metrics = FALSE)
+plot(boundaryShape, col="black")
+#show together to make sure crs and scale are correct
+together <- rbind(coldPoolShape, boundaryShape, makeUniqueIDs = TRUE) 
+plot(together, col="black")
 
-
-
-coldPoolAndBoundary <- union(coldPoolShape, boundaryShape)
-plot(coldPoolAndBoundary)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-coldPoolShape <- st_transform(coldPoolShape, crs = st_crs(rgb0))
-boundaryShape <- st_transform(boundaryShape, crs = st_crs(rgb0))
-plot(coldPool)
-plot(boundaryShape)
-plot(coldPool, add=TRUE)
-
-
-
-crs.coldPoolShape <- projection(boundaryShape)
-plot(boundaryShape)
-plot(coldPoolShape, add=TRUE)
 head(coldPoolShape)
 head(boundaryShape)
 identical(coldPoolShape,boundaryShape)
 
-coldPoolShape$area <- st_area(st_geometry(coldPoolShape)) #calculate the area of the polgons and add a new attribute table called "area"
-boundaryShape$area <- st_area(st_geometry(boundaryShape)) #calculate the area of the polgons and add a new attribute table called "area"
-areascf <- as.data.frame(cbind(coldPoolShape$area,boundaryShape$area)) #bind the two columns together into a new dataframe. This will only work if both the original files have the same number of rows. if we are not certain that this is the case, we can check with length(st_geometry(new_SE)) for each file. 
-#and inspect the new data frame we created:
+#calculate the areas
+coldPoolArea <- sum(area(coldPoolShape))
+boundaryArea <- sum(area(boundaryShape))
+differenceArea <- boundaryArea - coldPoolArea
 
-head(areascf)
+#show that the combined plot area is the same as the sum of individual areas,
+#which means the resolution is constant
+togetherArea <- sum(area(together))
+sumArea <- boundaryArea + coldPoolArea
 
-#rename the columns something more useful
-colnames(areascf) <- c("coldPoolShape","boundaryShape")
-#create a new column showing the difference in area between the two shape files
-#I rounded up to 3 dps to avoid very small differences. 
-areascf$diff <- round(areascf$coldPoolShape-areascf$boundaryShape,3)
-areascf
-plot(boundaryShape[1], col='red')
-plot(coldPoolShape[1], col='blue', add=TRUE)
-plot(areascf$diff)
+#express the coldpool as a percent of the total cold area
+percentColdPool <- (coldPoolArea/sumArea)*100
+
