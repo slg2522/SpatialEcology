@@ -15,12 +15,11 @@ library(dplyr)
 library(sp)
 
 # set path and filename
-files<- list.files("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize",pattern='*.nc',full.names=TRUE)
-path <- "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/"
+files<- list.files("D:/Cold Pool/1993",pattern='*.nc',full.names=TRUE)
+path <- "D:/Cold Pool/1993/"
 dname <- "TEMP"
 
 #extent
-#Ext <- extent(c(259.3191, 455.6267, 137.5159, 354.8564))
 Ext <- extent(c(222.6804, 584.4472, 109.7872, 349.5629))
 
 # rasterVis plot
@@ -28,16 +27,16 @@ library(RColorBrewer)
 rbcols <- brewer.pal(11, 'RdBu')
 newcol <- colorRampPalette(rbcols)
 ncols <- 1000
-rbcols2 <- newcol(ncols)#apply the function to get 100 colours
+rbcols2 <- newcol(ncols)#apply the function to get 1000 colours
 
 mapTheme <- rasterTheme(region = rev(rbcols2))
 cutpts <- c(seq(-2, 16, by=0.025))
 
 raster_list = list()
 plot_list = list()
-months_list = list( "-test3", "-test4", "-test5", "-test6")
+months_list = list("-01", "-02", "-03", "-04", "-05", "-06", "-07", "-08", "-09", "-10", "-11", "-12")
 
-setwd("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize")
+setwd("D:/Cold Pool/1993")
 
 #loop through files
 for (i in seq_along(files)) {
@@ -66,12 +65,15 @@ for (i in seq_along(files)) {
   options = c("COMPRESS=LZW", "BIGTIFF=YES", "TILED=TRUE", "BLOCKXSIZE=256",
               "BLOCKYSIZE=256")
   
-  writeRaster(minTemp, 
+  rgb0 <- image_raster(minTemp, col = rev(rbcols2))
+  
+  writeRaster(rgb0, 
               filename=file.path(getwd(), filetitle), 
               datatype='INT1U',
               NAflag=0,
               options=options,
               overwrite=TRUE)
+
   raster_list[[i]] = minTemp
   pltMin <- levelplot(minTemp, margin = F,  at=cutpts, cuts=101, pretty=TRUE, par.settings = mapTheme,
                       main=title)
@@ -89,47 +91,26 @@ for (i in 1:length(plot_list)) {
   dev.off()
 }
 
-## apply the colours used by raster plot() itself
-rgb0 <- image_raster(minTemp, col = rev(rbcols2))
-plotRGB(rgb0)
-plotRGB(rgb0)
 
-#write correct color raster
-filetitle2 <- (paste0(title, "TrueColors.tif", sep=""))
-writeRaster(rgb0, 
-            filename=file.path(getwd(), filetitle2), 
-            datatype='INT1U',
-            NAflag=0,
-            options=options,
-            overwrite=TRUE)
-
-trueColorRaster <- raster(paste0(getwd(), "/", filetitle2))
 plot(trueColorRaster)
+trueColorRaster <- image_raster(trueColorRaster, col = rev(rbcols2))ster(paste0(getwd(), "/", filetitle2))
+trueColorRaster
 
-plotRGB(rgb0)
-boundary <- rasterToPolygons(minTemp, fun=function(x){x<2 & x> -1})
+plotRGB(rgb0)trueColorRaster
+boundary <- rasterToPolygons(trueColorRaster, fun=function(x){x<2 & x> -1})
 coldPool <- rasterToPolygons(minTemp, fun=function(x){x< -1})
-#get resolution of the raster
-resolution <- res(minTemp)
-
-plot(boundary, add=TRUE, col='red')
-plot(coldPool, add=TRUE, col='blue')
-
-#write shapefiles
-shapefile(coldPool, filename="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/coldPoolShape.shp")
-shapefile(boundary, filename="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/boundaryShape.shp")
-
+#get resolutitrueColorRaster
 #merge shapes
 coldPoolShape <- readOGR("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/coldPoolShape/coldPoolShape.shp")
 boundaryShape <- readOGR("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/boundaryShape/boundaryShape.shp")
 plot(coldPoolShape, col="black")
 plot(boundaryShape, col="black")
-#show together to make sure crs and scale are correct
-together <- rbind(coldPoolShape, boundaryShape, makeUniqueIDs = TRUE) 
+#show together to make sure crD:/Cold Pool/1993/
+together <- rbind(coldPoolShapD:/Cold Pool/1993/
 plot(together, col="black")
 
-head(coldPoolShape)
-head(boundaryShape)
+head(coldPoolShape)D:/Cold Pool/1993/coldPoolShape.shp
+head(boundaryShape)D:/Cold Pool/1993/boundaryShape.shp
 identical(coldPoolShape,boundaryShape)
 
 #calculate the areas
