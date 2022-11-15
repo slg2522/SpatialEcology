@@ -100,6 +100,7 @@ plotRGB(rgb0)trueColorRaster
 boundary <- rasterToPolygons(trueColorRaster, fun=function(x){x<2 & x> -1})
 coldPool <- rasterToPolygons(minTemp, fun=function(x){x< -1})
 #get resolutitrueColorRaster
+
 #merge shapes
 coldPoolShape <- readOGR("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/coldPoolShape/coldPoolShape.shp")
 boundaryShape <- readOGR("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/Cold Pool/Recolorize/boundaryShape/boundaryShape.shp")

@@ -24,7 +24,7 @@ Ext <- extent(c(222.6804, 584.4472, 109.7872, 349.5629))
 library(RColorBrewer)
 bluecols <- brewer.pal(9, 'Blues')
 newcol <- colorRampPalette(bluecols)
-ncols <- 100
+ncols <- 1000
 bluecols2 <- newcol(ncols)#apply the function to get 100 colours
 
 mapTheme <- rasterTheme(region = rev(bluecols2))
