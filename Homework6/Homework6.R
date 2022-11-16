@@ -437,7 +437,19 @@ percentBB
 #chosen arbitrarily and likely deserves more attention based on the biology of 
 #the species.
 
+#chosen home range estimator approach from the three listed in question one
+#Brownian Bridge Movement Model
 
+#justification for method
+#If I were a manager of an endangered and highly mobile and territorial species, I would want to overestimate, rather
+#than risk underestimating, that species' home range. For this reason, the brownian bridge model 
+#appears to be the most suitable for outlining potential habitats of the Florida panther and their 
+#intersection with public areas. The BBMM assumes that location errors are within
+#a bivariate normal distribution and that movement between successive locations is
+#psuedo-random, in that it is conditioned on the starting and ending locations. I
+#believe that these two assumptions are satisfied because the panthers' tracks
+#do not appear to trend towards a central location or direction and error appears
+#isometric over space.
 
 
 
@@ -456,13 +468,18 @@ percentBB
 ##3. your interpretation of the results, answering the question for managers.
 
 
-#chosen home range estimator approach from the three listed in question one
+#a description of and justification for the resource selection design approach and statistical test
+#Of the selection ratios that we have discussed, the widesII appears the most
+#appropriate for this task. As a design II data approach, the method assumes
+#equal habitat availability for all organisms, but measures the habitat use for
+#each individual. The method is also capable of testing for identical habitat use
+#versus habitat selection. Wides uses a Chi-square for each animal to test 
+#habitat selection.
 
-#justification for selection to address the developed area avoidance question
 
+#methods
 
 #specify the urban environment using land_sub==8
-
 # reclassify into fewer landcover categories
 #load reclassification table for reclassifying map
 classification <- read.table("resistance reclass.txt", header=T)
@@ -479,11 +496,103 @@ land_sub <- reclassify(land,rcl=class)
 #plot only the urban areas
 plot(land_sub==8)
 
+#create some new layers that represent continuous covariates of key landcover types 
+#for panthers by moving window analysis
+#proportion of urban area in 5km radius
+urban <- land_sub
+values(urban) <- 0
+urban[land_sub==8] <- 1
 
-#the statistical test to answer the question
+#natural area
+natural <- land_sub
+values(natural) <- 0
+natural[land_sub!=8] <- 1
 
-#the statistical test results
+#5 km moving window to get neighborhood proportion
+fw <- focalWeight(land_sub, 5000, 'circle')
+natural.focal <- focal(natural, w=fw, fun="sum", na.rm=T)
+urban.focal <- focal(urban, w=fw, fun="sum", na.rm=T)
 
-#my interpretation of the statistical test results and answer to managers
+#merge into a single raster stack
+layers <- stack(land_sub, natural.focal, urban.focal)
+names(layers) <- c("landcover", "natural", "urban")
+
+#plot
+plot(layers)
+
+#design II availability: population availability
+#get availability points
+set.seed(8)
+rand.II <- sampleRandom(layers, size=1000)
+rand.II <- data.frame(rand.II)
+
+#inspect
+head(rand.II)
+str(rand.II)
+
+rand.II.land <- as.factor(rand.II$landcover)
+table(rand.II.land)
+
+#sum up counts of each landcover type
+avail.II <- tapply(rand.II.land, rand.II.land, length)
+
+#inspect
+avail.II
+
+#add land-cover names
+names(avail.II) <- as.character(newclass.names[1:10,2])
+
+#inspect
+avail.II
+
+#remove exotics, which were not observed in use sample
+avail.II <- avail.II[c(-14)]
+
+#design II selection ratios using widesII
+sel.ratioII <- widesII(u=useCatID[,c(2:ncol(useCatID))], a=as.vector(avail.II), 
+                       avknown=FALSE, alpha = 0.05)
+
+#inspect
+sel.ratioII
+sel.ratioII$wi
+sel.ratioII$se.wi
+
+#plot
+plot(sel.ratioII)
+
+#the statistical results
+#sel.ratioII$wi
+#coastalwetland        Cropland       OpenWater       Grassland           Urban          Barren 
+#3.30132700      2.98685783      3.57006248      1.45261471      0.88983700      1.62397579 
+#Dryprairie Freshwatermarsh           Shrub    CypressSwamp 
+#0.08500149      0.47365960      0.10359556      0.25835978 
+
+#sel.ratioII$se.wi
+#coastalwetland        Cropland       OpenWater       Grassland           Urban          Barren 
+#0.90899386      0.70721382      1.14930546      0.39260054      0.30233322      0.76937733 
+#Dryprairie Freshwatermarsh           Shrub    CypressSwamp 
+#0.05355014      0.17044895      0.06139076      0.26026283 
+
+#interpretation of the results, answering the question for managers
+#The widesII reports a selection ratio of 0.89 for the urban environment. This 
+#suggests that there is slightly more available urban environment than there is
+#currently used by panthers. For reference, a ratio 0f 1.0 would mean there is an
+#equal ratio of used urban habitat to what is used. The results suggest that
+#compared to availability, panthers are disproportionately exhibiting movement 
+#patterns around coastal wetlands (3.30), openwater (3.57), and cropland (2.99)
+#and most avoiding dry prairies (0.09), shrubs (0.10), and cypress swamps (0.26).
+#Urban environments appear to not be only slighly avoided even when accounting for the
+#lower estimates of the confidence interval (ie. ~0.58 selection ratio). In short,
+#managers should recognize that panthers only slightly avoid developed land areas
+#and that this conclusion includes standard errors of 0.3, leading the possible
+#selection ratio to be between 1.19 (signaling movement towards urban areas)
+#and 0.59 (avoidance of urban areas). Thus, managers should recognize that the 
+#0.89 selection ratio signals slight avoidance but that results should be interpreted
+#cautiously given that the selection ratio's uncertainty could lead it to fall
+#slightly skewed in either behavioral direction.
+
+
+
+
 
 
