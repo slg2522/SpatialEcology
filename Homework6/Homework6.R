@@ -590,9 +590,3 @@ plot(sel.ratioII)
 #0.89 selection ratio signals slight avoidance but that results should be interpreted
 #cautiously given that the selection ratio's uncertainty could lead it to fall
 #slightly skewed in either behavioral direction.
-
-
-
-
-
-
