@@ -398,8 +398,45 @@ summary(model)
 ##4. Calculate the median and maximum speeds for each turtle track
 ##(where speeds>0).
 
+#turtle1
+# Calculate speed as distance divided by time (km/h), 
+# where the time interval between positions is 24 hours.
+t1$speed<-t1$dist/24
+summary(t1$speed)
+summary(t1$speed[t1$speed>0]) #where speed is >0
+## The median speed is 1.0597 km/h with a maximum speed of 4.1023 km/h.
 
+#turtle2
+# Calculate speed as distance divided by time (km/h), 
+# where the time interval between positions is 24 hours.
+t2$speed<-t2$dist/24
+summary(t2$speed)
+summary(t2$speed[t2$speed>0]) #where speed is >0
+## The median speed is 1.18292 km/h with a maximum speed of 3.37830 km/h.
 
+#turtle6
+# Calculate speed as distance divided by time (km/h), 
+# where the time interval between positions is 24 hours.
+t6$speed<-t6$dist/24
+summary(t6$speed)
+summary(t6$speed[t6$speed>0]) #where speed is >0
+## The median speed is 0.529316 km/h with a maximum speed of 2.348022 km/h.
+
+#turtle7
+# Calculate speed as distance divided by time (km/h), 
+# where the time interval between positions is 24 hours.
+t7$speed<-t7$dist/24
+summary(t7$speed)
+summary(t7$speed[t7$speed>0]) #where speed is >0
+## The median speed is 1.10291 km/h with a maximum speed of 3.50967 km/h.
+
+#turtle8
+# Calculate speed as distance divided by time (km/h), 
+# where the time interval between positions is 24 hours.
+t8$speed<-t8$dist/24
+summary(t8$speed)
+summary(t8$speed[t8$speed>0]) #where speed is >0
+## The median speed is 1.1830 km/h with a maximum speed of 3.5555 km/h.
 
 
 
