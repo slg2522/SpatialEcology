@@ -557,7 +557,7 @@ lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
 legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 1 Track"),lty=2,col=c("black","grey"),cex=0.8)
 
 png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
-plot(move[move>0],(R2n/100000),ylim=c(0,150),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+plot(move[move>0],(R2n/100000),ylim=c(0,280),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
 lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
 lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
 legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 1 Track"),lty=2,col=c("black","grey"),cex=0.8)
@@ -674,8 +674,8 @@ lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
 lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
 legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 2 Track"),lty=2,col=c("black","grey"),cex=0.8)
 
-png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
-plot(move[move>0],(R2n/100000),ylim=c(0,150),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+png(filename = "Turtle2_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(move[move>0],(R2n/100000),ylim=c(0,280),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
 lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
 lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
 legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 2 Track"),lty=2,col=c("black","grey"),cex=0.8)
@@ -792,7 +792,7 @@ lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
 lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
 legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 6 Track"),lty=2,col=c("black","grey"),cex=0.8)
 
-png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+png(filename = "Turtle6_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
 plot(move[move>0],(R2n/100000),ylim=c(0,15),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
 lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
 lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
@@ -910,7 +910,7 @@ lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
 lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
 legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 7 Track"),lty=2,col=c("black","grey"),cex=0.8)
 
-png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+png(filename = "Turtle7_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
 plot(move[move>0],(R2n/100000),ylim=c(0,50),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
 lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
 lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
@@ -1028,14 +1028,14 @@ lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
 lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
 legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 8 Track"),lty=2,col=c("black","grey"),cex=0.8)
 
-png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+png(filename = "Turtle8_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
 plot(move[move>0],(R2n/100000),ylim=c(0,350),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
 lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
 lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
 legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 8 Track"),lty=2,col=c("black","grey"),cex=0.8)
 dev.off()
 
-#######################
+
 
 ##6. For each turtle ID, did they fit a correlated random walk, a biased random
 ##walk model, or neither?
