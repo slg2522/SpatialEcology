@@ -1066,8 +1066,10 @@ dev.off()
 ##7. What do these results suggest about the turtles’ behavior during this
 ##tracking period? (A couple of sentences is fine)
 
-#
-
-
-
-
+#Based on the track analysis above, all of the turtle's paths exceeded the
+#expected net squared displacement for a CRW and BRW, this suggests that the
+#turtles are all executing directed paths. This suggests that the turtles are
+#deliberately moving away from their original location. From this data, it is
+#unclear what is driving the movement away from the original area, it could be
+#due to factors such as foraging prospects, habitat suitability, or initiation
+#of migration.
