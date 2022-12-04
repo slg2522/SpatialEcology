@@ -19,6 +19,7 @@ library(rgeos)
 library(rgdal)
 library(argosfilter)
 library(adehabitatLT)
+library(argosfilter)
 
 #set working directory
 setwd("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Homework7")
@@ -446,20 +447,626 @@ summary(t8$speed[t8$speed>0]) #where speed is >0
 ##step lengths, turning angles and bearing from each track’s distribution. There
 ##should be one graph for each track (five graphs total).
 
+#turtle1
+#convert to month, day, year time
+da<-as.POSIXct(strptime(t1$date,format="%m/%d/%y"))
+
+#calculate the angles (bearings) in the variable 'b'
+b<-bearingTrack(t1$lat,t1$long)
+lb<-length(b)
+l<-length(t1$dist)
+dist<-t1$dist[t1$dist>0]
+#  so in the 'for' loop 
+# convert from the -180 to +180 argosfilter values to a 0-360 range
+for (i in 1:lb){
+  if(b[i]>0) {
+    b[i]<-b[i]
+  } else {
+    b[i]<-360+b[i]
+  }
+}
+#convert from degrees to radians
+br<-radian(b)
+x<-numeric(l)
+y<-numeric(l)
+#start position is (0,0)
+x[1]<-0
+y[1]<-0
+#use the sequence of distances and angles to estimate the x, y coordinates
+#of each subsequent position
+for (i in 2:l) {
+  x[i]<-(dist[i-1]*sin(br[i-1]))+x[i-1]
+  y[i]<-(dist[i-1]*cos(br[i-1]))+y[i-1]
+}
 
 
+# Create object of class 'ltraj' so adehabitatLT package can read 
+# data file and calculate movement metrics.
+xy<-data.frame(x,y)
+path<-as.ltraj(xy,date=da,id="1") #change id for turtle
+summary.ltraj(path)
+
+# 'head' returns the first part of an object so you can see the columns 
+# and variables within the ltraj created by the 'as.ltraj' function.
+head(path[[1]])
+
+# calculate observed net squared displacement
+# "R2n" is the net squared displacement and "turning" is the 
+# turning angle (in radians). 
+R2n<-path[[1]][1:l,8]
+turning<-path[[1]][1:l,10]
+summary(R2n)
+summary(turning)
+
+# Calculate expected net squared displacement for CRW model
+# The variable 'm1' is the mean step length and 'm2' is the 
+# mean squared step length.
+m1<-mean(t1$dist)
+m2<-mean((t1$dist)^2)
+
+# The variable 'c' is the mean of the cosines of the turning angle.
+c<-mean(cos(turning),na.rm=TRUE)
+CRW<-numeric(l)
+CRW[1]<-0
+CRW[l]<-0
+
+# The variable 'move' gives the move number where positions along the 
+# track were numbered sequentially.
+move<-seq(from=0,to=l,by=1)
+
+# The 'for' loop calculates the expected net squared displacement 
+# for a CRW model given the mean step length and turning angles calculated 
+# from the track.
+for (i in 2:l-1) {
+  CRW[i]<-move[i]*m2+(2*(m1)^2)*(c/(1-c))*(move[i]-((1-c^move[i])/(1-c)))
+}
+
+summary(CRW)
+
+# Calculate expected net squared displacement for BRW model
+# Used bearing "b" because the absolute move direction because those calculated 
+# from ltraj didn't seem to be accurate.
+brad<-b*pi/180
+
+# variable 'theta' is the mean of the cosine of the absolute move (compass) direction.
+theta<-mean(cos(brad),na.rm=TRUE)
+
+BRW<-numeric(l)
+BRW[1]<-0
+BRW[l]<-0
+
+# The 'for' loop calculates the expected net squared displacement for a BRW model 
+# given the mean step length and compass direction calculated from the track.
+for (i in 2:l-1) {
+  BRW[i]<-move[i]*m2+move[i]*(move[i]-1)*(m1^2)*theta^2
+}
+
+summary(BRW) #biased random walk model summary
+
+# Plot actual track net squared displacement and lines for the expected 
+# net squared displacements for CRW and BRW models.
+# The track net squared displacement will be close to those for a 
+# CRW or BRW if following those random walk models. If the track NSD is below 
+# these lines, the turtle is exhibiting more residential behavior, and if it is 
+# above the lines it indicates more directed behavior.
+# Change ylim and legend title as needed.
+
+plot(move[move>0],(R2n/100000),ylim=c(0,280),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 1 Track"),lty=2,col=c("black","grey"),cex=0.8)
+
+png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(move[move>0],(R2n/100000),ylim=c(0,150),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 1 Track"),lty=2,col=c("black","grey"),cex=0.8)
+dev.off()
+
+#######################
+
+#turtle2
+#convert to month, day, year time
+da<-as.POSIXct(strptime(t2$date,format="%m/%d/%y"))
+
+#calculate the angles (bearings) in the variable 'b'
+b<-bearingTrack(t2$lat,t2$long)
+lb<-length(b)
+l<-length(t2$dist)
+dist<-t2$dist[t2$dist>0]
+#  so in the 'for' loop 
+# convert from the -180 to +180 argosfilter values to a 0-360 range
+for (i in 1:lb){
+  if(b[i]>0) {
+    b[i]<-b[i]
+  } else {
+    b[i]<-360+b[i]
+  }
+}
+#convert from degrees to radians
+br<-radian(b)
+x<-numeric(l)
+y<-numeric(l)
+#start position is (0,0)
+x[1]<-0
+y[1]<-0
+#use the sequence of distances and angles to estimate the x, y coordinates
+#of each subsequent position
+for (i in 2:l) {
+  x[i]<-(dist[i-1]*sin(br[i-1]))+x[i-1]
+  y[i]<-(dist[i-1]*cos(br[i-1]))+y[i-1]
+}
 
 
+# Create object of class 'ltraj' so adehabitatLT package can read 
+# data file and calculate movement metrics.
+xy<-data.frame(x,y)
+path<-as.ltraj(xy,date=da,id="2") #change id for turtle
+summary.ltraj(path)
+
+# 'head' returns the first part of an object so you can see the columns 
+# and variables within the ltraj created by the 'as.ltraj' function.
+head(path[[1]])
+
+# calculate observed net squared displacement
+# "R2n" is the net squared displacement and "turning" is the 
+# turning angle (in radians). 
+R2n<-path[[1]][1:l,8]
+turning<-path[[1]][1:l,10]
+summary(R2n)
+summary(turning)
+
+# Calculate expected net squared displacement for CRW model
+# The variable 'm1' is the mean step length and 'm2' is the 
+# mean squared step length.
+m1<-mean(t2$dist)
+m2<-mean((t2$dist)^2)
+
+# The variable 'c' is the mean of the cosines of the turning angle.
+c<-mean(cos(turning),na.rm=TRUE)
+CRW<-numeric(l)
+CRW[1]<-0
+CRW[l]<-0
+
+# The variable 'move' gives the move number where positions along the 
+# track were numbered sequentially.
+move<-seq(from=0,to=l,by=1)
+
+# The 'for' loop calculates the expected net squared displacement 
+# for a CRW model given the mean step length and turning angles calculated 
+# from the track.
+for (i in 2:l-1) {
+  CRW[i]<-move[i]*m2+(2*(m1)^2)*(c/(1-c))*(move[i]-((1-c^move[i])/(1-c)))
+}
+
+summary(CRW)
+
+# Calculate expected net squared displacement for BRW model
+# Used bearing "b" because the absolute move direction because those calculated 
+# from ltraj didn't seem to be accurate.
+brad<-b*pi/180
+
+# variable 'theta' is the mean of the cosine of the absolute move (compass) direction.
+theta<-mean(cos(brad),na.rm=TRUE)
+
+BRW<-numeric(l)
+BRW[1]<-0
+BRW[l]<-0
+
+# The 'for' loop calculates the expected net squared displacement for a BRW model 
+# given the mean step length and compass direction calculated from the track.
+for (i in 2:l-1) {
+  BRW[i]<-move[i]*m2+move[i]*(move[i]-1)*(m1^2)*theta^2
+}
+
+summary(BRW) #biased random walk model summary
+
+# Plot actual track net squared displacement and lines for the expected 
+# net squared displacements for CRW and BRW models.
+# The track net squared displacement will be close to those for a 
+# CRW or BRW if following those random walk models. If the track NSD is below 
+# these lines, the turtle is exhibiting more residential behavior, and if it is 
+# above the lines it indicates more directed behavior.
+# Change ylim and legend title as needed.
+
+plot(move[move>0],(R2n/100000),ylim=c(0,280),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 2 Track"),lty=2,col=c("black","grey"),cex=0.8)
+
+png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(move[move>0],(R2n/100000),ylim=c(0,150),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 2 Track"),lty=2,col=c("black","grey"),cex=0.8)
+dev.off()
+
+#######################
+
+#turtle6
+#convert to month, day, year time
+da<-as.POSIXct(strptime(t6$date,format="%m/%d/%y"))
+
+#calculate the angles (bearings) in the variable 'b'
+b<-bearingTrack(t6$lat,t6$long)
+lb<-length(b)
+l<-length(t6$dist)
+dist<-t6$dist[t6$dist>0]
+#  so in the 'for' loop 
+# convert from the -180 to +180 argosfilter values to a 0-360 range
+for (i in 1:lb){
+  if(b[i]>0) {
+    b[i]<-b[i]
+  } else {
+    b[i]<-360+b[i]
+  }
+}
+#convert from degrees to radians
+br<-radian(b)
+x<-numeric(l)
+y<-numeric(l)
+#start position is (0,0)
+x[1]<-0
+y[1]<-0
+#use the sequence of distances and angles to estimate the x, y coordinates
+#of each subsequent position
+for (i in 2:l) {
+  x[i]<-(dist[i-1]*sin(br[i-1]))+x[i-1]
+  y[i]<-(dist[i-1]*cos(br[i-1]))+y[i-1]
+}
+
+
+# Create object of class 'ltraj' so adehabitatLT package can read 
+# data file and calculate movement metrics.
+xy<-data.frame(x,y)
+path<-as.ltraj(xy,date=da,id="6") #change id for turtle
+summary.ltraj(path)
+
+# 'head' returns the first part of an object so you can see the columns 
+# and variables within the ltraj created by the 'as.ltraj' function.
+head(path[[1]])
+
+# calculate observed net squared displacement
+# "R2n" is the net squared displacement and "turning" is the 
+# turning angle (in radians). 
+R2n<-path[[1]][1:l,8]
+turning<-path[[1]][1:l,10]
+summary(R2n)
+summary(turning)
+
+# Calculate expected net squared displacement for CRW model
+# The variable 'm1' is the mean step length and 'm2' is the 
+# mean squared step length.
+m1<-mean(t6$dist)
+m2<-mean((t6$dist)^2)
+
+# The variable 'c' is the mean of the cosines of the turning angle.
+c<-mean(cos(turning),na.rm=TRUE)
+CRW<-numeric(l)
+CRW[1]<-0
+CRW[l]<-0
+
+# The variable 'move' gives the move number where positions along the 
+# track were numbered sequentially.
+move<-seq(from=0,to=l,by=1)
+
+# The 'for' loop calculates the expected net squared displacement 
+# for a CRW model given the mean step length and turning angles calculated 
+# from the track.
+for (i in 2:l-1) {
+  CRW[i]<-move[i]*m2+(2*(m1)^2)*(c/(1-c))*(move[i]-((1-c^move[i])/(1-c)))
+}
+
+summary(CRW)
+
+# Calculate expected net squared displacement for BRW model
+# Used bearing "b" because the absolute move direction because those calculated 
+# from ltraj didn't seem to be accurate.
+brad<-b*pi/180
+
+# variable 'theta' is the mean of the cosine of the absolute move (compass) direction.
+theta<-mean(cos(brad),na.rm=TRUE)
+
+BRW<-numeric(l)
+BRW[1]<-0
+BRW[l]<-0
+
+# The 'for' loop calculates the expected net squared displacement for a BRW model 
+# given the mean step length and compass direction calculated from the track.
+for (i in 2:l-1) {
+  BRW[i]<-move[i]*m2+move[i]*(move[i]-1)*(m1^2)*theta^2
+}
+
+summary(BRW) #biased random walk model summary
+
+# Plot actual track net squared displacement and lines for the expected 
+# net squared displacements for CRW and BRW models.
+# The track net squared displacement will be close to those for a 
+# CRW or BRW if following those random walk models. If the track NSD is below 
+# these lines, the turtle is exhibiting more residential behavior, and if it is 
+# above the lines it indicates more directed behavior.
+# Change ylim and legend title as needed.
+
+plot(move[move>0],(R2n/100000),ylim=c(0,15),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 6 Track"),lty=2,col=c("black","grey"),cex=0.8)
+
+png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(move[move>0],(R2n/100000),ylim=c(0,15),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 6 Track"),lty=2,col=c("black","grey"),cex=0.8)
+dev.off()
+
+#######################
+
+#turtle7
+#convert to month, day, year time
+da<-as.POSIXct(strptime(t7$date,format="%m/%d/%y"))
+
+#calculate the angles (bearings) in the variable 'b'
+b<-bearingTrack(t7$lat,t7$long)
+lb<-length(b)
+l<-length(t7$dist)
+dist<-t7$dist[t7$dist>0]
+#  so in the 'for' loop 
+# convert from the -180 to +180 argosfilter values to a 0-360 range
+for (i in 1:lb){
+  if(b[i]>0) {
+    b[i]<-b[i]
+  } else {
+    b[i]<-360+b[i]
+  }
+}
+#convert from degrees to radians
+br<-radian(b)
+x<-numeric(l)
+y<-numeric(l)
+#start position is (0,0)
+x[1]<-0
+y[1]<-0
+#use the sequence of distances and angles to estimate the x, y coordinates
+#of each subsequent position
+for (i in 2:l) {
+  x[i]<-(dist[i-1]*sin(br[i-1]))+x[i-1]
+  y[i]<-(dist[i-1]*cos(br[i-1]))+y[i-1]
+}
+
+
+# Create object of class 'ltraj' so adehabitatLT package can read 
+# data file and calculate movement metrics.
+xy<-data.frame(x,y)
+path<-as.ltraj(xy,date=da,id="7") #change id for turtle
+summary.ltraj(path)
+
+# 'head' returns the first part of an object so you can see the columns 
+# and variables within the ltraj created by the 'as.ltraj' function.
+head(path[[1]])
+
+# calculate observed net squared displacement
+# "R2n" is the net squared displacement and "turning" is the 
+# turning angle (in radians). 
+R2n<-path[[1]][1:l,8]
+turning<-path[[1]][1:l,10]
+summary(R2n)
+summary(turning)
+
+# Calculate expected net squared displacement for CRW model
+# The variable 'm1' is the mean step length and 'm2' is the 
+# mean squared step length.
+m1<-mean(t7$dist)
+m2<-mean((t7$dist)^2)
+
+# The variable 'c' is the mean of the cosines of the turning angle.
+c<-mean(cos(turning),na.rm=TRUE)
+CRW<-numeric(l)
+CRW[1]<-0
+CRW[l]<-0
+
+# The variable 'move' gives the move number where positions along the 
+# track were numbered sequentially.
+move<-seq(from=0,to=l,by=1)
+
+# The 'for' loop calculates the expected net squared displacement 
+# for a CRW model given the mean step length and turning angles calculated 
+# from the track.
+for (i in 2:l-1) {
+  CRW[i]<-move[i]*m2+(2*(m1)^2)*(c/(1-c))*(move[i]-((1-c^move[i])/(1-c)))
+}
+
+summary(CRW)
+
+# Calculate expected net squared displacement for BRW model
+# Used bearing "b" because the absolute move direction because those calculated 
+# from ltraj didn't seem to be accurate.
+brad<-b*pi/180
+
+# variable 'theta' is the mean of the cosine of the absolute move (compass) direction.
+theta<-mean(cos(brad),na.rm=TRUE)
+
+BRW<-numeric(l)
+BRW[1]<-0
+BRW[l]<-0
+
+# The 'for' loop calculates the expected net squared displacement for a BRW model 
+# given the mean step length and compass direction calculated from the track.
+for (i in 2:l-1) {
+  BRW[i]<-move[i]*m2+move[i]*(move[i]-1)*(m1^2)*theta^2
+}
+
+summary(BRW) #biased random walk model summary
+
+# Plot actual track net squared displacement and lines for the expected 
+# net squared displacements for CRW and BRW models.
+# The track net squared displacement will be close to those for a 
+# CRW or BRW if following those random walk models. If the track NSD is below 
+# these lines, the turtle is exhibiting more residential behavior, and if it is 
+# above the lines it indicates more directed behavior.
+# Change ylim and legend title as needed.
+
+plot(move[move>0],(R2n/100000),ylim=c(0,50),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 7 Track"),lty=2,col=c("black","grey"),cex=0.8)
+
+png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(move[move>0],(R2n/100000),ylim=c(0,50),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 7 Track"),lty=2,col=c("black","grey"),cex=0.8)
+dev.off()
+
+#######################
+
+#turtle8
+#convert to month, day, year time
+da<-as.POSIXct(strptime(t8$date,format="%m/%d/%y"))
+
+#calculate the angles (bearings) in the variable 'b'
+b<-bearingTrack(t8$lat,t8$long)
+lb<-length(b)
+l<-length(t8$dist)
+dist<-t8$dist[t8$dist>0]
+#  so in the 'for' loop 
+# convert from the -180 to +180 argosfilter values to a 0-360 range
+for (i in 1:lb){
+  if(b[i]>0) {
+    b[i]<-b[i]
+  } else {
+    b[i]<-360+b[i]
+  }
+}
+#convert from degrees to radians
+br<-radian(b)
+x<-numeric(l)
+y<-numeric(l)
+#start position is (0,0)
+x[1]<-0
+y[1]<-0
+#use the sequence of distances and angles to estimate the x, y coordinates
+#of each subsequent position
+for (i in 2:l) {
+  x[i]<-(dist[i-1]*sin(br[i-1]))+x[i-1]
+  y[i]<-(dist[i-1]*cos(br[i-1]))+y[i-1]
+}
+
+
+# Create object of class 'ltraj' so adehabitatLT package can read 
+# data file and calculate movement metrics.
+xy<-data.frame(x,y)
+path<-as.ltraj(xy,date=da,id="8") #change id for turtle
+summary.ltraj(path)
+
+# 'head' returns the first part of an object so you can see the columns 
+# and variables within the ltraj created by the 'as.ltraj' function.
+head(path[[1]])
+
+# calculate observed net squared displacement
+# "R2n" is the net squared displacement and "turning" is the 
+# turning angle (in radians). 
+R2n<-path[[1]][1:l,8]
+turning<-path[[1]][1:l,10]
+summary(R2n)
+summary(turning)
+
+# Calculate expected net squared displacement for CRW model
+# The variable 'm1' is the mean step length and 'm2' is the 
+# mean squared step length.
+m1<-mean(t8$dist)
+m2<-mean((t8$dist)^2)
+
+# The variable 'c' is the mean of the cosines of the turning angle.
+c<-mean(cos(turning),na.rm=TRUE)
+CRW<-numeric(l)
+CRW[1]<-0
+CRW[l]<-0
+
+# The variable 'move' gives the move number where positions along the 
+# track were numbered sequentially.
+move<-seq(from=0,to=l,by=1)
+
+# The 'for' loop calculates the expected net squared displacement 
+# for a CRW model given the mean step length and turning angles calculated 
+# from the track.
+for (i in 2:l-1) {
+  CRW[i]<-move[i]*m2+(2*(m1)^2)*(c/(1-c))*(move[i]-((1-c^move[i])/(1-c)))
+}
+
+summary(CRW)
+
+# Calculate expected net squared displacement for BRW model
+# Used bearing "b" because the absolute move direction because those calculated 
+# from ltraj didn't seem to be accurate.
+brad<-b*pi/180
+
+# variable 'theta' is the mean of the cosine of the absolute move (compass) direction.
+theta<-mean(cos(brad),na.rm=TRUE)
+
+BRW<-numeric(l)
+BRW[1]<-0
+BRW[l]<-0
+
+# The 'for' loop calculates the expected net squared displacement for a BRW model 
+# given the mean step length and compass direction calculated from the track.
+for (i in 2:l-1) {
+  BRW[i]<-move[i]*m2+move[i]*(move[i]-1)*(m1^2)*theta^2
+}
+
+summary(BRW) #biased random walk model summary
+
+# Plot actual track net squared displacement and lines for the expected 
+# net squared displacements for CRW and BRW models.
+# The track net squared displacement will be close to those for a 
+# CRW or BRW if following those random walk models. If the track NSD is below 
+# these lines, the turtle is exhibiting more residential behavior, and if it is 
+# above the lines it indicates more directed behavior.
+# Change ylim and legend title as needed.
+
+plot(move[move>0],(R2n/100000),ylim=c(0,350),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 8 Track"),lty=2,col=c("black","grey"),cex=0.8)
+
+png(filename = "Turtle1_NetSquaredDisplacement.png",  width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(move[move>0],(R2n/100000),ylim=c(0,350),xlab="Number of steps",ylab="Net squared displacement (x 100,000 km)",type="l",las=1)
+lines(move[1:l-1],(CRW[1:l-1]/100000),lty=2)
+lines(move[1:l-1],(BRW[1:l-1]/100000),lty=2,col="grey")
+legend("topleft",legend=c("CRW","BRW"),title=c("Turtle 8 Track"),lty=2,col=c("black","grey"),cex=0.8)
+dev.off()
+
+#######################
 
 ##6. For each turtle ID, did they fit a correlated random walk, a biased random
 ##walk model, or neither?
   
+#Based on the plot of the actual track net squared displacement and the lines
+#for the expected net squared displacements for CRW and BRW models, Turtle 1
+#exhibits directed behavior, as it is far above the CRW and BRW lines.
+
+#Based on the plot of the actual track net squared displacement and the lines
+#for the expected net squared displacements for CRW and BRW models, Turtle 2
+#exhibits directed behavior, as it is far above the CRW and BRW lines.
+
+#Based on the plot of the actual track net squared displacement and the lines
+#for the expected net squared displacements for CRW and BRW models, Turtle 6
+#exhibits a path similar to, but slightly above, a CRW.
+
+#Based on the plot of the actual track net squared displacement and the lines
+#for the expected net squared displacements for CRW and BRW models, Turtle 7
+#exhibits a path similar to, but slightly above, a CRW.
+
+#Based on the plot of the actual track net squared displacement and the lines
+#for the expected net squared displacements for CRW and BRW models, Turtle 8
+#exhibits directed behavior, as it is far above the CRW and BRW lines.
 
 
 
-  
+
 ##7. What do these results suggest about the turtles’ behavior during this
 ##tracking period? (A couple of sentences is fine)
+
+#
 
 
 
