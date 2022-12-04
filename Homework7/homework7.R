@@ -88,14 +88,154 @@ dev.off()
 
 
 
-
 ##2. Plot step length versus frequency on logarithmic scales for each
 ##leatherback turtle track.
 
+#for loop to calculate distance between consecutive points in km
+#turtle1
+l<-length(t1$long)
+t1$dist<-numeric(l)
+for (i in 1:(l-1)) {
+  t1$dist[i]<-distance(t1$lat[i],t1$lat[i+1],t1$lon[i],t1$lon[i+1])
+}
 
+#assign the last position a distance of zero (no future steps)
+t1$dist[l]<-0
+summary(t1$dist)
 
+#turtle2
+l<-length(t2$long)
+t2$dist<-numeric(l)
+for (i in 1:(l-1)) {
+  t2$dist[i]<-distance(t2$lat[i],t2$lat[i+1],t2$lon[i],t2$lon[i+1])
+}
 
+#assign the last position a distance of zero (no future steps)
+t2$dist[l]<-0
+summary(t2$dist)
 
+#turtle6
+l<-length(t6$long)
+t6$dist<-numeric(l)
+for (i in 1:(l-1)) {
+  t6$dist[i]<-distance(t6$lat[i],t6$lat[i+1],t6$lon[i],t6$lon[i+1])
+}
+
+#assign the last position a distance of zero (no future steps)
+t6$dist[l]<-0
+summary(t6$dist)
+
+#turtle7
+l<-length(t7$long)
+t7$dist<-numeric(l)
+for (i in 1:(l-1)) {
+  t7$dist[i]<-distance(t7$lat[i],t7$lat[i+1],t7$lon[i],t7$lon[i+1])
+}
+
+#assign the last position a distance of zero (no future steps)
+t7$dist[l]<-0
+summary(t7$dist)
+
+#turtle8
+l<-length(t8$long)
+t8$dist<-numeric(l)
+for (i in 1:(l-1)) {
+  t8$dist[i]<-distance(t8$lat[i],t8$lat[i+1],t8$lon[i],t8$lon[i+1])
+}
+
+#assign the last position a distance of zero (no future steps)
+t8$dist[l]<-0
+summary(t8$dist)
+
+#Turtle1 Plotting
+# plot the step length histogram on log scale (with step + 1 to avoid infinites)
+# Change plot filename to appropriate ID number.
+h<-hist(t1$dist, breaks=12,xlim=c(0,100),xlab="Daily distance (km)",
+        main="Turtle 1 Histogram of step lengths",las=1)
+h
+step<-h$breaks[h$breaks>1]
+freq<-h$counts+1
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b")
+
+#save this plot to a file
+png(filename = "Turtle1StepLengthDistribution.png",  
+    width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b",las=1)
+dev.off()
+
+#Turtle2 Plotting
+# plot the step length histogram on log scale (with step + 1 to avoid infinites)
+# Change plot filename to appropriate ID number.
+h<-hist(t2$dist, breaks=12,xlim=c(0,100),xlab="Daily distance (km)",
+        main="Turtle 2 Histogram of step lengths",las=1)
+h
+step<-h$breaks[h$breaks>1]
+freq<-h$counts+1
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b")
+
+#save this plot to a file
+png(filename = "Turtle2StepLengthDistribution.png",  
+    width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b",las=1)
+dev.off()
+
+#Turtle6 Plotting
+# plot the step length histogram on log scale (with step + 1 to avoid infinites)
+# Change plot filename to appropriate ID number.
+h<-hist(t6$dist, breaks=12,xlim=c(0,100),xlab="Daily distance (km)",
+        main="Turtle 6 Histogram of step lengths",las=1)
+h
+step<-h$breaks[h$breaks>1]
+freq<-h$counts+1
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b")
+
+#save this plot to a file
+png(filename = "Turtle6StepLengthDistribution.png",  
+    width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b",las=1)
+dev.off()
+
+#Turtle7 Plotting
+# plot the step length histogram on log scale (with step + 1 to avoid infinites)
+# Change plot filename to appropriate ID number.
+h<-hist(t7$dist, breaks=12,xlim=c(0,100),xlab="Daily distance (km)",
+        main="Turtle 1 Histogram of step lengths",las=1)
+h
+step<-h$breaks[h$breaks>1]
+freq<-h$counts+1
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b")
+
+#save this plot to a file
+png(filename = "Turtle7StepLengthDistribution.png",  
+    width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b",las=1)
+dev.off()
+
+#Turtle8 Plotting
+# plot the step length histogram on log scale (with step + 1 to avoid infinites)
+# Change plot filename to appropriate ID number.
+h<-hist(t8$dist, breaks=12,xlim=c(0,100),xlab="Daily distance (km)",
+        main="Turtle 8 Histogram of step lengths",las=1)
+h
+step<-h$breaks[h$breaks>1]
+freq<-h$counts+1
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b")
+
+#save this plot to a file
+png(filename = "Turtle8StepLengthDistribution.png",  
+    width = 600, height = 600, units = "px", pointsize = 14, bg = "white")
+plot(log10(step),log10(freq),xlab="Log(step length)", 
+     ylab="Log(frequency)",type="b",las=1)
+dev.off()
 
 
 ##3. For each turtle ID, does the distribution of step lengths fit a Lévy
