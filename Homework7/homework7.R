@@ -14,8 +14,77 @@
 ##It can be five separate maps for each individual or all five tracks plotted
 ##on one map with a legend.
 
+library("maptools")
+library(rgeos)
+library(rgdal)
+library(argosfilter)
+library(adehabitatLT)
 
+#set working directory
+setwd("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Homework7")
 
+# read in all of the turtle track csv files and assign
+t1 <-read.csv("LeatherbackTurtle_ID1_DataForStudents.csv",header=T,sep=",")
+names(t1)
+head(t1)
+t2 <-read.csv("LeatherbackTurtle_ID2_DataForStudents.csv",header=T,sep=",")
+head(t2)
+t6 <-read.csv("LeatherbackTurtle_ID6_DataForStudents.csv",header=T,sep=",")
+head(t6)
+t7 <-read.csv("LeatherbackTurtle_ID7_DataForStudents.csv",header=T,sep=",")
+head(t7)
+t8 <-read.csv("LeatherbackTurtle_ID8_DataForStudents.csv",header=T,sep=",")
+head(t8)
+
+# Plot track on a map
+## Note: Adjust x and y limits if track gets cut-off in image
+#maptools settings
+CRy<-c(-40,20)
+CRx<-c(220,310)
+m<-system.file("share/gshhs_c.b",package="maptools")
+CR<-Rgshhs(m,xlim=CRx,ylim=CRy,level=1)
+#start with Pacific coast of Central and South America
+plot(CR$SP,col="grey",xaxs="i",yaxs="i",axes=TRUE,las=1)
+#add the turtle tracks
+#turtle1
+points((t1$long+360),t1$lat,pch=20,cex=0.5,col="red")
+points((t1$long[1]+360),t1$lat[1],pch=20,cex=1,col="red")
+#turtle2
+points((t2$long+360),t2$lat,pch=20,cex=0.5,col="orange")
+points((t2$long[1]+360),t2$lat[1],pch=20,cex=1,col="orange")
+#turtle6
+points((t6$long+360),t6$lat,pch=20,cex=0.5,col="yellow")
+points((t6$long[1]+360),t6$lat[1],pch=20,cex=1,col="yellow")
+#turtle7
+points((t7$long+360),t7$lat,pch=20,cex=0.5,col="green")
+points((t7$long[1]+360),t7$lat[1],pch=20,cex=1,col="green")
+#turtle8
+points((t8$long+360),t8$lat,pch=20,cex=0.5,col="blue")
+points((t8$long[1]+360),t8$lat[1],pch=20,cex=1,col="blue")
+legend("bottomright",legend=c("Leatherback #1", "Leatherback #2", "Leatherback #6", "Leatherback #7", "Leatherback #8"),pch=20, col=c("red", "orange", "yellow", "green", "blue"))
+
+#save this plot to a file
+png(filename = "LeatherbackTurtles_map.png",  width = 782, height = 480, units = "px", pointsize = 14, bg = "white")
+#start with Pacific coast of Central and South America
+plot(CR$SP,col="grey",xaxs="i",yaxs="i",axes=TRUE,las=1)
+#add the turtle tracks
+#turtle1
+points((t1$long+360),t1$lat,pch=20,cex=0.5,col="red")
+points((t1$long[1]+360),t1$lat[1],pch=20,cex=1,col="red")
+#turtle2
+points((t2$long+360),t2$lat,pch=20,cex=0.5,col="orange")
+points((t2$long[1]+360),t2$lat[1],pch=20,cex=1,col="orange")
+#turtle6
+points((t6$long+360),t6$lat,pch=20,cex=0.5,col="yellow")
+points((t6$long[1]+360),t6$lat[1],pch=20,cex=1,col="yellow")
+#turtle7
+points((t7$long+360),t7$lat,pch=20,cex=0.5,col="green")
+points((t7$long[1]+360),t7$lat[1],pch=20,cex=1,col="green")
+#turtle8
+points((t8$long+360),t8$lat,pch=20,cex=0.5,col="blue")
+points((t8$long[1]+360),t8$lat[1],pch=20,cex=1,col="blue")
+legend("bottomright",legend=c("Leatherback #1", "Leatherback #2", "Leatherback #6", "Leatherback #7", "Leatherback #8"),pch=20, col=c("red", "orange", "yellow", "green", "blue"))
+dev.off()
 
 
 

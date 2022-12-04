@@ -2,7 +2,10 @@
 ## R Recitation Animal Movement tracking
 ###################################################
 # This is example code for calculating distance, 
-# speed and bearing between track positions in R. 
+# speed and bearing between track positions in R.
+
+#set working directory
+setwd("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/Week13/R recitation")
 
 # install.packages("argosfilter")
 # install.packages("adehabitatLT")
