@@ -1,6 +1,8 @@
 #load packages
 library(raster)
 library(dismo)
+library(ggplot2)
+library(usmap)
 
 #load data
 krill <- read.csv("C:/Users/hongs/OneDrive - University of Maryland/Desktop/anaconda files/krillMapbox/timeKrill.csv")
@@ -340,7 +342,7 @@ thin9500 <- thin(
 
 thinned9500 <- data.frame(thin9500[[1]])
 
-library(usmap)
+
 alaska <- plot_usmap(regions=c("state"), include=c("AK"), linewidth=1, labels = FALSE)
 
 #transform data
@@ -521,6 +523,10 @@ shapiro.test(trans9500$y)
 qqnorm(transk9500$y, pch = 1, frame = FALSE)
 qqline(transk9500$y, col = "steelblue", lwd = 2)
 
+#visualize outliers
+boxplot(transk9500$x)$out
+boxplot(transk9500$y)$out
+
 ##############################################################################
 
 #x coordinate (long)
@@ -546,6 +552,10 @@ shapiro.test(trans0106$y)
 #original
 qqnorm(transk0106$y, pch = 1, frame = FALSE)
 qqline(transk0106$y, col = "steelblue", lwd = 2)
+
+#visualize outliers
+boxplot(trans0106$x)$out
+boxplot(trans0106$y)$out
 
 ##############################################################################
 
@@ -573,6 +583,10 @@ shapiro.test(trans0712$y)
 qqnorm(transk0712$y, pch = 1, frame = FALSE)
 qqline(transk0712$y, col = "steelblue", lwd = 2)
 
+#visualize outliers
+boxplot(trans0712$x)$out
+boxplot(trans0712$y)$out
+
 ##############################################################################
 
 #x coordinate (long)
@@ -598,3 +612,8 @@ shapiro.test(trans1318$y)
 #original
 qqnorm(transk1318$y, pch = 1, frame = FALSE)
 qqline(transk1318$y, col = "steelblue", lwd = 2)
+
+#visualize outliers
+boxplot(trans1318$x)$out
+boxplot(trans1318$y)$out
+
