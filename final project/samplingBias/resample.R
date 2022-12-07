@@ -335,7 +335,7 @@ thin9500 <- thin(
   max.files = 5,
   out.dir,
   out.base = "thinned_data",
-  write.log.file = TRUE,
+  write.log.file = FALSE,
   log.file = "spatial_thin_log.txt",
   verbose = TRUE
 )
@@ -523,9 +523,13 @@ shapiro.test(trans9500$y)
 qqnorm(transk9500$y, pch = 1, frame = FALSE)
 qqline(transk9500$y, col = "steelblue", lwd = 2)
 
-#visualize outliers
+#non-transformed
 boxplot(transk9500$x)$out
 boxplot(transk9500$y)$out
+
+#visualize outliers thinned
+boxplot(trans9500$x)$out
+boxplot(trans9500$y)$out
 
 ##############################################################################
 
