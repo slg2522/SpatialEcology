@@ -260,33 +260,10 @@ plot(novelLimit)
 
 
 #START HERE
-
-
-################################################################################
-# script to model ant distributions in New England using maxent
-# 
-#
-# Results described in:
-# Fitzpatrick et al. (2013) MAXENT vs. MAXLIKE: Empirical Comparisons with 
-# Ant Species Distributions. Ecosphere
-#
-# DESCRIPTION & NOTES
-# The code needs the following to run:
-# (1) climate & elevation rasters (provided as neClim)
-# (2) ant distribution data (provided as antData_use4R_snappedToClim.csv). Note
-# that as the file name suggests these data have been snapped to cell centroids.
-#
-################################################################################
-
-# Our goal here is to fit and compare several different maxent models. 
-# All will be fit to the same data, but we will see how changing the complexity
-# of the features and correcting for sampling bias (or not) alter outcomes. We
-# will compare them in terms of predictions and using model selection 
-# approaches (AIC).
-
-################################################################################
-# CHUNK 1: Read in & prep data
-################################################################################
+# load the required libraries
+library(raster)
+library(sp)
+library(rgdal)
 library(dismo)
 library(raster)
 library(dismo)
@@ -294,24 +271,108 @@ library(sp)
 library(sm)
 library(colorRamps)
 library(ENMeval)
+library(colorRamps)
+library(terra)
 
-setwd("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/data") # setwd to where data files are stored
+################################################################################
+# CHUNK 1: Read in & prep data
+################################################################################
 
-# ant occurrence data for New England, USA
-# for about 120 species of ants
-antsGeoXY <- read.csv("antData.csv")
+# set working directory to data folder
+#setwd("pathToDirHere")
+wd <- ("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt")
+setwd(wd)
+
+#load the rasters and create the necessary raster stacks prior to averaging
+
+#chlorophyllA
+#load in all files
+ca <- list.files(path="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/data/ChlorophyllA", pattern = "TIFF", full.names = TRUE)
+#stack the files
+stackCA <- raster::stack(ca)
+#write a combined raster file
+writeRaster(stackCA, "chlorophyllCombined.TIF")
+#take the average
+ca_avg <- mean(stackCA)
+#plot the average
+plot(ca_avg)
+
+
+#sea surface temperature
+#load in all files
+sst <- list.files(path="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/data/SeaSurfaceTemperature", pattern = "TIFF", full.names = TRUE)
+#stack the files
+stackSST <- raster::stack(sst)
+#write a combined raster file
+writeRaster(stackSST, "sstCombined.TIF")
+#take the average
+sst_avg <- mean(stackSST)
+#plot the average
+plot(sst_avg)
+#terra does not take non-integer values, to convert, must take factors of 5 and 2
+#change to 0.5 resolution
+sst5 <- aggregate(sst_avg, 2)
+plot(sst5)
+#change to 0.1 resolution
+sst1 <- disaggregate(sst5, 5)
+plot(sst1)
+
+
+#bathymetry
+#load in all files
+bathymetry <- list.files(path="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/data/Bathymetry", pattern = "TIFF", full.names = TRUE)
+#stack the files
+stackBath <- raster::stack(bathymetry)
+#write a combined raster file
+writeRaster(stackBath, "bathymetryCombined.TIF")
+#take the average
+bath_avg <- mean(stackBath)
+#plot the average
+plot(bath_avg)
+
+# thinned krill occurrence data for the Bering Sea
+krill9500 <- read.csv("thin9500LonLat.csv")
+krill0106 <- read.csv("thin0106LonLat.csv")
+krill0712 <- read.csv("thin0712LonLat.csv")
+krill1318 <- read.csv("thin1318LonLat.csv")
+
+#check the data with headers
+head(krill9500)
+head(krill0106)
+head(krill0712)
+head(krill1318)
+
+#combine all of the thinned krill data
+krillGeoXY <- data.frame(species=c(krill9500$species, krill0106$species, krill0712$species, krill1318$species),
+                         lon=c(krill9500$lon, krill0106$lon, krill0712$lon, krill1318$lon),
+                         lat=c(krill9500$lat, krill0106$lat, krill0712$lat, krill1318$lat))
+
+#crop rasters:
+e <- extent(-180, -150, 50, 70)
+#chlorophyllA
+cropCA <- crop(ca_avg, e)
+plot(cropCA)
+#SST
+cropSST <- crop(sst1, e)
+plot(cropSST)
+#Bathymetry
+cropBATH <- crop(bath_avg, e)
+plot(cropBATH)
+
+#stack all of the environmental covariates
+envCovariates <- stack(cropCA, cropSST, cropBATH)
 
 # read in climate & elev data
-neClim <- stack("neClim.grd") # three variables
-antsSp <- antsGeoXY # make a new object for use later
+neClim <- stack(envCovariates)
+krillSp <- krillGeoXY # make a new object for use later
 # convert to sp object
-coordinates(antsSp) <- c("x", "y")
+coordinates(krillSp) <- c("lon", "lat")
 # assign projection
-projection(antsSp) <- projection(neClim)
+projection(krillSp) <- projection(neClim)
 
 # let's look at the data
-plot(neClim$bio_1, col=rgb.tables(1000))
-points(antsSp, pch=20, cex=0.5, col=rgb(0,0,0,0.25))
+plot(neClim$layer.1, col=rgb.tables(1000))
+points(krillSp, pch=20, cex=0.7, col="black")
 
 # make a mask raster to use below
 mask <- neClim[[1]]>-1000
@@ -319,11 +380,11 @@ mask <- neClim[[1]]>-1000
 
 # Sampling bias ----------------------------------------------------------------
 # To deal with spatial sampling bias, we will create
-# a raster that reflects the sampling density of ants
+# a raster that reflects the sampling density of krill
 # in the study region using kernel density estimation (KDE)
 
 # use the x-y coords to get the cell numbers
-bias <- cellFromXY(mask, antsSp) # cells with records
+bias <- cellFromXY(mask, krillSp) # cells with records
 cells <- unique(sort(bias))
 # xy-locations of all samples
 kernelXY <- xyFromCell(mask, cells)
@@ -341,10 +402,10 @@ max(samps) #one grid cell has 255 records in it
 KDEsur <- sm.density(kernelXY, 
                      weights=samps, 
                      display="none", # do not plot 
-                     ngrid=812, # number of grid cells along each dimension,
-                     # have a look at the clim data = 812 columns
-                     ylim=c(40,48), # approximate latitude range 
-                     xlim=c(-75,-65), # approximate longitude range
+                     ngrid=300, # number of grid cells along each dimension,
+                     # there are 300 columns
+                     ylim=c(50,70), # approximate latitude range 
+                     xlim=c(-180,-150), # approximate longitude range
                      nbins=0) # see help, can ignore
 
 # let's look at the structure
@@ -382,21 +443,23 @@ bg <- randomPoints(KDErast, 500, prob=T) # alternate method
 # CHUNK 2: Run models
 ################################################################################
 # extract data for ant spp
-antSpp <- c("camher", "camnov", "forint", "monema", "phepil", "preimp")
-a <- 6 # let's work with only preimp in this example
-# loop to run models for each species
+krillSpp <- c("krill")
+a <- 1 #only working with krill as a taxonomic group
+# loop to run models for each species if there were multiple species of krill
 #for(a in 1:length(antSpp)){
-antGeoXY <- antsGeoXY[antsGeoXY$spcode==antSpp[a],-1]
-dim(antGeoXY)
+krillGeoXY <- krillGeoXY[krillGeoXY$species==krillSpp[a],-1]
+#check the dimensions
+dim(krillGeoXY)
+#plot
 plot(neClim[[1]])
-points(antGeoXY$x, antGeoXY$y, pch=20)
+points(krillGeoXY$lon, krillGeoXY$lat, pch=20, col="black")
 
 ########## make sets of training/test (t/t) data
 ttSplit = 0.25 # ttSplit = test/train split percentage
 # function to partition data into t/t
 fold <- function(ttSplit){ 
   k = round(1/ttSplit, 0)
-  fold <- kfold(antGeoXY, k=k)
+  fold <- kfold(krillGeoXY, k=k)
 }
 
 # make sets of t/t data
@@ -405,17 +468,17 @@ folds <- replicate(sets, fold(ttSplit)) # replicate five different random folds
 head(folds)
 
 # now loop through to build lists of t/t data
-antTrain <- list()
-antTest <- list()
+krillTrain <- list()
+krillTest <- list()
 for(h in 1:sets){
-  antTrain[[h]] <- antGeoXY[folds[,h]!=1,]
-  antTest[[h]] <- antGeoXY[folds[,h]==1,]
+  krillTrain[[h]] <- krillGeoXY[folds[,h]!=1,]
+  krillTest[[h]] <- krillGeoXY[folds[,h]==1,]
 }
-str(antTrain)
+str(krillTrain)
 
 plot(neClim[[1]])
-points(antTrain[[1]], pch=20)
-points(antTrain[[2]], pch=20, col="red")
+points(krillTrain[[1]], pch=20)
+points(krillTrain[[2]], pch=20, col="red")
 
 
 
@@ -429,13 +492,13 @@ points(antTrain[[2]], pch=20, col="red")
 
 # MODEL 1 -----------------------------------------------------------------
 #### MAXENT - LINEAR FEATURES
-antmaxMods_LF <- list()
+krillmaxMods_LF <- list()
 # loop through each fold (5 total), fit a model, and place fitted model
 # in a list
 for(f in 1:sets){
   print(f)
   #### MAXENT - LINEAR FEATURES
-  antmaxMods_LF[[f]] <- maxent(neClim, antTrain[[f]], 
+  krillmaxMods_LF[[f]] <- maxent(neClim, krillTrain[[f]], 
                                args=c(c("-h", # turn off hinge features
                                         "-q", # turn off quadratic features
                                         "-p", # turn off product features
@@ -444,21 +507,21 @@ for(f in 1:sets){
                                       c("-m", 10000))) # max iterations = 10K
 }
 # predict to geography
-antmaxStack_LF <- predict(antmaxMods_LF[[1]], neClim) #cloglog
-antmaxStackRAW_LF <- predict(antmaxMods_LF[[1]], neClim, args='outputformat=raw')
+krillmaxStack_LF <- predict(krillmaxMods_LF[[1]], neClim) #cloglog
+krillmaxStackRAW_LF <- predict(krillmaxMods_LF[[1]], neClim, args='outputformat=raw')
 
 # loop through the rest of the models and predict
 for(j in 2:sets){
   print(j)
-  mod_LF <- predict(antmaxMods_LF[[j]], neClim)
-  modRAW_LF <- predict(antmaxMods_LF[[j]], neClim, args='outputformat=raw')
-  antmaxStack_LF <- stack(antmaxStack_LF, mod_LF)
-  antmaxStackRAW_LF <- stack(antmaxStackRAW_LF, modRAW_LF)
+  mod_LF <- predict(krillmaxMods_LF[[j]], neClim)
+  modRAW_LF <- predict(krillmaxMods_LF[[j]], neClim, args='outputformat=raw')
+  krillmaxStack_LF <- stack(krillmaxStack_LF, mod_LF)
+  krillmaxStackRAW_LF <- stack(krillmaxStackRAW_LF, modRAW_LF)
 }
 
-plot(antmaxStack_LF, col=rgb.tables(1000))
-plot(mean(antmaxStack_LF), col=rgb.tables(1000)) # mean of the five models
-plot(calc(antmaxStack_LF, sd), col=rgb.tables(1000)) #std dev of the five models
+plot(krillmaxStack_LF, col=rgb.tables(1000))
+plot(mean(krillmaxStack_LF), col=rgb.tables(1000)) # mean of the five models
+plot(calc(krillmaxStack_LF, sd), col=rgb.tables(1000)) #std dev of the five models
 
 
 
