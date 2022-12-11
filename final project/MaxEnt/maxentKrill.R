@@ -532,27 +532,25 @@ plot(calc(krillmaxStack_LF, sd), col=rgb.tables(1000)) #std dev of the five mode
 # MODEL 2 -----------------------------------------------------------------
 #### MAXENT - DEFAULT FEATURES
 # Same as above, but now using default features
-antmaxMods_allF <- list()
+krillmaxMods_allF <- list()
 for(f in 1:sets){
   print(f)
-  antmaxMods_allF[[f]] <- maxent(neClim, antTrain[[f]], 
+  krillmaxMods_allF[[f]] <- maxent(neClim, krillTrain[[f]], 
                                  args=c("-P",c("-m", 10000)))
 }
 # Predict to geography and stack
-antmaxStack_allF <- predict(antmaxMods_allF[[1]], neClim)
-antmaxStackRAW_allF <- predict(antmaxMods_allF[[1]], neClim, args='outputformat=raw')
+krillmaxStack_allF <- predict(krillmaxMods_allF[[1]], neClim)
+krillmaxStackRAW_allF <- predict(krillmaxMods_allF[[1]], neClim, args='outputformat=raw')
 for(j in 2:sets){
   print(j)
-  mod_allF <- predict(antmaxMods_allF[[j]], neClim)
-  modRAW_allF <- predict(antmaxMods_allF[[j]], neClim, args='outputformat=raw')
-  antmaxStack_allF <- stack(antmaxStack_allF, mod_allF)
-  antmaxStackRAW_allF <- stack(antmaxStackRAW_allF, modRAW_allF)
+  mod_allF <- predict(krillmaxMods_allF[[j]], neClim)
+  modRAW_allF <- predict(krillmaxMods_allF[[j]], neClim, args='outputformat=raw')
+  antmaxStack_allF <- stack(krillmaxStack_allF, mod_allF)
+  antmaxStackRAW_allF <- stack(krillmaxStackRAW_allF, modRAW_allF)
 }
 
-#I ADDED
-plot(antmaxStack_allF, col=rgb.tables(1000))
-plot(mean(antmaxStack_allF), col=rgb.tables(1000)) # mean of the five models
-plot(calc(antmaxStack_allF, sd), col=rgb.tables(1000)) #std dev of the five models
+#plot the output (only one rep, so no mean or standard deviation)
+plot(krillmaxStack_allF, col=rgb.tables(1000))
 
 
 
@@ -584,11 +582,11 @@ bg <- KDEpts[sample(seq(1:nrow(KDEpts)),
 plot(neClim[[1]])
 points(bg, pch=20)
 
-antmaxMods_LF_bias <- list()
+krillmaxMods_LF_bias <- list()
 for(f in 1:sets){
   print(f)
-  antmaxMods_LF_bias[[f]] <- maxent(neClim, 
-                                    antTrain[[f]],
+  krillmaxMods_LF_bias[[f]] <- maxent(neClim, 
+                                    krillTrain[[f]],
                                     # background points selected from KDEpts
                                     a=KDEpts[sample(seq(1:nrow(KDEpts)), 
                                                     size=10000, 
@@ -598,24 +596,32 @@ for(f in 1:sets){
 }
 
 # Predict to geography and stack 
-antmaxStack_LF_bias <- predict(antmaxMods_LF_bias[[1]], neClim)
-antmaxStackRAW_LF_bias <- predict(antmaxMods_LF_bias[[1]], neClim, args='outputformat=raw')
+krillmaxStack_LF_bias <- predict(krillmaxMods_LF_bias[[1]], neClim)
+krillmaxStackRAW_LF_bias <- predict(krillmaxMods_LF_bias[[1]], neClim, args='outputformat=raw')
 
 for(j in 2:sets){
   print(j)
-  mod_LF_bias <- predict(antmaxMods_LF_bias[[j]], neClim)
-  modRAW_LF_bias <- predict(antmaxMods_LF_bias[[j]], neClim, args='outputformat=raw')
-  antmaxStack_LF_bias <- stack(antmaxStack_LF_bias, mod_LF_bias)
-  antmaxStackRAW_LF_bias <- stack(antmaxStackRAW_LF_bias, modRAW_LF_bias)
+  mod_LF_bias <- predict(krillmaxMods_LF_bias[[j]], neClim)
+  modRAW_LF_bias <- predict(krillmaxMods_LF_bias[[j]], neClim, args='outputformat=raw')
+  krillmaxStack_LF_bias <- stack(krillmaxStack_LF_bias, mod_LF_bias)
+  krillmaxStackRAW_LF_bias <- stack(krillmaxStackRAW_LF_bias, modRAW_LF_bias)
 }
+
+
+plot(krillmaxStack_LF_bias, col=rgb.tables(1000))
+plot(mean(krillmaxStack_LF_bias), col=rgb.tables(1000)) # mean of the five models
+plot(calc(krillmaxStack_LF_bias, sd), col=rgb.tables(1000)) #std dev of the five models
+
+
+
 
 # MODEL 4 -----------------------------------------------------------------
 #### MAXENT - DEFAULT FEATURES - BIAS CORRECTED BACKGROUND
-antmaxMods_allF_bias <- list()
+krillmaxMods_allF_bias <- list()
 for(f in 1:sets){
   print(f)
-  antmaxMods_allF_bias[[f]] <- maxent(neClim, 
-                                      antTrain[[f]], 
+  krillmaxMods_allF_bias[[f]] <- maxent(neClim, 
+                                      krillTrain[[f]], 
                                       a=KDEpts[sample(seq(1:nrow(KDEpts)), 
                                                       size=10000, 
                                                       replace=T, 
@@ -624,18 +630,20 @@ for(f in 1:sets){
 }
 
 # Predict to geography and stack
-antmaxStack_allF_bias <- predict(antmaxMods_allF_bias[[1]], neClim)
-antmaxStackRAW_allF_bias <- predict(antmaxMods_allF_bias[[1]], neClim, 
+krillmaxStack_allF_bias <- predict(krillmaxMods_allF_bias[[1]], neClim)
+krillmaxStackRAW_allF_bias <- predict(krillmaxMods_allF_bias[[1]], neClim, 
                                     args='outputformat=raw')
 for(j in 2:sets){
   print(j)
-  mod_allF_bias <- predict(antmaxMods_allF_bias[[j]], neClim)
-  modRAW_allF_bias <- predict(antmaxMods_allF_bias[[j]], neClim, 
+  mod_allF_bias <- predict(krillmaxMods_allF_bias[[j]], neClim)
+  modRAW_allF_bias <- predict(krillmaxMods_allF_bias[[j]], neClim, 
                               args='outputformat=raw')
-  antmaxStack_allF_bias <- stack(antmaxStack_allF_bias, mod_allF_bias)
-  antmaxStackRAW_allF_bias <- stack(antmaxStackRAW_allF_bias, modRAW_allF_bias)
+  krillmaxStack_allF_bias <- stack(krillmaxStack_allF_bias, mod_allF_bias)
+  krillmaxStackRAW_allF_bias <- stack(krillmaxStackRAW_allF_bias, modRAW_allF_bias)
 }
-save.image(file=paste(antSpp[a], ".RData", sep=""))
+
+#save workspace image
+save.image(file=paste(krillSpp[a], ".RData", sep=""))
 #}
 ################################################################################
 
@@ -646,40 +654,40 @@ save.image(file=paste(antSpp[a], ".RData", sep=""))
 # CHUNK 3: Write mean and sd rasters of predictions for evaluation, mapping, etc
 ################################################################################
 
-#antFile <- "/Users/mfitzpatrick/code/PRStats_SDMs/data/preimp.RData"
-#load(antFile)
+#krillFile <- "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/krill.RData"
+#load(krillFile)
 
-fileName <- "preimp"
+fileName <- "krill"
 
 #maxent - LINEAR FEATURES
-writeRaster(sum(antmaxStack_LF)/dim(antmaxStack_LF)[3], 
+writeRaster(sum(krillmaxStack_LF)/dim(krillmaxStack_LF)[3], 
             paste0(fileName, "_maxent_prob_LF.tiff"), 
             type="GTiff", overwrite=T)
-writeRaster(calc(antmaxStack_LF, sd), 
+writeRaster(calc(krillmaxStack_LF, sd), 
             paste0(fileName, "_maxent_sd_LF.tiff",sep=""), 
             type="GTiff", overwrite=T)  
 
 #maxent - ALL FEATURES
-writeRaster(sum(antmaxStack_allF)/dim(antmaxStack_allF)[3], 
+writeRaster(sum(krillmaxStack_allF)/dim(krillmaxStack_allF)[3], 
             paste0(fileName, "_maxent_prob_allF.tiff"), 
             type="GTiff", overwrite=T)
-writeRaster(calc(antmaxStack_allF, sd), 
+writeRaster(calc(krillmaxStack_allF, sd), 
             paste0(fileName, "_maxent_sd_allF.tiff",sep=""), 
             type="GTiff", overwrite=T)
 
 #maxent - LINEAR FEATURES - ***bias corrected***
-writeRaster(sum(antmaxStack_LF_bias)/dim(antmaxStack_LF_bias)[3], 
+writeRaster(sum(krillmaxStack_LF_bias)/dim(krillmaxStack_LF_bias)[3], 
             paste0(fileName,"_maxent_prob_LF_biasCorrected.tiff"), 
             type="GTiff", overwrite=T)
-writeRaster(calc(antmaxStack_LF_bias, sd), 
+writeRaster(calc(krillmaxStack_LF_bias, sd), 
             paste0(fileName,"_maxent_sd_LF_biasCorrected.tiff"), 
             type="GTiff", overwrite=T)  
 
 #maxent - ALL FEATURES - ***bias corrected***
-writeRaster(sum(antmaxStack_allF_bias)/dim(antmaxStack_allF_bias)[3], 
+writeRaster(sum(krillmaxStack_allF_bias)/dim(krillmaxStack_allF_bias)[3], 
             paste0(fileName, "_maxent_prob_allF_biasCorrected.tiff"), 
             type="GTiff", overwrite=T)
-writeRaster(calc(antmaxStack_allF_bias, sd), 
+writeRaster(calc(krillmaxStack_allF_bias, sd), 
             paste0(fileName,"_maxent_sd_allF_biasCorrected.tiff"), 
             type="GTiff", 
             overwrite=T)
@@ -700,33 +708,53 @@ library(dismo)
 library(zoo)
 library(ENMeval)
 
-#antFile <- "/Users/mfitzpatrick/code/PRStats_SDMs/data/preimp.RData"
-#load(antFile)
+#work with the outdated ENMeval functions
+library("remotes")
+library("fs")
+
+
+#create separate libraries for housing
+dev_lib <- path_home_r("R/win-library/dev-versions/")
+old_lib <- path_home_r("R/win-library/old-versions/")
+
+#detach current version
+detach("package:ENMeval")
+
+install_version("ENMeval", version = "0.2.0", lib = old_lib)
+library("ENMeval")
+packageVersion("ENMeval")
+
+
+#krillFile <- "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/krill.RData"
+#load(krillFile)
 
 aicc.LF <- aicc.allF <- aicc.LF_bias <- aicc.allF_bias <- NULL
 
+#calc.aicc() is now aic.maxent(), so use ENMeval version 0.2.0
 for(ii in 1:5){
-  aicc.LF[ii] <- calc.aicc(nparam = get.params(antmaxMods_LF[[ii]]), 
-                           occ=antGeoXY, 
-                           antmaxStack_LF[[ii]])$AICc
+  aicc.LF[ii] <- calc.aicc(nparam = get.params(krillmaxMods_LF[[ii]]), 
+                           occ=krillGeoXY, 
+                           krillmaxStack_LF[[ii]])$AICc
   
-  aicc.allF[ii] <- calc.aicc(nparam = get.params(antmaxMods_allF[[ii]]), 
-                             occ=antGeoXY, 
-                             antmaxStack_allF[[ii]])$AICc
+  #aicc.allF[ii] <- calc.aicc(nparam = get.params(krillmaxMods_allF[[ii]]), 
+                             #occ=krillGeoXY, 
+                             #krillmaxStack_allF[[ii]])$AICc
   
-  aicc.LF_bias[ii] <- calc.aicc(nparam = get.params(antmaxMods_LF_bias[[ii]]), 
-                                occ=antGeoXY, 
-                                antmaxStack_LF_bias[[ii]])$AICc
+  aicc.LF_bias[ii] <- calc.aicc(nparam = get.params(krillmaxMods_LF_bias[[ii]]), 
+                                occ=krillGeoXY, 
+                                krillmaxStack_LF_bias[[ii]])$AICc
   
-  aicc.allF_bias[ii] <- calc.aicc(nparam = get.params(antmaxMods_allF_bias[[ii]]), 
-                                  occ=antGeoXY, 
-                                  antmaxStack_allF_bias[[ii]])$AICc
+  aicc.allF_bias[ii] <- calc.aicc(nparam = get.params(krillmaxMods_allF_bias[[ii]]), 
+                                  occ=krillGeoXY, 
+                                  krillmaxStack_allF_bias[[ii]])$AICc
 }    
 
-mean(aicc.LF)
-mean(aicc.allF)
-mean(aicc.LF_bias)
-mean(aicc.allF_bias)
+meanaicc.LF <- mean(as.numeric(aicc.LF[1]),as.numeric(aicc.LF[2]), as.numeric(aicc.LF[3]), as.numeric(aicc.LF[4]), as.numeric(aicc.LF[5]))
+meanaicc.LF_bias <- mean(as.numeric(aicc.LF_bias[1]),as.numeric(aicc.LF_bias[2]), as.numeric(aicc.LF_bias[3]), as.numeric(aicc.LF_bias[4]), as.numeric(aicc.LF_bias[5]))
+meanaicc.allF_bias <- mean(as.numeric(aicc.allF_bias[1]),as.numeric(aicc.allF_bias[2]), as.numeric(aicc.allF_bias[3]), as.numeric(aicc.allF_bias[4]), as.numeric(aicc.allF_bias[5]))
+
+
+
 ################################################################################
 
 
@@ -746,15 +774,23 @@ Boyce <- AUCmod <- meanProb <- meanBG <- NULL
 
 #ERRORS: 
 #Warning message: In .doExtract(x, i, drop = drop) : some indices are invalid (NA returned)
-#Error in extract(antmaxStack_LF[[ii]], antTest[[ii]]) : object of type 'S4' is not subsettable
+#Error in extract(krillmaxStack_LF[[ii]], antTest[[ii]]) : object of type 'S4' is not subsettable
+#due to NAs
+
+#take a random sample
+x <- randomPoints(noNAneClim, 10000)
+nrow(x)
+any(is.na(x))
+
 
 # predicted probability at random background points
-probBG <- extract(antmaxStack_LF, randomPoints(neClim, 10000))
+probBG <- extract(krillmaxStack_LF, randomPoints(neClim, 10000))
+probBG <- extract(krillmaxStack_LF, x)
 
-for(ii in 1:dim(antmaxStack_LF)[3]){    
-  probTest <- as.numeric(na.omit(extract(antmaxStack_LF[[ii]], antTest[[ii]])))
+for(ii in 1:dim(krillmaxStack_LF)[3]){    
+  probTest <- as.numeric(na.omit(extract(krillmaxStack_LF[[ii]], krillTest[[ii]])))
   # predicted probability at test points
-  Boyce[[ii]] <- ecospat.boyce(antmaxStack_LF[[ii]], antTest[[ii]],
+  Boyce[[ii]] <- ecospat.boyce(krillmaxStack_LF[[ii]], krillTest[[ii]],
                                PEplot=FALSE)$Spearman.cor
   evalDismo <- evaluate(p=probTest, a=probBG[,ii])
   AUCmod[[ii]] <- evalDismo@auc
