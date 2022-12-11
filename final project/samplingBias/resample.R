@@ -342,6 +342,8 @@ thin9500 <- thin(
 
 thinned9500 <- data.frame(thin9500[[1]])
 
+#thinned data as csv
+write.csv(thinned9500, "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/thinned9500LongLat.csv", row.names=TRUE)
 
 alaska <- plot_usmap(regions=c("state"), include=c("AK"), linewidth=1, labels = FALSE)
 
@@ -356,11 +358,22 @@ alaska + geom_point(data=transk9500, aes(x=x, y=y, colour="raw"), size=1.5, alph
 
 #plot side-by-side
 par(mfrow=c(1,2))
-raw9500 <- alaska + geom_point(data=transk9500, aes(x=x, y=y, colour="raw"), size=1.5, alpha=I(0.5)) + labs(title = "Raw")
-thin9500 <- alaska + geom_point(data=trans9500, aes(x=x, y=y, colour="thin"), size=1.5, alpha=I(0.5)) + labs(title = "Thinned")
+raw9500 <- alaska + geom_point(data=transk9500, aes(x=x, y=y, colour="raw"), size=1.5, alpha=I(0.5)) + labs(title = "1995-2000 Raw")
+thin9500 <- alaska + geom_point(data=trans9500, aes(x=x, y=y, colour="thin"), size=1.5, alpha=I(0.5)) + labs(title = "1995-2000 Thinned")
 par(mfrow=c(1,2))
 raw9500
 thin9500
+
+#save raw and thinned maps
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/raw1995-2000.png",
+    width=780, height=480)
+raw9500
+dev.off()
+
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/thin1995-2000.png",
+    width=780, height=480)
+thin9500
+dev.off()
 
 ###############################################################
 
@@ -387,6 +400,10 @@ thin0106 <- thin(
 
 thinned0106 <- data.frame(thin0106[[1]])
 
+#thinned data as csv
+write.csv(thinned0106, "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/thinned0106LongLat.csv", row.names=TRUE)
+
+
 alaska <- plot_usmap(regions=c("state"), include=c("AK"), linewidth=1, labels = FALSE)
 
 #transform data
@@ -405,6 +422,17 @@ thin0106 <- alaska + geom_point(data=trans0106, aes(x=x, y=y, colour="thin"), si
 par(mfrow=c(1,2))
 raw0106
 thin0106
+
+#save raw and thinned maps
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/raw2001-2006.png",
+    width=780, height=480)
+raw0106
+dev.off()
+
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/thin2001-2006.png",
+    width=780, height=480)
+thin0106
+dev.off()
 
 ##################################################################################
 
@@ -431,6 +459,10 @@ thin0712 <- thin(
 
 thinned0712 <- data.frame(thin0712[[1]])
 
+#thinned data as csv
+write.csv(thinned0712, "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/thinned0712LongLat.csv", row.names=TRUE)
+
+
 alaska <- plot_usmap(regions=c("state"), include=c("AK"), linewidth=1, labels = FALSE)
 
 #transform data
@@ -449,6 +481,17 @@ thin0712 <- alaska + geom_point(data=trans0712, aes(x=x, y=y, colour="thin"), si
 par(mfrow=c(1,2))
 raw0712
 thin0712
+
+#save raw and thinned maps
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/raw2007-2012.png",
+    width=780, height=480)
+raw0712
+dev.off()
+
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/thin2007-2012.png",
+    width=780, height=480)
+thin0712
+dev.off()
 
 ################################################################################
 
@@ -475,6 +518,9 @@ thin1318 <- thin(
 
 thinned1318 <- data.frame(thin1318[[1]])
 
+#thinned data as csv
+write.csv(thinned1318, "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/thinned1318LongLat.csv", row.names=TRUE)
+
 alaska <- plot_usmap(regions=c("state"), include=c("AK"), linewidth=1, labels = FALSE)
 
 #transform data
@@ -494,6 +540,17 @@ par(mfrow=c(1,2))
 raw1318
 thin1318
 
+#save raw and thinned maps
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/raw2013-2018.png",
+    width=780, height=480)
+raw1318
+dev.off()
+
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/thin2013-2018.png",
+    width=780, height=480)
+thin1318
+dev.off()
+
 ###############################################################################
 
 #test for normality
@@ -504,6 +561,13 @@ par(mfrow=c(1,1))
 qqnorm(trans9500$x, pch = 1, frame = FALSE)
 qqline(trans9500$x, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQthinX1995-2000.png",
+    width=780, height=480)
+qqnorm(trans9500$x, pch = 1, frame = FALSE)
+qqline(trans9500$x, col = "steelblue", lwd = 2)
+dev.off()
+
 #Shapiro-Wilk’s method (>0.05 is normal)
 shapiro.test(trans9500$x)
 
@@ -511,10 +575,25 @@ shapiro.test(trans9500$x)
 qqnorm(transk9500$x, pch = 1, frame = FALSE)
 qqline(transk9500$x, col = "steelblue", lwd = 2)
 
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQrawX1995-2000.png",
+    width=780, height=480)
+qqnorm(transk9500$x, pch = 1, frame = FALSE)
+qqline(transk9500$x, col = "steelblue", lwd = 2)
+dev.off()
+
+#Shapiro-Wilk’s method (>0.05 is normal)
+shapiro.test(transk9500$x)
+
 #y coordinate (lat)
 #thinned
 qqnorm(trans9500$y, pch = 1, frame = FALSE)
 qqline(trans9500$y, col = "steelblue", lwd = 2)
+
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQthinY1995-2000.png",
+    width=780, height=480)
+qqnorm(trans9500$y, pch = 1, frame = FALSE)
+qqline(trans9500$y, col = "steelblue", lwd = 2)
+dev.off()
 
 #Shapiro-Wilk’s method (>0.05 is normal)
 shapiro.test(trans9500$y)
@@ -523,13 +602,46 @@ shapiro.test(trans9500$y)
 qqnorm(transk9500$y, pch = 1, frame = FALSE)
 qqline(transk9500$y, col = "steelblue", lwd = 2)
 
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQrawY1995-2000.png",
+    width=780, height=480)
+qqnorm(transk9500$y, pch = 1, frame = FALSE)
+qqline(transk9500$y, col = "steelblue", lwd = 2)
+dev.off()
+
+#Shapiro-Wilk’s method (>0.05 is normal)
+shapiro.test(transk9500$y)
+
 #non-transformed
 boxplot(transk9500$x)$out
 boxplot(transk9500$y)$out
 
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxRawX1995-2000.png",
+    width=780, height=480)
+boxplot(transk9500$x)$out
+dev.off()
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxRawY1995-2000.png",
+    width=780, height=480)
+boxplot(transk9500$y)$out
+dev.off()
+
 #visualize outliers thinned
 boxplot(trans9500$x)$out
 boxplot(trans9500$y)$out
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxThinX1995-2000.png",
+    width=780, height=480)
+boxplot(trans9500$x)$out
+dev.off()
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxThinY1995-2000.png",
+    width=780, height=480)
+boxplot(trans9500$y)$out
+dev.off()
 
 ##############################################################################
 
@@ -538,6 +650,13 @@ boxplot(trans9500$y)$out
 qqnorm(trans0106$x, pch = 1, frame = FALSE)
 qqline(trans0106$x, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQthinX2001-2006.png",
+    width=780, height=480)
+qqnorm(trans0106$x, pch = 1, frame = FALSE)
+qqline(trans0106$x, col = "steelblue", lwd = 2)
+dev.off()
+
 #Shapiro-Wilk’s method (>0.05 is normal)
 shapiro.test(trans0106$x)
 
@@ -545,10 +664,27 @@ shapiro.test(trans0106$x)
 qqnorm(transk0106$x, pch = 1, frame = FALSE)
 qqline(transk0106$x, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQrawX2001-2006.png",
+    width=780, height=480)
+qqnorm(transk0106$x, pch = 1, frame = FALSE)
+qqline(transk0106$x, col = "steelblue", lwd = 2)
+dev.off()
+
+#Shapiro-Wilk’s method (>0.05 is normal)
+shapiro.test(transk0106$x)
+
 #y coordinate (lat)
 #thinned
 qqnorm(trans0106$y, pch = 1, frame = FALSE)
 qqline(trans0106$y, col = "steelblue", lwd = 2)
+
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQthinY2001-2006.png",
+    width=780, height=480)
+qqnorm(trans0106$y, pch = 1, frame = FALSE)
+qqline(trans0106$y, col = "steelblue", lwd = 2)
+dev.off()
 
 #Shapiro-Wilk’s method (>0.05 is normal)
 shapiro.test(trans0106$y)
@@ -557,9 +693,47 @@ shapiro.test(trans0106$y)
 qqnorm(transk0106$y, pch = 1, frame = FALSE)
 qqline(transk0106$y, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQrawY2001-2006.png",
+    width=780, height=480)
+qqnorm(transk0106$y, pch = 1, frame = FALSE)
+qqline(transk0106$y, col = "steelblue", lwd = 2)
+dev.off()
+
+#Shapiro-Wilk’s method (>0.05 is normal)
+shapiro.test(transk0106$y)
+
+#visualize outliers
+boxplot(transk0106$x)$out
+boxplot(transk0106$y)$out
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxRawX2001-2006.png",
+    width=780, height=480)
+boxplot(transk0106$x)$out
+dev.off()
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxRawY2001-2006.png",
+    width=780, height=480)
+boxplot(transk0106$y)$out
+dev.off()
+
 #visualize outliers
 boxplot(trans0106$x)$out
 boxplot(trans0106$y)$out
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxThinX2001-2006.png",
+    width=780, height=480)
+boxplot(trans0106$x)$out
+dev.off()
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxThinY2001-2006.png",
+    width=780, height=480)
+boxplot(trans0106$y)$out
+dev.off()
 
 ##############################################################################
 
@@ -568,6 +742,13 @@ boxplot(trans0106$y)$out
 qqnorm(trans0712$x, pch = 1, frame = FALSE)
 qqline(trans0712$x, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQthinX2007-2012.png",
+    width=780, height=480)
+qqnorm(trans0712$x, pch = 1, frame = FALSE)
+qqline(trans0712$x, col = "steelblue", lwd = 2)
+dev.off()
+
 #Shapiro-Wilk’s method (>0.05 is normal)
 shapiro.test(trans0712$x)
 
@@ -575,10 +756,27 @@ shapiro.test(trans0712$x)
 qqnorm(transk0712$x, pch = 1, frame = FALSE)
 qqline(transk0712$x, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQRawX2007-2012.png",
+    width=780, height=480)
+qqnorm(transk0712$x, pch = 1, frame = FALSE)
+qqline(transk0712$x, col = "steelblue", lwd = 2)
+dev.off()
+
+#Shapiro-Wilk’s method (>0.05 is normal)
+shapiro.test(transk0712$x)
+
 #y coordinate (lat)
 #thinned
 qqnorm(trans0712$y, pch = 1, frame = FALSE)
 qqline(trans0712$y, col = "steelblue", lwd = 2)
+
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQThinY2007-2012.png",
+    width=780, height=480)
+qqnorm(trans0712$y, pch = 1, frame = FALSE)
+qqline(trans0712$y, col = "steelblue", lwd = 2)
+dev.off()
 
 #Shapiro-Wilk’s method (>0.05 is normal)
 shapiro.test(trans0712$y)
@@ -587,9 +785,47 @@ shapiro.test(trans0712$y)
 qqnorm(transk0712$y, pch = 1, frame = FALSE)
 qqline(transk0712$y, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQRawY2007-2012.png",
+    width=780, height=480)
+qqnorm(transk0712$y, pch = 1, frame = FALSE)
+qqline(transk0712$y, col = "steelblue", lwd = 2)
+dev.off()
+
+#Shapiro-Wilk’s method (>0.05 is normal)
+shapiro.test(transk0712$y)
+
 #visualize outliers
 boxplot(trans0712$x)$out
 boxplot(trans0712$y)$out
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxThinX2007-2012.png",
+    width=780, height=480)
+boxplot(trans0712$x)$out
+dev.off()
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxThinY2007-2012.png",
+    width=780, height=480)
+boxplot(trans0712$y)$out
+dev.off()
+
+#visualize outliers
+boxplot(transk0712$x)$out
+boxplot(transk0712$y)$out
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxRawX2007-2012.png",
+    width=780, height=480)
+boxplot(transk0712$x)$out
+dev.off()
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxRawY2007-2012.png",
+    width=780, height=480)
+boxplot(transk0712$y)$out
+dev.off()
 
 ##############################################################################
 
@@ -598,6 +834,13 @@ boxplot(trans0712$y)$out
 qqnorm(trans1318$x, pch = 1, frame = FALSE)
 qqline(trans1318$x, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQthinX2013-2018.png",
+    width=780, height=480)
+qqnorm(trans1318$x, pch = 1, frame = FALSE)
+qqline(trans1318$x, col = "steelblue", lwd = 2)
+dev.off()
+
 #Shapiro-Wilk’s method (>0.05 is normal)
 shapiro.test(trans1318$x)
 
@@ -605,10 +848,27 @@ shapiro.test(trans1318$x)
 qqnorm(transk1318$x, pch = 1, frame = FALSE)
 qqline(transk1318$x, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQRawX2013-2018.png",
+    width=780, height=480)
+qqnorm(transk1318$x, pch = 1, frame = FALSE)
+qqline(transk1318$x, col = "steelblue", lwd = 2)
+dev.off()
+
+#Shapiro-Wilk’s method (>0.05 is normal)
+shapiro.test(transk1318$x)
+
 #y coordinate (lat)
 #thinned
 qqnorm(trans1318$y, pch = 1, frame = FALSE)
 qqline(trans1318$y, col = "steelblue", lwd = 2)
+
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQthinY2013-2018.png",
+    width=780, height=480)
+qqnorm(trans1318$y, pch = 1, frame = FALSE)
+qqline(trans1318$y, col = "steelblue", lwd = 2)
+dev.off()
 
 #Shapiro-Wilk’s method (>0.05 is normal)
 shapiro.test(trans1318$y)
@@ -617,7 +877,45 @@ shapiro.test(trans1318$y)
 qqnorm(transk1318$y, pch = 1, frame = FALSE)
 qqline(transk1318$y, col = "steelblue", lwd = 2)
 
+#save QQ plot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/QQRawY2013-2018.png",
+    width=780, height=480)
+qqnorm(transk1318$y, pch = 1, frame = FALSE)
+qqline(transk1318$y, col = "steelblue", lwd = 2)
+dev.off()
+
+#Shapiro-Wilk’s method (>0.05 is normal)
+shapiro.test(transk1318$y)
+
 #visualize outliers
 boxplot(trans1318$x)$out
 boxplot(trans1318$y)$out
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxThinX2013-2018.png",
+    width=780, height=480)
+boxplot(trans1318$x)$out
+dev.off()
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxThinY2013-2018.png",
+    width=780, height=480)
+boxplot(trans1318$y)$out
+dev.off()
+
+#visualize outliers
+boxplot(transk1318$x)$out
+boxplot(transk1318$y)$out
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxRawX2013-2018.png",
+    width=780, height=480)
+boxplot(transk1318$x)$out
+dev.off()
+
+#save boxplot
+png(file="C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/samplingBias/boxRawY2013-2018.png",
+    width=780, height=480)
+boxplot(transk1318$y)$out
+dev.off()
 

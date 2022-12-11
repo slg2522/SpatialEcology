@@ -1,0 +1,258 @@
+Sun Dec 11 10:23:10 EST 2022
+MaxEnt version 3.4.3
+Reading file absence
+readGrid: max memory 536870912, total allocated 266338304, free 121953664, used 144384640, increment 47185920
+Reading samples from presence
+Read samples: max memory 536870912, total allocated 266338304, free 91544960, used 174793344, increment 30408704
+Adding samples to background in feature space
+Command line used:  autorun -e C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/absence -o C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut -s C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/presence -z replicates=5 projectionlayers=C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut
+Command line to repeat: java density.MaxEnt nowarnings noprefixes "outputdirectory=C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut" "projectionlayers=C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut" "samplesfile=C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/presence" "environmentallayers=C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/absence" replicates=5 autorun novisible noprefixes -t biome
+Species: species_0 species_1 species_2 species_3 species_4
+Layers: bio1 bio12 bio16 bio17 bio5 bio6 bio7 bio8 biome
+Layertypes: Continuous Continuous Continuous Continuous Continuous Continuous Continuous Continuous Categorical
+outputdirectory: C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut
+projectionlayers: C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut
+samplesfile: C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/presence
+environmentallayers: C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/absence
+replicates: 5
+autorun: true
+visible: false
+prefixes: false
+
+getSamples: max memory 536870912, total allocated 266338304, free 91018624, used 175319680, increment 526336
+Making features
+makeFeatures: max memory 536870912, total allocated 266338304, free 87517616, used 178820688, increment 3501008
+species_0: 
+Regularization values: linear/quadratic/product: 0.121, categorical: 0.250, threshold: 1.250, hinge: 0.500
+75 samples
+Density: max memory 536870912, total allocated 266338304, free 80010624, used 186327680, increment 7506992
+linearPredictor: max memory 536870912, total allocated 266338304, free 80010624, used 186327680, increment 0
+Deactivating (biome=3.0)
+Deactivating (biome=4.0)
+Deactivating (biome=5.0)
+Deactivating (biome=7.0)
+Deactivating (biome=8.0)
+Deactivating (biome=10.0)
+Deactivating (biome=11.0)
+Deactivating (biome=12.0)
+Deactivating (biome=14.0)
+FeaturedSpace: max memory 536870912, total allocated 266338304, free 80010624, used 186327680, increment 0
+Sequential: max memory 536870912, total allocated 266338304, free 80010624, used 186327680, increment 0
+Initial loss: 9.18471482433721
+Initial test loss: 9.18471482433721
+Time since start: 1.684
+500: time = 1.553000 loss = 7.852180 testLoss 8.012641
+Resulting gain: 1.3325351828693481
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_0.csv
+Projecting...
+Converting file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\biome.asc size 125408, max memory = 536870912
+Reading file biome.asc
+FLOAT, 9766 pixels with data
+readGrid: max memory 536870912, total allocated 266338304, free 153603968, used 112734336, increment -73593344
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\maxent.cache\biome.mxe
+Converting file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\bio1.asc size 219993, max memory = 536870912
+Reading file bio1.asc
+FLOAT, 9775 pixels with data
+readGrid: max memory 536870912, total allocated 266338304, free 145744344, used 120593960, increment 7859624
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\maxent.cache\bio1.mxe
+Converting file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\bio12.asc size 226298, max memory = 536870912
+Reading file bio12.asc
+FLOAT, 9776 pixels with data
+readGrid: max memory 536870912, total allocated 266338304, free 138926552, used 127411752, increment 6817792
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\maxent.cache\bio12.mxe
+Converting file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\bio16.asc size 220948, max memory = 536870912
+Reading file bio16.asc
+FLOAT, 9776 pixels with data
+readGrid: max memory 536870912, total allocated 266338304, free 132635096, used 133703208, increment 6291456
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\maxent.cache\bio16.mxe
+Converting file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\bio17.asc size 214873, max memory = 536870912
+Reading file bio17.asc
+FLOAT, 9776 pixels with data
+readGrid: max memory 536870912, total allocated 266338304, free 126869976, used 139468328, increment 5765120
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\maxent.cache\bio17.mxe
+Converting file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\bio5.asc size 195023, max memory = 536870912
+Reading file bio5.asc
+FLOAT, 9775 pixels with data
+readGrid: max memory 536870912, total allocated 266338304, free 120578520, used 145759784, increment 6291456
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\maxent.cache\bio5.mxe
+Converting file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\bio6.asc size 192474, max memory = 536870912
+Reading file bio6.asc
+FLOAT, 9775 pixels with data
+readGrid: max memory 536870912, total allocated 266338304, free 114287064, used 152051240, increment 6291456
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\maxent.cache\bio6.mxe
+Converting file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\bio7.asc size 192371, max memory = 536870912
+Reading file bio7.asc
+FLOAT, 9775 pixels with data
+readGrid: max memory 536870912, total allocated 266338304, free 107995608, used 158342696, increment 6291456
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\maxent.cache\bio7.mxe
+Converting file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\bio8.asc size 219899, max memory = 536870912
+Reading file bio8.asc
+FLOAT, 9776 pixels with data
+readGrid: max memory 536870912, total allocated 266338304, free 101704152, used 164634152, increment 6291456
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\maxent.cache\bio8.mxe
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_0_maxentOut.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_0_maxentOut_clamping.asc
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_0_maxentOut.png
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_0_maxentOut_clamping.png
+Time since start: 2.716
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_0_maxentOut_novel.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_0_maxentOut_novel_limiting.asc
+getSamples: max memory 536870912, total allocated 278921216, free 60146936, used 218774280, increment 54140128
+Making features
+makeFeatures: max memory 536870912, total allocated 278921216, free 56645928, used 222275288, increment 3501008
+species_1: 
+Regularization values: linear/quadratic/product: 0.121, categorical: 0.250, threshold: 1.250, hinge: 0.500
+75 samples
+Density: max memory 536870912, total allocated 278921216, free 49138936, used 229782280, increment 7506992
+linearPredictor: max memory 536870912, total allocated 278921216, free 49138936, used 229782280, increment 0
+Deactivating (biome=3.0)
+Deactivating (biome=4.0)
+Deactivating (biome=5.0)
+Deactivating (biome=7.0)
+Deactivating (biome=8.0)
+Deactivating (biome=10.0)
+Deactivating (biome=11.0)
+Deactivating (biome=12.0)
+FeaturedSpace: max memory 536870912, total allocated 278921216, free 49138936, used 229782280, increment 0
+Sequential: max memory 536870912, total allocated 278921216, free 49138936, used 229782280, increment 0
+Initial loss: 9.18471482433721
+Initial test loss: 9.18471482433721
+Time since start: 4.985
+500: time = 1.439000 loss = 7.888449 testLoss 7.863303
+Resulting gain: 1.2962662158449039
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_1.csv
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_1_maxentOut.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_1_maxentOut_clamping.asc
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_1_maxentOut.png
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_1_maxentOut_clamping.png
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_1_maxentOut_novel.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_1_maxentOut_novel_limiting.asc
+getSamples: max memory 536870912, total allocated 293601280, free 154281776, used 139319504, increment -90462776
+Making features
+makeFeatures: max memory 536870912, total allocated 293601280, free 150936752, used 142664528, increment 3345024
+species_2: 
+Regularization values: linear/quadratic/product: 0.121, categorical: 0.250, threshold: 1.250, hinge: 0.500
+75 samples
+Density: max memory 536870912, total allocated 293601280, free 143758760, used 149842520, increment 7177992
+linearPredictor: max memory 536870912, total allocated 293601280, free 143273776, used 150327504, increment 484984
+Deactivating (biome=3.0)
+Deactivating (biome=4.0)
+Deactivating (biome=5.0)
+Deactivating (biome=7.0)
+Deactivating (biome=8.0)
+Deactivating (biome=10.0)
+Deactivating (biome=11.0)
+Deactivating (biome=12.0)
+FeaturedSpace: max memory 536870912, total allocated 293601280, free 143273776, used 150327504, increment 0
+Sequential: max memory 536870912, total allocated 293601280, free 143273776, used 150327504, increment 0
+Initial loss: 9.18471482433721
+Initial test loss: 9.18471482433721
+Time since start: 7.325
+500: time = 1.519000 loss = 7.815735 testLoss 8.133147
+Resulting gain: 1.368979860218687
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_2.csv
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_2_maxentOut.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_2_maxentOut_clamping.asc
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_2_maxentOut.png
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_2_maxentOut_clamping.png
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_2_maxentOut_novel.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_2_maxentOut_novel_limiting.asc
+getSamples: max memory 536870912, total allocated 306184192, free 150661744, used 155522448, increment 5194944
+Making features
+makeFeatures: max memory 536870912, total allocated 306184192, free 147141128, used 159043064, increment 3520616
+species_3: 
+Regularization values: linear/quadratic/product: 0.121, categorical: 0.250, threshold: 1.250, hinge: 0.500
+75 samples
+Density: max memory 536870912, total allocated 306184192, free 139653744, used 166530448, increment 7487384
+linearPredictor: max memory 536870912, total allocated 306184192, free 139653744, used 166530448, increment 0
+Deactivating (biome=3.0)
+Deactivating (biome=4.0)
+Deactivating (biome=5.0)
+Deactivating (biome=7.0)
+Deactivating (biome=8.0)
+Deactivating (biome=9.0)
+Deactivating (biome=10.0)
+Deactivating (biome=11.0)
+Deactivating (biome=12.0)
+FeaturedSpace: max memory 536870912, total allocated 306184192, free 139653744, used 166530448, increment 0
+Sequential: max memory 536870912, total allocated 306184192, free 139653744, used 166530448, increment 0
+Initial loss: 9.18471482433721
+Initial test loss: 9.18471482433721
+Time since start: 9.74
+500: time = 1.570000 loss = 7.776547 testLoss 8.292508
+Resulting gain: 1.408168187089923
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_3.csv
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_3_maxentOut.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_3_maxentOut_clamping.asc
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_3_maxentOut.png
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_3_maxentOut_clamping.png
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_3_maxentOut_novel.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_3_maxentOut_novel_limiting.asc
+getSamples: max memory 536870912, total allocated 306184192, free 6292552, used 299891640, increment 133361192
+Making features
+makeFeatures: max memory 536870912, total allocated 307232768, free 193796912, used 113435856, increment -186455784
+species_4: 
+Regularization values: linear/quadratic/product: 0.119, categorical: 0.250, threshold: 1.240, hinge: 0.500
+76 samples
+Density: max memory 536870912, total allocated 307232768, free 186633968, used 120598800, increment 7162944
+linearPredictor: max memory 536870912, total allocated 307232768, free 186555968, used 120676800, increment 78000
+Deactivating (biome=3.0)
+Deactivating (biome=4.0)
+Deactivating (biome=5.0)
+Deactivating (biome=7.0)
+Deactivating (biome=8.0)
+Deactivating (biome=10.0)
+Deactivating (biome=11.0)
+Deactivating (biome=12.0)
+FeaturedSpace: max memory 536870912, total allocated 307232768, free 186555968, used 120676800, increment 0
+Sequential: max memory 536870912, total allocated 307232768, free 186555968, used 120676800, increment 0
+Initial loss: 9.184817414745098
+Initial test loss: 9.184817414745098
+Time since start: 12.422
+500: time = 1.702000 loss = 7.922389 testLoss 7.820280
+Resulting gain: 1.2624282495312888
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_4.csv
+Projecting...
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_4_maxentOut.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_4_maxentOut_clamping.asc
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_4_maxentOut.png
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_4_maxentOut_clamping.png
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_4_maxentOut_novel.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_4_maxentOut_novel_limiting.asc
+Reading file absence
+readGrid: max memory 536870912, total allocated 312475648, free 65897360, used 246578288, increment 125901488
+Reading file absence
+readGrid: max memory 536870912, total allocated 312475648, free 34886960, used 277588688, increment 31010400
+Reading file absence
+readGrid: max memory 536870912, total allocated 312475648, free 176210432, used 136265216, increment -141323472
+Reading file absence
+readGrid: max memory 536870912, total allocated 312475648, free 145801728, used 166673920, increment 30408704
+Reading file absence
+readGrid: max memory 536870912, total allocated 312475648, free 114870784, used 197604864, increment 30930944
+Creating average grid, stddev grid etc.
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_avg.csv
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_stddev.csv
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_min.csv
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_max.csv
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_median.csv
+Time since start: 13.495
+Creating average grid, stddev grid etc.
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_maxentOut_avg.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_maxentOut_stddev.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_maxentOut_min.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_maxentOut_max.asc
+Writing file C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\species_maxentOut_median.asc
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_maxentOut_avg.png
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_maxentOut_stddev.png
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_maxentOut_min.png
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_maxentOut_max.png
+Writing C:\Users\hongs\OneDrive - University of Maryland\Desktop\University of Maryland\Classes\SpatialEcology\final project\MaxEnt\maxentOut\plots\species_maxentOut_median.png
+Ending
