@@ -1,264 +1,3 @@
-# In-class tutorial
-# Overview of Maxent in R
-
-library(dismo)
-library(maptools)
-library(ecospat)
-library(colorRamps)
-library(sm)
-
-## ---- Load species data-------------------------------------------------------
-# csv table with species occurrence data
-# csv (Comma separated values) is an easy format to work with
-file <- paste0(system.file(package="dismo"), "/ex/bradypus.csv")
-file
-
-# read the file
-bradypus <- read.csv(file)
-# first rows
-head(bradypus)
-unique(bradypus$species)
-# only one species in the data, so
-# we only need columns 2 and 3 - the x-y coords:
-bradypus <- bradypus[,2:3]
-head(bradypus)
-names(bradypus) <- c("x", "y")
-
-## ---- Load env data-------------------------------------------------------
-# file to path to where the rasters are saved
-path <- file.path(system.file(package="dismo"), 'ex')
-# list the files
-files <- list.files(path, pattern='grd$', full.names=TRUE )
-files
-
-# Let's stack the raster files together
-# stacking a list of files is fast and easy
-predictors <- stack(files) 
-names(predictors) # names of the rasters
-#plot(predictors)
-
-# lets plot the data 
-data(wrld_simpl)
-plot(predictors, 1)
-# can also plot by name, try: plot(predictors, "biome")
-plot(wrld_simpl, add=TRUE)
-# with the points function, "add" is implicit
-points(bradypus, cex=0.5, pch=20, col='blue')
-
-
-## ---- Extract env data-------------------------------------------------------
-# Next, we want to extract the environmental values at each
-# of the occurrence locations.
-# See ?extract
-presvals <- extract(predictors, bradypus)
-head(presvals)
-
-## ---- Create background (pseudo-absence) data --------------------------------
-# setting a random seed to always create the same
-# random set of points for this example
-set.seed(0)
-# create 500 random background points 
-backgr <- randomPoints(predictors, 500)
-# and then extract env data at the background points
-absvals <- extract(predictors, backgr)
-# make a vector of 1's and 0's to match the
-# presence records and the background data
-# See ?rep
-sppPA <- c(rep(1, nrow(presvals)), rep(0, nrow(absvals)))
-# now we bind everything together into a data.frame
-sdmData <- data.frame(cbind(sppPA, rbind(presvals, absvals)))
-# biome is a factor, so define it that way
-sdmData[,'biome'] = as.factor(sdmData[,'biome'])
-# and have a look at the data
-head(sdmData)
-summary(sdmData)
-
-# for plotting, extracting, etc
-ptsXY <- rbind(bradypus, backgr)
-sdmData <- cbind(ptsXY, sdmData)
-head(sdmData)
-
-# make new stack without the categorical variable 'biome'
-# as not all SDMs can use categorical data
-pred_nf <- dropLayer(predictors, "biome")
-
-
-## ---- Create training / test datasets ----------------------------------------
-set.seed(0)
-#?kfold
-group <- kfold(sdmData, k=5) # 5 groups = 80/20 split
-sdmTrain <- sdmData[group != 1, ]
-sdmTest <- sdmData[group == 1, ]
-
-presTrain <- sdmTrain[sdmTrain$sppPA==1,c("x", "y")]
-bgTrain <- sdmTrain[sdmTrain$sppPA==0,c("x", "y")]
-presTest <- sdmTest[sdmTest$sppPA==1,c("x", "y")]
-bgTest <- sdmTest[sdmTest$sppPA==0,c("x", "y")]  
-
-# let's set an extent to crop the env data to make 
-# the analyses go a bit faster
-#ext <- raster::extent(-90, -32, -33, 23)
-
-# lets plot the data
-#plot(pred_nf[[1]], col='light grey', legend=FALSE)
-#plot(ext, add=TRUE, lwd=2)
-# presence pts (training)
-#points(presTrain, pch= '+', col='red') 
-# presence pts (testing)
-#points(presTest, pch='+', col='blue')
-# background pts (training)
-#points(bgTrain, pch=20, cex=0.5, col='yellow')
-# background pts (testing)
-#points(bgTest, pch=20, cex=0.5, col='black')
-
-
-## ---- Fit MaxEnt -------------------------------------------------------------
-maxent()
-filePath <- "C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut"
-mx <- maxent(stack(predictors), # env data as a raster stack
-             presTrain, # presence data
-             factors='biome', # biome is categorical
-             path=filePath) # where to save all the output
-plot(mx)
-mx
-
-# evaluate the model using the test data
-e <- evaluate(presTest, bgTest, mx, stack(predictors))
-e
-
-# predict back to geography
-mxPred <- predict(mx, stack(predictors))
-plot(mxPred, col=rgb.tables(1000))
-# Predict in 'raw' format and save raster of prediction
-#mxPred <- predict(mx, stack(predictors), args=c("outputformat=raw"),
-#                  filename=paste0(filePath, '/maxent_predictionRAW.tif'))
-
-# let's check model quality using the Boyce Index
-ecospat.boyce(mxPred, presTest)
-
-
-
-
-
-
-
-
-
-
-
-# there are lots of options to change (see the provided MaxEntHELP.pdf)
-# we use the 'args' argument to set the options we want by providing the 
-# appropriate "flag". Doing so changes the the default value of the flag. 
-# For example, here I am asking for 'responsecurves' to be generated. 
-# The default is to not report response curves (responsecurves=FALSE). 
-# By flagging 'responsecurves', we change it from the default (TRUE).
-# Let's run the model:
-mx <- maxent(stack(predictors), 
-             presTrain, 
-             factors='biome',
-             path=filePath,
-             args=c("responsecurves=TRUE"))
-
-# perform multiple replicates (5 in this example - will take
-# a few minutes to run)
-mx <- maxent(stack(predictors), 
-             presTrain, 
-             factors='biome',
-             path=filePath,
-             args=c("responsecurves", "replicates=5"))
-
-# Let's now measure variable importance using jackknife and also produce 
-# response curves. Running this model will take a minute or two.
-mx <- maxent(stack(predictors), 
-             presTrain, 
-             factors='biome',
-             path=filePath,
-             args=c("jackknife", "responsecurves"))
-
-
-
-
-
-
-
-
-# To fit a model with only linear and product features, we have to turn off all 
-# other feature types
-mx <- maxent(stack(predictors), 
-             presTrain, 
-             factors='biome',
-             path=filePath,
-             args=c("jackknife", "responsecurves",
-                    "-h", # turn off hinge features
-                    "-q", # turn off quadratic features
-                    "nothreshold")) # turn off threshold))
-
-# Change the 'beta multiplier' which controls model complexity (smaller
-# values = greater complexity)
-mx <- maxent(stack(predictors), 
-             presTrain, 
-             factors='biome',
-             path=filePath,
-             args=c("betamultiplier=0.25","responsecurves"))
-
-
-
-
-
-
-# let's try projecting to future climate. For simplicity, we will create
-# some fake future climate layers rather than going to the trouble of
-# downloading actual forecasts
-future <- stack(predictors)
-future$bio5 <- future$bio5+40 # increase max temp by 4C (recall temp is 10x)
-future$bio6 <- future$bio6+80 # increase min temp by 8C (recall temp is 10x)
-future$bio7 <- future$bio5-future$bio6 # recalculate temp annual range (bio7)
-future$bio12 <- future$bio12*0.67 # decrease precipitation by 33%
-
-# save each layer to disk
-projNames <- paste0("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/",
-                    names(future), ".asc")
-for(i in 1:length(projNames)){
-  writeRaster(future[[i]], projNames[i], overwrite=T) #save the files to disk
-}
-
-# run the model and project to the new layers by providing the directory
-# where the new layers are saved. Much more output will be written to disk
-# automatically. We will step through some of this output below.
-mx <- maxent(stack(predictors), 
-             bradypus, 
-             factors='biome',
-             path=filePath,
-             args=c("replicates=5", 
-                    "projectionlayers=C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut"))
-#map the model to the fake future conditions
-
-# Where the model extrapolating beyond the data?
-clamping <- raster("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/species_0_maxentOut_clamping.asc")
-#clamping to force the model to not predict beyond the dataset
-# areas in red are problematic
-plot(clamping, col=rgb.tables(1000))
-
-# multivariate environmental similarity surface (MESS)
-# a measure of how novel the new climate is relative to the conditions under
-# which the model was fit.
-mess <- raster("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/species_0_maxentOut_novel.asc")
-# areas in red have one or more environmental variables outside the range 
-# present in the training data
-plot(mess, col=rgb.tables(1000)[1000:1])
-
-# which variable is 
-novelLimit <- raster("C:/Users/hongs/OneDrive - University of Maryland/Desktop/University of Maryland/Classes/SpatialEcology/final project/MaxEnt/maxentOut/species_0_maxentOut_novel_limiting.asc")
-plot(novelLimit)
-
-
-
-
-
-
-
-
-
 #START HERE
 # load the required libraries
 library(raster)
@@ -442,11 +181,11 @@ bg <- randomPoints(KDErast, 500, prob=T) # alternate method
 ################################################################################
 # CHUNK 2: Run models
 ################################################################################
-# extract data for ant spp
+# extract data for krill spp
 krillSpp <- c("krill")
 a <- 1 #only working with krill as a taxonomic group
 # loop to run models for each species if there were multiple species of krill
-#for(a in 1:length(antSpp)){
+#for(a in 1:length(krillSpp)){
 krillGeoXY <- krillGeoXY[krillGeoXY$species==krillSpp[a],-1]
 #check the dimensions
 dim(krillGeoXY)
@@ -545,21 +284,12 @@ for(j in 2:sets){
   print(j)
   mod_allF <- predict(krillmaxMods_allF[[j]], neClim)
   modRAW_allF <- predict(krillmaxMods_allF[[j]], neClim, args='outputformat=raw')
-  antmaxStack_allF <- stack(krillmaxStack_allF, mod_allF)
-  antmaxStackRAW_allF <- stack(krillmaxStackRAW_allF, modRAW_allF)
+  krillmaxStack_allF <- stack(krillmaxStack_allF, mod_allF)
+  krillmaxStackRAW_allF <- stack(krillmaxStackRAW_allF, modRAW_allF)
 }
 
 #plot the output (only one rep, so no mean or standard deviation)
 plot(krillmaxStack_allF, col=rgb.tables(1000))
-
-
-
-
-
-
-
-
-
 
 # MODEL 3 -----------------------------------------------------------------
 #### MAXENT - LINEAR FEATURES + SAMPLING BIAS
@@ -613,8 +343,6 @@ plot(mean(krillmaxStack_LF_bias), col=rgb.tables(1000)) # mean of the five model
 plot(calc(krillmaxStack_LF_bias, sd), col=rgb.tables(1000)) #std dev of the five models
 
 
-
-
 # MODEL 4 -----------------------------------------------------------------
 #### MAXENT - DEFAULT FEATURES - BIAS CORRECTED BACKGROUND
 krillmaxMods_allF_bias <- list()
@@ -641,6 +369,10 @@ for(j in 2:sets){
   krillmaxStack_allF_bias <- stack(krillmaxStack_allF_bias, mod_allF_bias)
   krillmaxStackRAW_allF_bias <- stack(krillmaxStackRAW_allF_bias, modRAW_allF_bias)
 }
+
+plot(krillmaxStack_allF_bias, col=rgb.tables(1000))
+plot(mean(krillmaxStack_allF_bias), col=rgb.tables(1000)) # mean of the five models
+plot(calc(krillmaxStack_allF_bias, sd), col=rgb.tables(1000)) #std dev of the five models
 
 #save workspace image
 save.image(file=paste(krillSpp[a], ".RData", sep=""))
@@ -695,10 +427,6 @@ writeRaster(calc(krillmaxStack_allF_bias, sd),
 
 
 
-
-
-#ERROR: Error in calc.aicc(nparam = get.params(antmaxMods_LF[[ii]]), occ = antGeoXY,  : 
-#could not find function "calc.aicc"
 ################################################################################
 # CHUNK 4: Calculate AICc for maxent models
 ################################################################################
@@ -757,6 +485,11 @@ meanaicc.allF_bias <- mean(as.numeric(aicc.allF_bias[1]),as.numeric(aicc.allF_bi
 
 ################################################################################
 
+#evaluate variables and collinearity
+library(usdm)
+vifCovariates <- as.character(vifstep(neClim)@results$Variables)
+bioRastsKeep <- neClim[[vifCovariates]]
+plot(bioRastsKeep, col=rgb.tables(1000), box=F, legend=T, axes=T)
 
 ################################################################################
 # CHUNK 5: Evaluate models
@@ -770,18 +503,6 @@ library(ecospat)
 
 ######### maxent LF ############# 
 Boyce <- AUCmod <- meanProb <- meanBG <- NULL
-
-
-#ERRORS: 
-#Warning message: In .doExtract(x, i, drop = drop) : some indices are invalid (NA returned)
-#Error in extract(krillmaxStack_LF[[ii]], antTest[[ii]]) : object of type 'S4' is not subsettable
-#due to NAs
-
-#take a random sample
-x <- randomPoints(noNAneClim, 10000)
-nrow(x)
-any(is.na(x))
-
 
 # predicted probability at random background points
 probBG <- extract(krillmaxStack_LF, randomPoints(neClim, 10000))
@@ -804,14 +525,14 @@ maxentEval_LF <- rbind(Boyce, AUCmod, meanProb, meanBG)
 Boyce <- AUCmod <- meanProb <- meanBG <- NULL
 
 # predicted probability at random background points
-probBG <- extract(antmaxStack_allF, randomPoints(neClim, 10000))
+probBG <- extract(krillmaxStack_allF, randomPoints(neClim, 10000))
 
-for(ii in 1:dim(antmaxStack_allF)[3]){    
+for(ii in 1:dim(krillmaxStack_allF)[3]){    
   
-  probTest <- as.numeric(na.omit(extract(antmaxStack_allF[[ii]], antTest[[ii]])))
+  probTest <- as.numeric(na.omit(extract(krillmaxStack_allF[[ii]], krillTest[[ii]])))
   
   # predicted probability at test points
-  Boyce[[ii]] <- ecospat.boyce(antmaxStack_allF[[ii]], antTest[[ii]],
+  Boyce[[ii]] <- ecospat.boyce(krillmaxStack_allF[[ii]], krillTest[[ii]],
                                PEplot=FALSE)$Spearman.cor
   evalDismo <- evaluate(p=probTest, a=probBG[,ii])
   AUCmod[[ii]] <- evalDismo@auc
@@ -825,14 +546,14 @@ maxentEval_allF <- rbind(Boyce, AUCmod, meanProb, meanBG)
 Boyce <- AUCmod <- meanProb <- meanBG <- NULL
 
 # predicted probability at random background points
-probBG <- extract(antmaxStack_LF_bias, randomPoints(neClim, 10000))
+probBG <- extract(krillmaxStack_LF_bias, randomPoints(neClim, 10000))
 
-for(ii in 1:dim(antmaxStack_LF_bias)[3]){    
+for(ii in 1:dim(krillmaxStack_LF_bias)[3]){    
   
-  probTest <- as.numeric(na.omit(extract(antmaxStack_LF_bias[[ii]], antTest[[ii]])))
+  probTest <- as.numeric(na.omit(extract(krillmaxStack_LF_bias[[ii]], krillTest[[ii]])))
   
   # predicted probability at test points
-  Boyce[[ii]] <- ecospat.boyce(antmaxStack_LF_bias[[ii]], antTest[[ii]],
+  Boyce[[ii]] <- ecospat.boyce(krillmaxStack_LF_bias[[ii]], krillTest[[ii]],
                                PEplot=FALSE)$Spearman.cor
   evalDismo <- evaluate(p=probTest, a=probBG[,ii])
   AUCmod[[ii]] <- evalDismo@auc
@@ -846,14 +567,14 @@ maxentEval_LF_bias <- rbind(Boyce, AUCmod, meanProb, meanBG)
 Boyce <- AUCmod <- meanProb <- meanBG <- NULL
 
 # predicted probability at random background points
-probBG <- extract(antmaxStack_allF_bias, randomPoints(neClim, 10000))
+probBG <- extract(krillmaxStack_allF_bias, randomPoints(neClim, 10000))
 
-for(ii in 1:dim(antmaxStack_allF_bias)[3]){    
+for(ii in 1:dim(krillmaxStack_allF_bias)[3]){    
   
-  probTest <- as.numeric(na.omit(extract(antmaxStack_allF_bias[[ii]], antTest[[ii]])))
+  probTest <- as.numeric(na.omit(extract(krillmaxStack_allF_bias[[ii]], krillTest[[ii]])))
   
   # predicted probability at test points
-  Boyce[[ii]] <- ecospat.boyce(antmaxStack_allF_bias[[ii]], antTest[[ii]],
+  Boyce[[ii]] <- ecospat.boyce(krillmaxStack_allF_bias[[ii]], krillTest[[ii]],
                                PEplot=FALSE)$Spearman.cor
   evalDismo <- evaluate(p=probTest, a=probBG[,ii])
   AUCmod[[ii]] <- evalDismo@auc
