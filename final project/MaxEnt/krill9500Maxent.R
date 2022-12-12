@@ -72,19 +72,15 @@ plot(bath_avg)
 # thinned krill occurrence data for the Bering Sea
 krill9500 <- read.csv("thin9500LonLat.csv")
 krill0106 <- read.csv("thin0106LonLat.csv")
-krill0712 <- read.csv("thin0712LonLat.csv")
-krill1318 <- read.csv("thin1318LonLat.csv")
 
 #check the data with headers
 head(krill9500)
 head(krill0106)
-head(krill0712)
-head(krill1318)
 
 #combine all of the thinned krill data
-krillGeoXY <- data.frame(species=c(krill9500$species, krill0106$species, krill0712$species, krill1318$species),
-                         lon=c(krill9500$lon, krill0106$lon, krill0712$lon, krill1318$lon),
-                         lat=c(krill9500$lat, krill0106$lat, krill0712$lat, krill1318$lat))
+krillGeoXY <- data.frame(species=c(krill9500$species, krill0106$species),
+                         lon=c(krill9500$lon, krill0106$lon),
+                         lat=c(krill9500$lat, krill0106$lat))
 
 #crop rasters:
 e <- extent(-180, -150, 50, 70)
@@ -110,11 +106,11 @@ coordinates(krillSp) <- c("lon", "lat")
 projection(krillSp) <- projection(neClim)
 
 # let's look at the data
-plot(neClim$layer.1, col=rgb.tables(1000))
+plot(neClim$layer.1, col=rgb.tables(1000), main="1995-2006 Thinned Krill Sample")
 points(krillSp, pch=20, cex=0.7, col="black")
 
 # make a mask raster to use below
-mask <- neClim[[1]]>-1000
+mask <- neClim[[1]]>-20
 
 
 # Sampling bias ----------------------------------------------------------------
@@ -164,7 +160,7 @@ KDErast <- SpatialPixelsDataFrame(KDErast, # points
                                                          length(KDEsur$estimate))))
 # convert to a raster and plot
 KDErast <- raster(KDErast)
-plot(KDErast)
+plot(KDErast, main="1995-2006 Kernel Density Estimate")
 
 # now crop, etc so that it matches the climate data
 KDErast <- resample(KDErast, mask)
@@ -259,8 +255,8 @@ for(j in 2:sets){
 }
 
 plot(krillmaxStack_LF, col=rgb.tables(1000))
-plot(mean(krillmaxStack_LF), col=rgb.tables(1000)) # mean of the five models
-plot(calc(krillmaxStack_LF, sd), col=rgb.tables(1000)) #std dev of the five models
+plot(mean(krillmaxStack_LF), col=rgb.tables(1000), main="1995-2006 Linear Features Maxent Mean") # mean of the five models
+plot(calc(krillmaxStack_LF, sd), col=rgb.tables(1000), main="1995-2006 Linear Features Maxent STD") #std dev of the five models
 
 
 

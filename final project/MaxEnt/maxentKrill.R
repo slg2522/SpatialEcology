@@ -1,16 +1,12 @@
-#START HERE
 # load the required libraries
 library(raster)
 library(sp)
 library(rgdal)
 library(dismo)
-library(raster)
-library(dismo)
 library(sp)
 library(sm)
 library(colorRamps)
 library(ENMeval)
-library(colorRamps)
 library(terra)
 
 ################################################################################
